@@ -1,10 +1,12 @@
-import type { NextPage, GetStaticProps, InferGetStaticPropsType } from "next";
+import type { NextPage, GetStaticProps } from "next";
 import Head from "next/head";
 import Image from "next/image";
 import { getDailyGame } from "../lib/fetchDailyGame";
 import { Puzzle } from "../lib/gameTypes";
 import styles from "../styles/Home.module.css";
-import { css } from "@emotion/react";
+import PageContainer from "../components/PageContainer";
+import { dummyPuzzle } from "../lib/dummy";
+import TextElement from "../components/TextElement";
 
 const Home: NextPage = () => {
   return (
@@ -17,7 +19,7 @@ const Home: NextPage = () => {
 
       <main className={styles.main}>
         <h1 className={styles.title}>
-          Welcome <a href="https://nextjs.org">Next.js!</a>
+          Welcome to <a href="https://nextjs.org">Next.js!</a>
         </h1>
 
         <p className={styles.description}>
@@ -75,25 +77,28 @@ const Home: NextPage = () => {
 interface DailyPuzzleProps {
   game: Puzzle;
 }
-//THIS  WORKS?
-// left hand side, what's being destructured out of the props
-// right hand side, type defn for whats within the props
-// const Dome = ({ game }: { game: Puzzle }) => {
-
 const MainPage: NextPage<DailyPuzzleProps> = ({ game }) => {
-  const { centralLetter, pangrams, puzzleLetters } = game;
+  const { pangrams, puzzleLetters, solutionsWithScores } = game;
   return (
-    <div>
+    <PageContainer>
+      <Head>
+        <title>Spelling Bee Game</title>
+        <meta name="description" content="Spelling Bee Game" />
+        <link rel="icon" href="/favicon.ico" />
+      </Head>
       <div>{puzzleLetters}</div>
-      <div>{centralLetter}</div>
-    </div>
+      <TextElement size="lg">{Object.keys(solutionsWithScores)[0]}</TextElement>
+      <TextElement textColour="Antique White">{pangrams[0]}</TextElement>
+    </PageContainer>
   );
 };
 
 export default MainPage;
 
 export const getStaticProps: GetStaticProps = async () => {
-  const dailyGame = await getDailyGame();
+  // temporarily commented out to avoid fetching from redis every time, just using a fixed game rn
+  // const dailyGame = await getDailyGame();
+  const dailyGame = dummyPuzzle;
 
   if (!dailyGame) {
     return {

@@ -1,8 +1,10 @@
 import { Puzzle } from "./gameTypes";
 
+const emojis = ["😴", "😐", "🙂", "😃", "😚", "😎", "🤩", "🔥", "🧠", "🐝"];
+
 export const dummyPuzzle: Puzzle = {
   gameId: "8754b810-3d36-41b5-9f1a-e54ebc4c3793",
-  date: new Date("2022-09-23T04:00:00.456Z"),
+  date: "2022-09-23T04:00:00.456Z",
   puzzleLetters: ["a", "d", "e", "i", "l", "r", "y"],
   centralLetter: "i",
   pangrams: ["DREARILY", "READILY"],

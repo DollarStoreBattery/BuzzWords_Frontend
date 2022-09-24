@@ -25,7 +25,7 @@ export interface PuzzleSolution {
 }
 
 export interface BasePuzzle extends PuzzleInput {
-  date: Date;
+  date: string;
   rankingScheme: { [key in ScoreRankings]: number };
   pangrams: Pangrams;
   solutionsWithScores: SolutionAndScore;
