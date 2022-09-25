@@ -6,6 +6,7 @@ import PageContainer from "../components/PageContainer";
 import { dummyPuzzle } from "../lib/dummy";
 import TextElement from "../components/TextElement";
 import GameGrid from "../components/GameGrid";
+import create from "zustand";
 interface DailyPuzzleProps {
   game: Puzzle;
 }

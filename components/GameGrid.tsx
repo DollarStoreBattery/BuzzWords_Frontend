@@ -26,7 +26,7 @@ const HoneyCombElement = styled("div")<HoneyCombType>(
     gridArea: "1/1",
     width: "min(20vw,100px)",
     height: "min(18vw,90px)",
-    userSelect: "none", //   so you can't highlight the text
+    userSelect: "none",
     clipPath: "polygon(25% 0%, 75% 0%, 100% 50%,75% 100%,25% 100%,0 50%)",
     transition: ".1s linear",
     ":hover": { filter: "brightness(89%)" },
@@ -35,11 +35,13 @@ const HoneyCombElement = styled("div")<HoneyCombType>(
     backgroundColor: props.cellColour
       ? colours[props.cellColour]
       : colours["Gold Crayola"],
-
     transform: `translate(${props.xOffset}%,${props.yOffset}%)`,
-    // "&:active": `transform: scale(1.2)`,
+    ":active": {
+      transform: `translate(${props.xOffset}%,${props.yOffset}%) scale(0.8)`,
+    },
   })
 );
+
 const HoneyCombCenter = styled(HoneyCombElement)({
   backgroundColor: colours["Kobe"],
   ":hover": { filter: "brightness(120%)" },
