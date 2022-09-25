@@ -1,10 +1,10 @@
 import { colours, fontSizes, paddings } from "../styles/theme";
-import { COLOURS, FONTSIZES } from "../styles/types";
+import { ColourNames, FontSizes } from "../styles/types";
 import styled from "@emotion/styled";
 
 type TextProps = {
-  size?: FONTSIZES;
-  textColour?: COLOURS;
+  size?: FontSizes;
+  textColour?: ColourNames;
 };
 
 const TextElement = styled("p")<TextProps>(

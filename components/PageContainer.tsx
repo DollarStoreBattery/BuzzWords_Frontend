@@ -13,6 +13,6 @@ const PageContainer = styled.div({
   minHeight: "100vh",
   maxWidth: "100vw",
   fontSize: fontSizes.md,
-  backgroundColor: colours["Gold Crayola"],
+  backgroundColor: colours["Antique White"],
 });
 export default PageContainer;
