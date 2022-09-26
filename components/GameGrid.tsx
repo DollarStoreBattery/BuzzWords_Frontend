@@ -1,4 +1,5 @@
 import styled from "@emotion/styled";
+import { useEffect } from "react";
 import usePlaySessionStore from "../lib/usePlaySessionStore";
 
 import { colours } from "../styles/theme";
@@ -58,15 +59,22 @@ const translations = [
   [-85, -55],
 ];
 
-type GameGridProps = { centralLetter: string; puzzleLetters: Array<string> };
+type GameGridProps = { centralLetter: string; boundaryLetters: Array<string> };
 
-const GameGrid = ({ centralLetter, puzzleLetters }: GameGridProps) => {
+const GameGrid = ({ centralLetter, boundaryLetters }: GameGridProps) => {
   const addtoGuess = usePlaySessionStore((state) => state.addToGuess);
-
-  const boundaryLetters = puzzleLetters.filter(
-    (letter) => letter != centralLetter
+  const statefulBoundaryLetters = usePlaySessionStore(
+    (state) => state.boundaryLetters
   );
-  const BoundaryCells = boundaryLetters.map((letter, index) => {
+  const setStatefulBoundaryLetters = usePlaySessionStore(
+    (state) => state.setBoundaryLetters
+  );
+
+  useEffect(() => {
+    setStatefulBoundaryLetters(boundaryLetters);
+  }, [boundaryLetters]);
+
+  const BoundaryCells = statefulBoundaryLetters.map((letter, index) => {
     return (
       <HoneyCombElement
         key={`cell_${index}`}
@@ -74,7 +82,6 @@ const GameGrid = ({ centralLetter, puzzleLetters }: GameGridProps) => {
         yOffset={translations[index][1]}
         onClick={(e) => {
           e.preventDefault();
-          console.log(`clicked ${letter}`);
           addtoGuess(letter);
         }}
       >

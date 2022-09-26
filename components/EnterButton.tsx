@@ -45,7 +45,7 @@ type EnterButtonProps = {
 const EnterButton = ({ solutionsList, centralLetter }: EnterButtonProps) => {
   return (
     <button onClick={(e) => handleGuessSubmit(centralLetter, solutionsList)}>
-      Enter Button
+      Enter
     </button>
   );
 };

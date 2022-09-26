@@ -11,12 +11,18 @@ import ResetButton from "../components/ResetButton";
 import EnterButton from "../components/EnterButton";
 import FoundWordsList from "../components/FoundWordsList";
 import BackSpaceButton from "../components/BackSpaceButton";
+import ShuffleButton from "../components/ShuffleButton";
 interface DailyPuzzleProps {
   game: Puzzle;
 }
+
 const MainPage: NextPage<DailyPuzzleProps> = ({ game }) => {
   const { pangrams, puzzleLetters, solutionsWithScores, centralLetter } = game;
 
+  const centralLetterUpper = centralLetter.toUpperCase();
+  const puzzleLettersUpper = puzzleLetters.map((letter) =>
+    letter.toUpperCase()
+  );
   return (
     <PageContainer>
       <Head>
@@ -27,15 +33,18 @@ const MainPage: NextPage<DailyPuzzleProps> = ({ game }) => {
       <TextElement>Welcome to the Spelling Bee Game 🐝</TextElement>
       <Guess />
       <GameGrid
-        centralLetter={centralLetter.toUpperCase()}
-        puzzleLetters={puzzleLetters.map((letter) => letter.toUpperCase())}
+        centralLetter={centralLetterUpper}
+        boundaryLetters={puzzleLettersUpper.filter(
+          (letter) => letter != centralLetterUpper
+        )}
       ></GameGrid>
       <TextElement textColour="Rust">{pangrams[0]}</TextElement>
       <BackSpaceButton />
       <EnterButton
-        centralLetter={centralLetter.toUpperCase()}
+        centralLetter={centralLetterUpper}
         solutionsList={Object.keys(solutionsWithScores)}
       />
+      <ShuffleButton />
       <ResetButton />
       <FoundWordsList />
     </PageContainer>

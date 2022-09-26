@@ -1,5 +1,6 @@
 import create from "zustand";
 import { ScoreRankings } from "./gameTypes";
+import shuffle from "lodash.shuffle";
 
 export enum BadGuessReasons {
   TOO_LONG = "Too long.",
@@ -15,12 +16,13 @@ interface PlaySessionState {
   ranking: keyof typeof ScoreRankings;
   currentGuess: string;
   //   the exact sorted version of how the letters get rendered into the honeycomb grid
-  letterSort: Array<string>;
+  boundaryLetters: Array<string>;
+  setBoundaryLetters: (letters: Array<string>) => void;
   addToGuess: (newLetter: string) => void;
   clearGuess: () => void;
   submitGuess: () => void;
   backspaceGuess: () => void;
-  //   shuffleLetters: () => void;
+  shuffleBoundaryLetters: () => void;
   badGuessReason?: BadGuessReasons;
 }
 
@@ -31,8 +33,12 @@ const usePlaySessionStore = create<PlaySessionState>()((set, get) => ({
   score: 0,
   ranking: "BEGINNER",
   currentGuess: "",
-  letterSort: [],
-
+  boundaryLetters: [],
+  setBoundaryLetters: (letters) => {
+    set(() => ({
+      boundaryLetters: letters.map((letter) => letter.toUpperCase()),
+    }));
+  },
   addToGuess: (newLetter) => {
     if (get().currentGuess.length > GUESS_LENGTH_LIMIT) {
       console.error(BadGuessReasons.TOO_LONG);
@@ -52,7 +58,10 @@ const usePlaySessionStore = create<PlaySessionState>()((set, get) => ({
       currentGuess: state.currentGuess.slice(0, state.currentGuess.length - 1),
     }));
   },
-  //   currentGuess: state.currentGuess.slice(0, state.currentGuess.length - 1),
+  shuffleBoundaryLetters: () => {
+    const shuffledLetters = shuffle(get().boundaryLetters);
+    set(() => ({ boundaryLetters: shuffledLetters }));
+  },
   submitGuess: () => {
     set((state) => ({
       wordsFound: [...state.wordsFound, get().currentGuess],
