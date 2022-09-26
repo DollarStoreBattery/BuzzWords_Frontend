@@ -45,6 +45,7 @@ const MainPage: NextPage<DailyPuzzleProps> = ({ game }) => {
         centralLetter={centralLetterUpper}
         // solutionsList={Object.keys(solutionsWithScores)}
         solutionsWithScores={solutionsWithScores}
+        puzzleLetters={puzzleLettersUpper}
       />
       <ShuffleButton />
       <ResetButton />

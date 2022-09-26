@@ -40,21 +40,22 @@ export const handleGuessSubmit = (
 type EnterButtonProps = {
   solutionsWithScores: SolutionAndScore;
   centralLetter: string;
+  puzzleLetters: Array<string>;
 };
 
 // it is dependent on current guess state because it's only enabled once the current guess is at least 4 letters
 const EnterButton = ({
   solutionsWithScores,
   centralLetter,
+  puzzleLetters,
 }: EnterButtonProps) => {
   const addtoGuess = usePlaySessionStore((state) => state.addToGuess);
   const backspaceGuess = usePlaySessionStore((state) => state.backspaceGuess);
 
   const keyboardInputHandler = (event: KeyboardEvent): void => {
     const key = event.key;
-    // check if user typed in a letter in the alphabet
-    if (key.length === 1 && key.match(/[a-z]/i)) {
-      addtoGuess(event.key.toUpperCase());
+    if (puzzleLetters.includes(key.toUpperCase())) {
+      addtoGuess(key);
     } else if (key == "Enter") {
       handleGuessSubmit(centralLetter, solutionsWithScores);
     } else if (key == "Backspace") {

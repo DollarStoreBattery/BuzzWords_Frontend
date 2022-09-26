@@ -74,12 +74,6 @@ interface BearState {
   bears: number;
   addLetter: (aby: string) => void;
 }
-
-const useBearStore = create<BearState>()((set) => ({
-  bears: 0,
-  addLetter: (aby) => set((state) => ({ bears: state.bears + aby.length })),
-}));
-
 export default usePlaySessionStore;
 
 //   rankingScheme: {
