@@ -20,7 +20,7 @@ interface PlaySessionState {
   setBoundaryLetters: (letters: Array<string>) => void;
   addToGuess: (newLetter: string) => void;
   clearGuess: () => void;
-  submitGuess: () => void;
+  submitGuess: (guessScore: number) => void;
   backspaceGuess: () => void;
   shuffleBoundaryLetters: () => void;
   badGuessReason?: BadGuessReasons;
@@ -62,9 +62,10 @@ const usePlaySessionStore = create<PlaySessionState>()((set, get) => ({
     const shuffledLetters = shuffle(get().boundaryLetters);
     set(() => ({ boundaryLetters: shuffledLetters }));
   },
-  submitGuess: () => {
+  submitGuess: (guessScore) => {
     set((state) => ({
       wordsFound: [...state.wordsFound, get().currentGuess],
+      score: state.score + guessScore,
     }));
   },
 }));

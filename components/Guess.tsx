@@ -16,13 +16,6 @@ const GuessText = styled(TextElement)({
 const Guess = () => {
   const currentGuess = usePlaySessionStore((state) => state.currentGuess);
   return <GuessText size="xl">{currentGuess.toUpperCase()}</GuessText>;
-  //   return (
-  //     <svg viewBox="0 0 300 20" css={{ marginBottom: "20px" }}>
-  //       <text x="10" y="15">
-  //         {currentGuess}
-  //       </text>
-  //     </svg>
-  //   );
 };
 
 export default Guess;

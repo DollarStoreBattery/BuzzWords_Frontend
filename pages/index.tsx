@@ -12,6 +12,7 @@ import EnterButton from "../components/EnterButton";
 import FoundWordsList from "../components/FoundWordsList";
 import BackSpaceButton from "../components/BackSpaceButton";
 import ShuffleButton from "../components/ShuffleButton";
+import ScoreDisplay from "../components/ScoreDisplay";
 interface DailyPuzzleProps {
   game: Puzzle;
 }
@@ -42,10 +43,12 @@ const MainPage: NextPage<DailyPuzzleProps> = ({ game }) => {
       <BackSpaceButton />
       <EnterButton
         centralLetter={centralLetterUpper}
-        solutionsList={Object.keys(solutionsWithScores)}
+        // solutionsList={Object.keys(solutionsWithScores)}
+        solutionsWithScores={solutionsWithScores}
       />
       <ShuffleButton />
       <ResetButton />
+      <ScoreDisplay />
       <FoundWordsList />
     </PageContainer>
   );
