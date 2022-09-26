@@ -1,8 +1,9 @@
 import styled from "@emotion/styled";
+import usePlaySessionStore from "../lib/usePlaySessionStore";
 
 import { colours } from "../styles/theme";
 import { ColourNames } from "../styles/types";
-import TextElement from "./TextElement";
+import TextElement from "./basic/TextElement";
 
 // credit for how to do this goes to https://css-tricks.com/css-grid-and-custom-shapes-part-1/
 
@@ -57,28 +58,43 @@ const translations = [
   [-85, -55],
 ];
 
-const GameGrid = () => {
-  const boundaryLetters = ["a", "c", "d", "e", "f", "g"];
-  const centerLetter = "b";
+type GameGridProps = { centralLetter: string; puzzleLetters: Array<string> };
 
-  const cells = boundaryLetters.map((letter, index) => {
+const GameGrid = ({ centralLetter, puzzleLetters }: GameGridProps) => {
+  const addtoGuess = usePlaySessionStore((state) => state.addToGuess);
+
+  const boundaryLetters = puzzleLetters.filter(
+    (letter) => letter != centralLetter
+  );
+  const BoundaryCells = boundaryLetters.map((letter, index) => {
     return (
       <HoneyCombElement
         key={`cell_${index}`}
         xOffset={translations[index][0]}
         yOffset={translations[index][1]}
+        onClick={(e) => {
+          e.preventDefault();
+          addtoGuess(letter);
+        }}
       >
-        <TextElement size="lg">{letter.toUpperCase()}</TextElement>
+        <TextElement size="lg">{letter}</TextElement>
       </HoneyCombElement>
     );
   });
+
   return (
     <HoneyCombContainer>
-      {cells}
-
-      <HoneyCombCenter xOffset={0} yOffset={0}>
+      {BoundaryCells}
+      <HoneyCombCenter
+        onClick={(e) => {
+          e.preventDefault();
+          addtoGuess(centralLetter);
+        }}
+        xOffset={0}
+        yOffset={0}
+      >
         <TextElement textColour="Antique White" size="lg">
-          {centerLetter.toUpperCase()}
+          {centralLetter}
         </TextElement>
       </HoneyCombCenter>
     </HoneyCombContainer>

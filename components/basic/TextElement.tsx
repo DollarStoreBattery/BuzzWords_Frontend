@@ -1,5 +1,5 @@
-import { colours, fontSizes, paddings } from "../styles/theme";
-import { ColourNames, FontSizes } from "../styles/types";
+import { colours, fontSizes, paddings } from "../../styles/theme";
+import { ColourNames, FontSizes } from "../../styles/types";
 import styled from "@emotion/styled";
 
 type TextProps = {
@@ -10,6 +10,7 @@ type TextProps = {
 const TextElement = styled("p")<TextProps>(
   {
     display: "flex",
+    textAlign: "center",
     paddingLeft: paddings.sm,
     paddingRight: paddings.sm,
   },

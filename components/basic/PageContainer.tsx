@@ -1,4 +1,4 @@
-import { colours, fontSizes } from "../styles/theme";
+import { colours, fontSizes } from "../../styles/theme";
 
 import styled from "@emotion/styled";
 
