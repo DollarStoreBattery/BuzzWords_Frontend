@@ -7,7 +7,7 @@ import { dummyPuzzle } from "../lib/dummy";
 import TextElement from "../components/basic/TextElement";
 import GameGrid from "../components/GameGrid";
 import Guess from "../components/Guess";
-import ResetButton from "../components/ResetButton";
+import ResetButton from "../components/ClearButton";
 import EnterButton from "../components/EnterButton";
 import FoundWordsList from "../components/FoundWordsList";
 import BackSpaceButton from "../components/BackSpaceButton";

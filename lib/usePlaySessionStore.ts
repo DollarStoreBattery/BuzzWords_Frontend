@@ -82,10 +82,6 @@ const useBearStore = create<BearState>()((set) => ({
 
 export default usePlaySessionStore;
 
-// const useBearStore = create<PlaySessionState>()((set) => ({
-//   date: "",
-//   puzzleLetters: [],
-//   centralLetter: "",
 //   rankingScheme: {
 //     Beginner: 0,
 //     "Good Start": 0,
@@ -97,9 +93,4 @@ export default usePlaySessionStore;
 //     Amazing: 0,
 //     Genius: 0,
 //     "Queen Bee": 0,
-//   },
-//   pangrams: [],
-//   solutionsWithScores: {},
-
-//   //   increase: (by) => set((state) => ({ bears: state.bears + by })),
-// }));
+//   }

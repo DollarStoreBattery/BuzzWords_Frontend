@@ -1,8 +1,8 @@
 import usePlaySessionStore from "../lib/usePlaySessionStore";
 
-const ResetButton = () => {
+const ClearButton = () => {
   const clearGuess = usePlaySessionStore((state) => state.clearGuess);
-  return <button onClick={clearGuess}>Reset</button>;
+  return <button onClick={clearGuess}>Clear</button>;
 };
 
-export default ResetButton;
+export default ClearButton;

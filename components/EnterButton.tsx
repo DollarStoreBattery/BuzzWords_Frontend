@@ -1,3 +1,4 @@
+import { useEffect } from "react";
 import { SolutionAndScore } from "../lib/gameTypes";
 import usePlaySessionStore, {
   BadGuessReasons,
@@ -7,7 +8,7 @@ const MIN_GUESS_LENGTH = 4;
 const MAX_GUESS_LENGTH = 20;
 
 // needs access to the store to update the error
-const handleGuessSubmit = (
+export const handleGuessSubmit = (
   centralLetter: string,
   solutionsWithScores: SolutionAndScore
 ) => {
@@ -46,6 +47,28 @@ const EnterButton = ({
   solutionsWithScores,
   centralLetter,
 }: EnterButtonProps) => {
+  const addtoGuess = usePlaySessionStore((state) => state.addToGuess);
+  const backspaceGuess = usePlaySessionStore((state) => state.backspaceGuess);
+
+  const keyboardInputHandler = (event: KeyboardEvent): void => {
+    const key = event.key;
+    // check if user typed in a letter in the alphabet
+    if (key.length === 1 && key.match(/[a-z]/i)) {
+      addtoGuess(event.key.toUpperCase());
+    } else if (key == "Enter") {
+      handleGuessSubmit(centralLetter, solutionsWithScores);
+    } else if (key == "Backspace") {
+      backspaceGuess();
+    }
+  };
+
+  useEffect(() => {
+    window.addEventListener("keydown", keyboardInputHandler);
+    return () => {
+      window.removeEventListener("keydown", keyboardInputHandler);
+    };
+  }, []);
+
   return (
     <button
       onClick={(e) => handleGuessSubmit(centralLetter, solutionsWithScores)}
