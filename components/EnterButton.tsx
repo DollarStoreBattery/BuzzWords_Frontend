@@ -55,7 +55,7 @@ const EnterButton = ({
   const keyboardInputHandler = (event: KeyboardEvent): void => {
     const key = event.key;
     if (puzzleLetters.includes(key.toUpperCase())) {
-      addtoGuess(key);
+      addtoGuess(key.toUpperCase());
     } else if (key == "Enter") {
       handleGuessSubmit(centralLetter, solutionsWithScores);
     } else if (key == "Backspace") {

@@ -59,8 +59,8 @@ export default MainPage;
 
 export const getStaticProps: GetStaticProps = async () => {
   // temporarily commented out to avoid fetching from redis every time, just using a fixed game rn
-  // const dailyGame = await getDailyGame();
-  const dailyGame = dummyPuzzle;
+  const dailyGame = await getDailyGame();
+  // const dailyGame = dummyPuzzle;
 
   if (!dailyGame) {
     return {
