@@ -19,7 +19,7 @@ interface PlaySessionState {
   addToGuess: (newLetter: string) => void;
   clearGuess: () => void;
   submitGuess: () => void;
-  //   backspaceGuess: () => void;
+  backspaceGuess: () => void;
   //   shuffleLetters: () => void;
   badGuessReason?: BadGuessReasons;
 }
@@ -44,7 +44,15 @@ const usePlaySessionStore = create<PlaySessionState>()((set, get) => ({
   clearGuess: () => {
     set(() => ({ currentGuess: "" }));
   },
-
+  backspaceGuess: () => {
+    if (get().currentGuess.length == 0) {
+      return;
+    }
+    set((state) => ({
+      currentGuess: state.currentGuess.slice(0, state.currentGuess.length - 1),
+    }));
+  },
+  //   currentGuess: state.currentGuess.slice(0, state.currentGuess.length - 1),
   submitGuess: () => {
     set((state) => ({
       wordsFound: [...state.wordsFound, get().currentGuess],

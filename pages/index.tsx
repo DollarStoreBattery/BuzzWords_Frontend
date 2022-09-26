@@ -10,6 +10,7 @@ import Guess from "../components/Guess";
 import ResetButton from "../components/ResetButton";
 import EnterButton from "../components/EnterButton";
 import FoundWordsList from "../components/FoundWordsList";
+import BackSpaceButton from "../components/BackSpaceButton";
 interface DailyPuzzleProps {
   game: Puzzle;
 }
@@ -30,11 +31,12 @@ const MainPage: NextPage<DailyPuzzleProps> = ({ game }) => {
         puzzleLetters={puzzleLetters.map((letter) => letter.toUpperCase())}
       ></GameGrid>
       <TextElement textColour="Rust">{pangrams[0]}</TextElement>
-      <ResetButton />
+      <BackSpaceButton />
       <EnterButton
         centralLetter={centralLetter.toUpperCase()}
         solutionsList={Object.keys(solutionsWithScores)}
       />
+      <ResetButton />
       <FoundWordsList />
     </PageContainer>
   );

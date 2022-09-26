@@ -4,11 +4,12 @@ import usePlaySessionStore from "../lib/usePlaySessionStore";
 import TextElement from "./basic/TextElement";
 
 const GuessText = styled(TextElement)({
-  fontSize: `max(6vw,2.5rem)`,
+  fontSize: "4rem",
   // todo: add media queries for font size
   //   todo: get the text to animate when cleared, erased, appended, etc. below is not working
   transition: ".1s linear",
-  height: "5vh",
+  height: "auto",
+  minHeight: "50px",
   maxWidth: "100%",
 });
 

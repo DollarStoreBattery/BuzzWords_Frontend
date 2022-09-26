@@ -38,7 +38,7 @@ const HoneyCombElement = styled("div")<HoneyCombType>(
       : colours["Gold Crayola"],
     transform: `translate(${props.xOffset}%,${props.yOffset}%)`,
     ":active": {
-      transform: `translate(${props.xOffset}%,${props.yOffset}%) scale(0.8)`,
+      transform: `translate(${props.xOffset}%,${props.yOffset}%) scale(1.1)`,
     },
   })
 );
@@ -74,6 +74,7 @@ const GameGrid = ({ centralLetter, puzzleLetters }: GameGridProps) => {
         yOffset={translations[index][1]}
         onClick={(e) => {
           e.preventDefault();
+          console.log(`clicked ${letter}`);
           addtoGuess(letter);
         }}
       >
