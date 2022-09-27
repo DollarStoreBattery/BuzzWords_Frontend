@@ -10,15 +10,15 @@ const pulse = keyframes`
 `;
 
 const ErrorElement = styled(TextElement)({
-  animation: `${pulse} 100ms ease`,
+  animation: `${pulse} 1100ms ease`,
 });
 
 const ErrorMessage = () => {
   const currentError = usePlaySessionStore((state) => state.badGuessReason);
-  const badGuessActive = usePlaySessionStore((state) => state.showError);
+  const badGuessActive = usePlaySessionStore((state) => state.activeError);
 
   const errorMsg = badGuessActive ? (
-    <ErrorElement size="xl">{currentError}</ErrorElement>
+    <ErrorElement size="sm">{currentError}</ErrorElement>
   ) : (
     <></>
   );

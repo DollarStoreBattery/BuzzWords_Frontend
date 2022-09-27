@@ -45,7 +45,6 @@ const MainPage: NextPage<DailyPuzzleProps> = ({ game }) => {
       <BackSpaceButton />
       <EnterButton
         centralLetter={centralLetterUpper}
-        // solutionsList={Object.keys(solutionsWithScores)}
         solutionsWithScores={solutionsWithScores}
         puzzleLetters={puzzleLettersUpper}
       />

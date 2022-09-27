@@ -7,7 +7,7 @@ const UI_WAITING_TIME = 1100; // in milliseconds
 export enum BadGuessReasons {
   TOO_LONG = "Too long.",
   TOO_SHORT = "Too short.",
-  MISSING_CENTRE = "Missing the centre letter.",
+  MISSING_CENTRE = "Missing centre letter.",
   ALREADY_FOUND = "Already found.",
   NOT_IN_WORD_LIST = "Not in word list.",
 }
@@ -27,14 +27,14 @@ interface PlaySessionState {
   backspaceGuess: () => void;
   shuffleBoundaryLetters: () => void;
   badGuessReason?: BadGuessReasons;
-  showError: boolean;
+  activeError: boolean;
   clearError: () => void;
 }
 
 const GUESS_LENGTH_LIMIT = 20;
 
 const usePlaySessionStore = create<PlaySessionState>()((set, get) => ({
-  showError: false,
+  activeError: false,
   wordsFound: [],
   score: 0,
   ranking: "BEGINNER",
@@ -42,12 +42,12 @@ const usePlaySessionStore = create<PlaySessionState>()((set, get) => ({
   boundaryLetters: [],
   setBadGuessReason: (reason) => {
     set(() => ({ badGuessReason: reason }));
-    set(() => ({ showError: true }));
+    set(() => ({ activeError: true }));
     setTimeout(get().clearGuess, UI_WAITING_TIME);
     setTimeout(get().clearError, UI_WAITING_TIME);
   },
   clearError: () => {
-    set(() => ({ showError: false }));
+    set(() => ({ activeError: false }));
   },
   setBoundaryLetters: (letters) => {
     set(() => ({
