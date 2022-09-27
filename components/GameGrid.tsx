@@ -2,6 +2,7 @@ import styled from "@emotion/styled";
 import { useEffect } from "react";
 
 import usePlaySessionStore from "../lib/usePlaySessionStore";
+import { fadeIn, horizontalRock } from "../styles/animations";
 
 import { colours } from "../styles/theme";
 import { ColourNames } from "../styles/types";
@@ -90,7 +91,15 @@ const GameGrid = ({ centralLetter, boundaryLetters }: GameGridProps) => {
           }
         }}
       >
-        <TextElement size="lg">{letter}</TextElement>
+        <TextElement
+          key={`${letter}_${statefulBoundaryLetters.toString()}`}
+          size="lg"
+          css={{
+            animation: `${fadeIn} 600ms ease`,
+          }}
+        >
+          {letter}
+        </TextElement>
       </HoneyCombElement>
     );
   });
