@@ -55,7 +55,7 @@ const MainPage: NextPage<DailyPuzzleProps> = ({ game }) => {
       <ShuffleButton />
       <ResetButton />
       <ScoreDisplay />
-      <FoundWordsList />
+      <FoundWordsList pangrams={pangrams} />
     </PageContainer>
   );
 };

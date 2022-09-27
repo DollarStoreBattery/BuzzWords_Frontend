@@ -11,7 +11,7 @@ export enum ScoreRankings {
   QUEEN_BEE = "Queen Bee",
 }
 
-type Pangrams = Array<string>;
+export type Pangrams = Array<string>;
 export type SolutionAndScore = { [key: string]: number };
 
 export default interface PuzzleInput {
