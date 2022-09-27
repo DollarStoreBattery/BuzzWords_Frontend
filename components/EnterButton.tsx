@@ -59,7 +59,6 @@ const EnterButton = ({
       !successActive &&
       puzzleLetters.includes(key.toUpperCase())
     ) {
-      console.log("success active?: ", successActive);
       addtoGuess(key.toUpperCase());
     } else if (key == "Enter") {
       handleGuessSubmit(centralLetter, solutionsWithScores);

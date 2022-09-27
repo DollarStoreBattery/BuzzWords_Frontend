@@ -1,6 +1,6 @@
 import { keyframes } from "@emotion/react";
 
-export const pulse = keyframes`
+export const horizontalRock = keyframes`
 0% {
   transform: translateX(3%);
 }
@@ -33,5 +33,17 @@ export const blink = keyframes`
 }
 50% {
   opacity: 0;
+}
+`;
+
+export const pulse = keyframes`
+0%{
+  transform:scale(1);
+}
+30%{
+  transform: scale(0.9);
+}
+100%{
+  transform:scale(1);
 }
 `;

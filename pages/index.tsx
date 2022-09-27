@@ -15,6 +15,7 @@ import ShuffleButton from "../components/ShuffleButton";
 import ScoreDisplay from "../components/ScoreDisplay";
 import ErrorMessage from "../components/ErrorMessage";
 import SuccessMessage from "../components/PraiseMessage";
+import NukeButtonDevOnly from "../components/NukeButtonDevOnly";
 interface DailyPuzzleProps {
   game: Puzzle;
 }
@@ -50,6 +51,7 @@ const MainPage: NextPage<DailyPuzzleProps> = ({ game }) => {
         solutionsWithScores={solutionsWithScores}
         puzzleLetters={puzzleLettersUpper}
       />
+      <NukeButtonDevOnly />
       <ShuffleButton />
       <ResetButton />
       <ScoreDisplay />

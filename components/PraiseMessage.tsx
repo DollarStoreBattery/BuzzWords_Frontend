@@ -1,10 +1,12 @@
 import styled from "@emotion/styled";
-import usePlaySessionStore from "../lib/usePlaySessionStore";
-import { pulse } from "../styles/animations";
+import usePlaySessionStore, {
+  UI_WAITING_TIME,
+} from "../lib/usePlaySessionStore";
+import { horizontalRock } from "../styles/animations";
 import TextElement from "./basic/TextElement";
 
 const PraiseElement = styled(TextElement)({
-  animation: `${pulse} 1100ms ease`,
+  animation: `${horizontalRock} ${UI_WAITING_TIME}ms ease`,
 });
 
 const PraiseMessage = () => {

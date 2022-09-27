@@ -1,15 +1,22 @@
 /** @jsxImportSource @emotion/react */
 import styled from "@emotion/styled";
-import usePlaySessionStore from "../lib/usePlaySessionStore";
+import usePlaySessionStore, {
+  UI_WAITING_TIME,
+} from "../lib/usePlaySessionStore";
 import TextElement from "./basic/TextElement";
 import { colours, spacings } from "../styles/theme";
-import { blink, pulse, shake } from "../styles/animations";
+import { blink, horizontalRock, shake, pulse } from "../styles/animations";
 
 type GuessTextWrapperProps = {
   isShaking: boolean;
+  isPulsing: boolean;
 };
 const GuessTextWrapper = styled("div")<GuessTextWrapperProps>((props) => ({
-  animation: props.isShaking ? `${shake} 600ms ease` : "",
+  animation: props.isShaking
+    ? `${shake} ${UI_WAITING_TIME}ms ease`
+    : props.isPulsing
+    ? `${pulse} ${UI_WAITING_TIME}ms ease`
+    : "",
   display: "flex",
 }));
 
@@ -21,7 +28,7 @@ const GuessText = styled(TextElement)({
   minHeight: "70px",
   margin: spacings.lg,
   maxWidth: "100%",
-  animation: `${pulse} 100ms ease`,
+  animation: `${horizontalRock} 100ms ease`,
 });
 
 const StyledCentralLetter = styled("span")({
@@ -37,7 +44,8 @@ const BlinkingCaretCursor = styled("span")({
 
 const Guess = ({ centralLetter }: { centralLetter: string }) => {
   const currentGuess = usePlaySessionStore((state) => state.currentGuess);
-  const showError = usePlaySessionStore((state) => state.activeError);
+  const activeError = usePlaySessionStore((state) => state.activeError);
+  const activeSuccess = usePlaySessionStore((state) => state.activeSuccess);
   const formattedGuess = currentGuess
     .toUpperCase()
     .split("")
@@ -50,10 +58,9 @@ const Guess = ({ centralLetter }: { centralLetter: string }) => {
       } else return character;
     });
   return (
-    <GuessTextWrapper isShaking={showError}>
+    <GuessTextWrapper isShaking={activeError} isPulsing={activeSuccess}>
       {/* key is vital for rerendering so that the animation can play everytime the guess is changed */}
       <GuessText size="xl" key={currentGuess}>
-        {/* {currentGuess.toUpperCase()} */}
         {formattedGuess}
         <BlinkingCaretCursor></BlinkingCaretCursor>
       </GuessText>

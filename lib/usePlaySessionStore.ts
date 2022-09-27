@@ -2,7 +2,7 @@ import create from "zustand";
 import { ScoreRankings } from "./gameTypes";
 import shuffle from "lodash.shuffle";
 
-const UI_WAITING_TIME = 1100; // in milliseconds
+export const UI_WAITING_TIME = 1100; // in milliseconds
 const GUESS_LENGTH_LIMIT = 20; // number of characters before you get yelled at
 
 export enum BadGuessReasons {
@@ -32,6 +32,7 @@ interface PlaySessionState {
   shuffleBoundaryLetters: () => void;
   clearError: () => void;
   clearSuccess: () => void;
+  nukeWordsDevOnly: () => void;
 }
 
 const usePlaySessionStore = create<PlaySessionState>()((set, get) => ({
@@ -42,6 +43,7 @@ const usePlaySessionStore = create<PlaySessionState>()((set, get) => ({
   ranking: "BEGINNER",
   currentGuess: "",
   boundaryLetters: [],
+  nukeWordsDevOnly: () => set({ wordsFound: [] }),
   setBadGuessReason: (reason) => {
     set(() => ({ badGuessReason: reason }));
     set(() => ({ activeError: true }));
