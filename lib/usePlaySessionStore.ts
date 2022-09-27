@@ -18,6 +18,7 @@ interface PlaySessionState {
   //   the exact sorted version of how the letters get rendered into the honeycomb grid
   boundaryLetters: Array<string>;
   setBoundaryLetters: (letters: Array<string>) => void;
+  setBadGuessReason: (reason: BadGuessReasons) => void;
   addToGuess: (newLetter: string) => void;
   clearGuess: () => void;
   submitGuess: (guessScore: number) => void;
@@ -34,6 +35,10 @@ const usePlaySessionStore = create<PlaySessionState>()((set, get) => ({
   ranking: "BEGINNER",
   currentGuess: "",
   boundaryLetters: [],
+  setBadGuessReason: (reason) => {
+    set(() => ({ badGuessReason: reason }));
+    console.log(reason);
+  },
   setBoundaryLetters: (letters) => {
     set(() => ({
       boundaryLetters: letters.map((letter) => letter.toUpperCase()),
@@ -41,7 +46,6 @@ const usePlaySessionStore = create<PlaySessionState>()((set, get) => ({
   },
   addToGuess: (newLetter) => {
     if (get().currentGuess.length > GUESS_LENGTH_LIMIT) {
-      console.error(BadGuessReasons.TOO_LONG);
       set(() => ({ currentGuess: "" }));
       set(() => ({ badGuessReason: BadGuessReasons.TOO_LONG }));
     }
@@ -70,10 +74,6 @@ const usePlaySessionStore = create<PlaySessionState>()((set, get) => ({
   },
 }));
 
-interface BearState {
-  bears: number;
-  addLetter: (aby: string) => void;
-}
 export default usePlaySessionStore;
 
 //   rankingScheme: {

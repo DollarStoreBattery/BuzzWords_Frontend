@@ -13,6 +13,7 @@ import FoundWordsList from "../components/FoundWordsList";
 import BackSpaceButton from "../components/BackSpaceButton";
 import ShuffleButton from "../components/ShuffleButton";
 import ScoreDisplay from "../components/ScoreDisplay";
+import ErrorMessage from "../components/ErrorMessage";
 interface DailyPuzzleProps {
   game: Puzzle;
 }
@@ -33,6 +34,7 @@ const MainPage: NextPage<DailyPuzzleProps> = ({ game }) => {
       </Head>
       <TextElement>Welcome to the Spelling Bee Game 🐝</TextElement>
       <Guess />
+      <ErrorMessage />
       <GameGrid
         centralLetter={centralLetterUpper}
         boundaryLetters={puzzleLettersUpper.filter(

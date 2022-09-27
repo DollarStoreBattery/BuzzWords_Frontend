@@ -11,8 +11,8 @@ const TextElement = styled("p")<TextProps>(
   {
     display: "flex",
     textAlign: "center",
-    paddingLeft: paddings.sm,
-    paddingRight: paddings.sm,
+    padding: paddings.sm,
+    margin: paddings.sm,
   },
   (props) => ({
     fontSize: props.size ? fontSizes[props.size] : fontSizes.md,

@@ -3,6 +3,7 @@ import styled from "@emotion/styled";
 import { keyframes } from "@emotion/react";
 import usePlaySessionStore from "../lib/usePlaySessionStore";
 import TextElement from "./basic/TextElement";
+import { colours } from "../styles/theme";
 
 const pulse = keyframes`
 0% {transform: translateX(3%);}
@@ -10,11 +11,12 @@ const pulse = keyframes`
 `;
 
 const GuessText = styled(TextElement)({
+  // 1A corresponds to 10% transparency
+  backgroundColor: `${colours["Kobe"]}1A`,
+  // todo: add media queries for font size and minheight
   fontSize: "4rem",
-  // todo: add media queries for font size
-  transition: ".1s linear",
-  height: "auto",
-  minHeight: "50px",
+  minHeight: "70px",
+
   maxWidth: "100%",
   animation: `${pulse} 100ms ease`,
 });
@@ -22,6 +24,7 @@ const GuessText = styled(TextElement)({
 const Guess = () => {
   const currentGuess = usePlaySessionStore((state) => state.currentGuess);
   return (
+    // key is vital for rerendering so that the animation can play
     <GuessText size="xl" key={currentGuess}>
       {currentGuess.toUpperCase()}
     </GuessText>

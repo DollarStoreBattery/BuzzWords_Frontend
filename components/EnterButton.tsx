@@ -28,9 +28,7 @@ export const handleGuessSubmit = (
     badGuess = BadGuessReasons.NOT_IN_WORD_LIST;
   }
   if (badGuess) {
-    // todo: remove this and come up with an actual error message
-    console.error(badGuess);
-    usePlaySessionStore.setState({ badGuessReason: badGuess });
+    usePlaySessionStore.getState().setBadGuessReason(badGuess);
   } else {
     usePlaySessionStore.getState().submitGuess(solutionsWithScores[guess]);
   }
