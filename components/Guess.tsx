@@ -1,37 +1,16 @@
 /** @jsxImportSource @emotion/react */
 import styled from "@emotion/styled";
-import { keyframes } from "@emotion/react";
 import usePlaySessionStore from "../lib/usePlaySessionStore";
 import TextElement from "./basic/TextElement";
 import { colours, spacings } from "../styles/theme";
+import { blink, pulse, shake } from "../styles/animations";
 
-const pulse = keyframes`
-0% {transform: translateX(3%);}
-100% {transform:translateX(0%) }
-`;
-
-const shake = keyframes`
-10%, 90% {
-  transform: translate3d(-1px, 0, 0);
-}
-
-20%, 80% {
-  transform: translate3d(2px, 0, 0);
-}
-
-30%, 50%, 70% {
-  transform: translate3d(-4px, 0, 0);
-}
-
-40%, 60% {
-  transform: translate3d(4px, 0, 0);
-}
-`;
 type GuessTextWrapperProps = {
   isShaking: boolean;
 };
 const GuessTextWrapper = styled("div")<GuessTextWrapperProps>((props) => ({
   animation: props.isShaking ? `${shake} 600ms ease` : "",
+  display: "flex",
 }));
 
 const GuessText = styled(TextElement)({
@@ -45,15 +24,23 @@ const GuessText = styled(TextElement)({
   animation: `${pulse} 100ms ease`,
 });
 
+const BlinkingCaretCursor = styled("span")({
+  borderRight: `3px solid ${colours["Rust"]}`,
+  height: "50px",
+  marginLeft: "2px",
+  animation: `${blink} 1s cubic-bezier(0.22, 0.61, 0.36, 1) infinite`,
+});
+
 const Guess = () => {
   const currentGuess = usePlaySessionStore((state) => state.currentGuess);
   const showError = usePlaySessionStore((state) => state.activeError);
 
   return (
     <GuessTextWrapper isShaking={showError}>
-      {/* key is vital for rerendering so that the animation can play */}
+      {/* key is vital for rerendering so that the animation can play everytime the guess is changed */}
       <GuessText size="xl" key={currentGuess}>
         {currentGuess.toUpperCase()}
+        <BlinkingCaretCursor></BlinkingCaretCursor>
       </GuessText>
     </GuessTextWrapper>
   );
