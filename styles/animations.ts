@@ -56,3 +56,18 @@ export const fadeIn = keyframes`
   opacity: 1;
 }
 `;
+
+export const fadeInOutSlide = keyframes`
+0% {
+  opacity: 0;
+  transform: scale(1.1);
+}
+10%, 70% {
+  opacity: 1;
+}
+100% {
+  opacity: 0;
+  transform: scale(1)
+
+}
+`;

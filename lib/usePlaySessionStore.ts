@@ -2,15 +2,15 @@ import create from "zustand";
 import { ScoreRankings } from "./gameTypes";
 import shuffle from "lodash.shuffle";
 
-export const UI_WAITING_TIME = 1000; // in milliseconds
+export const UI_WAITING_TIME = 1100; // in milliseconds
 const GUESS_LENGTH_LIMIT = 20; // number of characters before you get yelled at
 
 export enum BadGuessReasons {
-  TOO_LONG = "Too long.",
-  TOO_SHORT = "Too short.",
-  MISSING_CENTRE = "Missing centre letter.",
-  ALREADY_FOUND = "Already found.",
-  NOT_IN_WORD_LIST = "Not in word list.",
+  TOO_LONG = "Too long",
+  TOO_SHORT = "Too short",
+  MISSING_CENTRE = "Missing centre letter",
+  ALREADY_FOUND = "Already found",
+  NOT_IN_WORD_LIST = "Not in word list",
 }
 
 interface PlaySessionState {
