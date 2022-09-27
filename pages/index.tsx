@@ -34,7 +34,7 @@ const MainPage: NextPage<DailyPuzzleProps> = ({ game }) => {
       </Head>
       <TextElement>Welcome to the Spelling Bee Game 🐝</TextElement>
       <ErrorMessage />
-      <Guess />
+      <Guess centralLetter={centralLetterUpper} />
       <GameGrid
         centralLetter={centralLetterUpper}
         boundaryLetters={puzzleLettersUpper.filter(

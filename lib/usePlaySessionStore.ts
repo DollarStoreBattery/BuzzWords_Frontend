@@ -56,8 +56,7 @@ const usePlaySessionStore = create<PlaySessionState>()((set, get) => ({
   },
   addToGuess: (newLetter) => {
     if (get().currentGuess.length > GUESS_LENGTH_LIMIT) {
-      set(() => ({ currentGuess: "" }));
-      set(() => ({ badGuessReason: BadGuessReasons.TOO_LONG }));
+      get().setBadGuessReason(BadGuessReasons.TOO_LONG);
     }
     set((state) => ({ currentGuess: state.currentGuess + newLetter }));
   },

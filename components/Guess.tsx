@@ -24,6 +24,10 @@ const GuessText = styled(TextElement)({
   animation: `${pulse} 100ms ease`,
 });
 
+const StyledCentralLetter = styled("span")({
+  color: colours["Kobe"],
+});
+
 const BlinkingCaretCursor = styled("span")({
   borderRight: `3px solid ${colours["Rust"]}`,
   height: "50px",
@@ -31,15 +35,26 @@ const BlinkingCaretCursor = styled("span")({
   animation: `${blink} 1s cubic-bezier(0.22, 0.61, 0.36, 1) infinite`,
 });
 
-const Guess = () => {
+const Guess = ({ centralLetter }: { centralLetter: string }) => {
   const currentGuess = usePlaySessionStore((state) => state.currentGuess);
   const showError = usePlaySessionStore((state) => state.activeError);
-
+  const formattedGuess = currentGuess
+    .toUpperCase()
+    .split("")
+    .map((character, index) => {
+      const keyVal = `guess_${character}_${index}`;
+      if (character === centralLetter) {
+        return (
+          <StyledCentralLetter key={keyVal}>{character}</StyledCentralLetter>
+        );
+      } else return character;
+    });
   return (
     <GuessTextWrapper isShaking={showError}>
       {/* key is vital for rerendering so that the animation can play everytime the guess is changed */}
       <GuessText size="xl" key={currentGuess}>
-        {currentGuess.toUpperCase()}
+        {/* {currentGuess.toUpperCase()} */}
+        {formattedGuess}
         <BlinkingCaretCursor></BlinkingCaretCursor>
       </GuessText>
     </GuessTextWrapper>
