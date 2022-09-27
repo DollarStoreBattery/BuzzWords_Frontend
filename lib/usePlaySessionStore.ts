@@ -3,6 +3,7 @@ import { ScoreRankings } from "./gameTypes";
 import shuffle from "lodash.shuffle";
 
 const UI_WAITING_TIME = 1100; // in milliseconds
+const GUESS_LENGTH_LIMIT = 20; // number of characters before you get yelled at
 
 export enum BadGuessReasons {
   TOO_LONG = "Too long.",
@@ -19,6 +20,9 @@ interface PlaySessionState {
   currentGuess: string;
   //   the exact sorted version of how the letters get rendered into the honeycomb grid
   boundaryLetters: Array<string>;
+  badGuessReason?: BadGuessReasons;
+  activeError: boolean;
+  activeSuccess: boolean;
   setBoundaryLetters: (letters: Array<string>) => void;
   setBadGuessReason: (reason: BadGuessReasons) => void;
   addToGuess: (newLetter: string) => void;
@@ -26,15 +30,13 @@ interface PlaySessionState {
   submitGuess: (guessScore: number) => void;
   backspaceGuess: () => void;
   shuffleBoundaryLetters: () => void;
-  badGuessReason?: BadGuessReasons;
-  activeError: boolean;
   clearError: () => void;
+  clearSuccess: () => void;
 }
-
-const GUESS_LENGTH_LIMIT = 20;
 
 const usePlaySessionStore = create<PlaySessionState>()((set, get) => ({
   activeError: false,
+  activeSuccess: false,
   wordsFound: [],
   score: 0,
   ranking: "BEGINNER",
@@ -48,6 +50,9 @@ const usePlaySessionStore = create<PlaySessionState>()((set, get) => ({
   },
   clearError: () => {
     set(() => ({ activeError: false }));
+  },
+  clearSuccess: () => {
+    set(() => ({ activeSuccess: false }));
   },
   setBoundaryLetters: (letters) => {
     set(() => ({
@@ -77,9 +82,11 @@ const usePlaySessionStore = create<PlaySessionState>()((set, get) => ({
   },
   submitGuess: (guessScore) => {
     set((state) => ({
+      activeSuccess: true,
       wordsFound: [...state.wordsFound, get().currentGuess],
       score: state.score + guessScore,
     }));
+    setTimeout(get().clearSuccess, UI_WAITING_TIME);
     setTimeout(get().clearGuess, UI_WAITING_TIME);
   },
 }));

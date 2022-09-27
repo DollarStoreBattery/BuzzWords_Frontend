@@ -49,11 +49,17 @@ const EnterButton = ({
   const addtoGuess = usePlaySessionStore((state) => state.addToGuess);
   const backspaceGuess = usePlaySessionStore((state) => state.backspaceGuess);
   const badGuessActive = usePlaySessionStore((state) => state.activeError);
+  const successActive = usePlaySessionStore((state) => state.activeSuccess);
 
   const keyboardInputHandler = (event: KeyboardEvent): void => {
     const key = event.key;
-    // while an error is showing dissallow inputs
-    if (!badGuessActive && puzzleLetters.includes(key.toUpperCase())) {
+    // while an error or success is showing dissallow inputs
+    if (
+      !badGuessActive &&
+      !successActive &&
+      puzzleLetters.includes(key.toUpperCase())
+    ) {
+      console.log("success active?: ", successActive);
       addtoGuess(key.toUpperCase());
     } else if (key == "Enter") {
       handleGuessSubmit(centralLetter, solutionsWithScores);
@@ -67,7 +73,7 @@ const EnterButton = ({
     return () => {
       window.removeEventListener("keydown", keyboardInputHandler);
     };
-  }, [badGuessActive]);
+  }, [badGuessActive, successActive]);
 
   return (
     <button

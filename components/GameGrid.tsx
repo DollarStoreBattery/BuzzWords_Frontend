@@ -70,6 +70,8 @@ const GameGrid = ({ centralLetter, boundaryLetters }: GameGridProps) => {
   const setStatefulBoundaryLetters = usePlaySessionStore(
     (state) => state.setBoundaryLetters
   );
+  const error = usePlaySessionStore((state) => state.activeError);
+  const success = usePlaySessionStore((state) => state.activeSuccess);
 
   useEffect(() => {
     setStatefulBoundaryLetters(boundaryLetters);
@@ -83,7 +85,9 @@ const GameGrid = ({ centralLetter, boundaryLetters }: GameGridProps) => {
         yOffset={translations[index][1]}
         onClick={(e) => {
           e.preventDefault();
-          addtoGuess(letter);
+          if (!error && !success) {
+            addtoGuess(letter);
+          }
         }}
       >
         <TextElement size="lg">{letter}</TextElement>
