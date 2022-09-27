@@ -1,4 +1,4 @@
-import { colours, fontSizes, paddings } from "../../styles/theme";
+import { colours, fontSizes, spacings } from "../../styles/theme";
 import { ColourNames, FontSizes } from "../../styles/types";
 import styled from "@emotion/styled";
 
@@ -11,8 +11,8 @@ const TextElement = styled("p")<TextProps>(
   {
     display: "flex",
     textAlign: "center",
-    padding: paddings.sm,
-    margin: paddings.sm,
+    padding: spacings.sm,
+    margin: spacings.sm,
   },
   (props) => ({
     fontSize: props.size ? fontSizes[props.size] : fontSizes.md,

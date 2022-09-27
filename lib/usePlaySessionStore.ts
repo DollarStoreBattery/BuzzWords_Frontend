@@ -2,6 +2,8 @@ import create from "zustand";
 import { ScoreRankings } from "./gameTypes";
 import shuffle from "lodash.shuffle";
 
+const UI_WAITING_TIME = 1100; // in milliseconds
+
 export enum BadGuessReasons {
   TOO_LONG = "Too long.",
   TOO_SHORT = "Too short.",
@@ -25,11 +27,14 @@ interface PlaySessionState {
   backspaceGuess: () => void;
   shuffleBoundaryLetters: () => void;
   badGuessReason?: BadGuessReasons;
+  showError: boolean;
+  clearError: () => void;
 }
 
 const GUESS_LENGTH_LIMIT = 20;
 
 const usePlaySessionStore = create<PlaySessionState>()((set, get) => ({
+  showError: false,
   wordsFound: [],
   score: 0,
   ranking: "BEGINNER",
@@ -37,7 +42,12 @@ const usePlaySessionStore = create<PlaySessionState>()((set, get) => ({
   boundaryLetters: [],
   setBadGuessReason: (reason) => {
     set(() => ({ badGuessReason: reason }));
-    console.log(reason);
+    set(() => ({ showError: true }));
+    setTimeout(get().clearGuess, UI_WAITING_TIME);
+    setTimeout(get().clearError, UI_WAITING_TIME);
+  },
+  clearError: () => {
+    set(() => ({ showError: false }));
   },
   setBoundaryLetters: (letters) => {
     set(() => ({
@@ -71,6 +81,7 @@ const usePlaySessionStore = create<PlaySessionState>()((set, get) => ({
       wordsFound: [...state.wordsFound, get().currentGuess],
       score: state.score + guessScore,
     }));
+    setTimeout(get().clearGuess, UI_WAITING_TIME);
   },
 }));
 

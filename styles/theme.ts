@@ -9,7 +9,7 @@ export const colours: { [key in ColourNames]: string } = {
   "Dark Sienna": "#2b0e02",
 };
 
-export const paddings: { [key in PaddingSizes]: string } = {
+export const spacings: { [key in PaddingSizes]: string } = {
   sm: "1rem",
   md: "1.5rem",
   lg: "2rem",

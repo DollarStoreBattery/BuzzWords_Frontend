@@ -32,7 +32,6 @@ export const handleGuessSubmit = (
   } else {
     usePlaySessionStore.getState().submitGuess(solutionsWithScores[guess]);
   }
-  usePlaySessionStore.getState().clearGuess();
 };
 
 type EnterButtonProps = {

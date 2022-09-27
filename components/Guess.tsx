@@ -3,7 +3,7 @@ import styled from "@emotion/styled";
 import { keyframes } from "@emotion/react";
 import usePlaySessionStore from "../lib/usePlaySessionStore";
 import TextElement from "./basic/TextElement";
-import { colours } from "../styles/theme";
+import { colours, spacings } from "../styles/theme";
 
 const pulse = keyframes`
 0% {transform: translateX(3%);}
@@ -16,7 +16,7 @@ const GuessText = styled(TextElement)({
   // todo: add media queries for font size and minheight
   fontSize: "4rem",
   minHeight: "70px",
-
+  margin: spacings.lg,
   maxWidth: "100%",
   animation: `${pulse} 100ms ease`,
 });

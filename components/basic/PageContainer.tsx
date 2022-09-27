@@ -3,7 +3,6 @@ import { colours, fontSizes } from "../../styles/theme";
 import styled from "@emotion/styled";
 
 const PageContainer = styled.div({
-  // overflowY: "scroll",
   display: "flex",
   flex: "1",
   flexDirection: "column",
