@@ -31,6 +31,8 @@ const getPraiseMessage = (score: number, isPangram: boolean) => {
   let scoreString = `+${score}`;
   if (isPangram) {
     praise = `Pangram!`;
+  } else if (score >= 7) {
+    praise = `Awesome!`;
   } else if (score > 1) {
     praise = `Nice!`;
   } else praise = `Good!`;
