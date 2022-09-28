@@ -34,7 +34,10 @@ const MainPage: NextPage<DailyPuzzleProps> = ({ game }) => {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <TextElement>Welcome to the Spelling Bee Game 🐝</TextElement>
-      <FeedbackMessage />
+      <FeedbackMessage
+        pangrams={pangrams}
+        scoringScheme={solutionsWithScores}
+      />
       <Guess centralLetter={centralLetterUpper} />
       <GameGrid
         centralLetter={centralLetterUpper}

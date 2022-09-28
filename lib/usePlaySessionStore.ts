@@ -23,6 +23,7 @@ interface PlaySessionState {
   badGuessReason?: BadGuessReasons;
   activeError: boolean;
   activeSuccess: boolean;
+  lastGuessedWord: string;
   setBoundaryLetters: (letters: Array<string>) => void;
   setBadGuessReason: (reason: BadGuessReasons) => void;
   addToGuess: (newLetter: string) => void;
@@ -43,6 +44,7 @@ const usePlaySessionStore = create<PlaySessionState>()((set, get) => ({
   ranking: "BEGINNER",
   currentGuess: "",
   boundaryLetters: [],
+  lastGuessedWord: "",
   nukeWordsDevOnly: () => set({ wordsFound: [] }),
   setBadGuessReason: (reason) => {
     set(() => ({ badGuessReason: reason }));
@@ -87,6 +89,7 @@ const usePlaySessionStore = create<PlaySessionState>()((set, get) => ({
       activeSuccess: true,
       wordsFound: [...state.wordsFound, get().currentGuess],
       score: state.score + guessScore,
+      lastGuessedWord: get().currentGuess,
     }));
     setTimeout(get().clearSuccess, UI_WAITING_TIME);
     setTimeout(get().clearGuess, UI_WAITING_TIME);

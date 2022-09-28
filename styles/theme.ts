@@ -16,7 +16,7 @@ export const spacings: { [key in PaddingSizes]: string } = {
 };
 
 export const fontSizes: { [key in FontSizes]: string } = {
-  sm: "1.6em",
+  sm: "1.6rem",
   md: "2.2rem",
   lg: "3rem",
   xl: "4rem",
