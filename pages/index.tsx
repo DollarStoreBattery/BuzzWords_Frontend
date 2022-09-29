@@ -15,6 +15,7 @@ import ShuffleButton from "../components/ShuffleButton";
 import ScoreDisplay from "../components/ScoreDisplay";
 import NukeButtonDevOnly from "../components/NukeButtonDevOnly";
 import FeedbackMessage from "../components/FeedbackMessage";
+import ProgressBar from "../components/ProgressBar";
 interface DailyPuzzleProps {
   game: Puzzle;
 }
@@ -34,6 +35,8 @@ const MainPage: NextPage<DailyPuzzleProps> = ({ game }) => {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <TextElement>Welcome to the Spelling Bee Game 🐝</TextElement>
+      <ProgressBar />
+
       <FeedbackMessage
         pangrams={pangrams}
         scoringScheme={solutionsWithScores}
