@@ -1,5 +1,7 @@
 import styled from "@emotion/styled";
 import { emojis } from "../lib/dummy";
+import { RankingScheme, ScoreRankings } from "../lib/gameTypes";
+import usePlaySessionStore from "../lib/usePlaySessionStore";
 
 const progressHeight = 4;
 
@@ -10,7 +12,8 @@ const ProgressContainer = styled("div")({
   height: progressHeight,
   borderRadius: "5px",
   display: "grid",
-  gridTemplateColumns: "repeat(9, auto)",
+  gridTemplateColumns: "repeat(8, auto)",
+  // gridTemplateColumns: "repeat(12.5%,8)",
   justifyContent: "space-between",
 });
 
@@ -32,58 +35,90 @@ const verticalEmojiAdjustment = "-70%";
 const horizontalEmojiAdjustment = "15px";
 
 const Bubble = styled("div")({
+  height: 20,
+  pointerEvents: "none",
   filter: "grayscale(80%)",
   // opacity: 0.5,
   fontSize: "clamp(10px,4.5vw,25px)",
   // the progress filler consumes the whole row, making the bubbles spill over into a new row
   // need to move them back upwards so they can overlap
-  transform: `translateY(${verticalEmojiAdjustment})`,
+  // transform: `translateY(${verticalEmojiAdjustment})`,
 });
 
 // emojis dont fill the space so the boundary emojis leave an ugly gap
 // first bubble shifts left, last bubble shifts right
 const FirstBubble = styled(Bubble)({
-  transform: `translate(-${horizontalEmojiAdjustment},${verticalEmojiAdjustment})`,
+  // transform: `translate(-${horizontalEmojiAdjustment},${verticalEmojiAdjustment})`,
 });
 
 const LastBubble = styled(Bubble)({
-  transform: `translate(${horizontalEmojiAdjustment},${verticalEmojiAdjustment})`,
+  // transform: `translate(${horizontalEmojiAdjustment},${verticalEmojiAdjustment})`,
 });
 
-// Beginner: 0,
-// "Good Start": 0.02,
-// "Moving Up": 0.05,
-// Good: 0.08,
-// Solid: 0.15,
-// Nice: 0.25,
-// Great: 0.4,
-// Amazing: 0.5,
-// Genius: 0.7,
-// "Queen Bee": 1,
+const getRankingBounds = (
+  currentScore: number,
+  rankingScheme: RankingScheme
+): {
+  percent: number;
+  currentRank: `${ScoreRankings}`;
+  nextRank: `${ScoreRankings}`;
+} => {
+  const NUM_SEGMENTS = 8;
 
-const rankNames = [
-  "Beginner",
-  "Good Start",
-  "Moving Up",
-  "Good",
-  "Solid",
-  "Nice",
-  "Great",
-  "Amazing",
-  "Genius",
-];
+  const scoreThresholds = Object.values(rankingScheme);
 
-const ProgressBar = ({}: {}) => {
+  const nextRankIndex = scoreThresholds.findIndex(
+    (score) => score >= currentScore
+  );
+  const relativeUpperBound = scoreThresholds[nextRankIndex];
+
+  let relativeLowerBound: number;
+  let activeRankIndex: number;
+
+  if (nextRankIndex === 0) {
+    relativeLowerBound = 0;
+    activeRankIndex = 0;
+  } else {
+    relativeLowerBound = scoreThresholds[nextRankIndex - 1];
+    activeRankIndex = nextRankIndex - 1;
+  }
+
+  let segmentPercent: number;
+
+  if (relativeUpperBound === 0) {
+    segmentPercent = 0;
+  } else {
+    segmentPercent =
+      (currentScore - relativeLowerBound) /
+      (relativeUpperBound - relativeLowerBound);
+  }
+
+  const scaledSegmentPercent = segmentPercent * (100 / NUM_SEGMENTS);
+  const scaledFullPercent =
+    activeRankIndex * (100 / NUM_SEGMENTS) + scaledSegmentPercent;
+
+  return {
+    percent: scaledFullPercent,
+    currentRank: "Beginner",
+    nextRank: "Amazing",
+  };
+};
+
+const ProgressBar = ({ rankingScheme }: { rankingScheme: RankingScheme }) => {
+  const score = usePlaySessionStore((state) => state.score);
+
+  const { percent } = getRankingBounds(score, rankingScheme);
+  console.log(percent);
   const emojiElements = emojis.map((emoji, index) => {
     if (index === 0) {
-      return <FirstBubble key={emoji}>{emoji}</FirstBubble>;
+      return <FirstBubble key={emoji}>{"|"}</FirstBubble>;
     } else if (index === emojis.length - 1) {
-      return <LastBubble key={emoji}>{emoji}</LastBubble>;
-    } else return <Bubble key={emoji}>{emoji}</Bubble>;
+      return <LastBubble key={emoji}>{"|"}</LastBubble>;
+    } else return <Bubble key={emoji}>{"|"}</Bubble>;
   });
   return (
     <ProgressContainer>
-      <ProgressFiller percentage={2.22} />
+      <ProgressFiller percentage={percent} />
       {emojiElements}
     </ProgressContainer>
   );

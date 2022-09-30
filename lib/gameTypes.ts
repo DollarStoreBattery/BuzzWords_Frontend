@@ -13,6 +13,7 @@ export enum ScoreRankings {
 
 export type Pangrams = Array<string>;
 export type SolutionAndScore = { [key: string]: number };
+export type RankingScheme = { [key in ScoreRankings]: number };
 
 export default interface PuzzleInput {
   puzzleLetters: Array<string>;
@@ -21,7 +22,7 @@ export default interface PuzzleInput {
 
 export interface BasePuzzle extends PuzzleInput {
   date: string;
-  rankingScheme: { [key in ScoreRankings]: number };
+  rankingScheme: RankingScheme;
   pangrams: Pangrams;
   solutionsWithScores: SolutionAndScore;
 }

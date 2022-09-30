@@ -34,6 +34,7 @@ interface PlaySessionState {
   clearError: () => void;
   clearSuccess: () => void;
   nukeWordsDevOnly: () => void;
+  setScoreDevOnly: (score: number) => void;
 }
 
 const usePlaySessionStore = create<PlaySessionState>()((set, get) => ({
@@ -45,7 +46,10 @@ const usePlaySessionStore = create<PlaySessionState>()((set, get) => ({
   currentGuess: "",
   boundaryLetters: [],
   lastGuessedWord: "",
-  nukeWordsDevOnly: () => set({ wordsFound: [] }),
+  setScoreDevOnly: (score) => {
+    set(() => ({ score: score }));
+  },
+  nukeWordsDevOnly: () => set({ wordsFound: [], score: 0 }),
   setBadGuessReason: (reason) => {
     set(() => ({ badGuessReason: reason }));
     set(() => ({ activeError: true }));

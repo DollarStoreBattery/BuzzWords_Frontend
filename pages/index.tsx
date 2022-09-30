@@ -16,12 +16,19 @@ import ScoreDisplay from "../components/ScoreDisplay";
 import NukeButtonDevOnly from "../components/NukeButtonDevOnly";
 import FeedbackMessage from "../components/FeedbackMessage";
 import ProgressBar from "../components/ProgressBar";
+import ScoreButtonDevOnly from "../components/ScoreButtonDevOnly";
 interface DailyPuzzleProps {
   game: Puzzle;
 }
 
 const MainPage: NextPage<DailyPuzzleProps> = ({ game }) => {
-  const { pangrams, puzzleLetters, solutionsWithScores, centralLetter } = game;
+  const {
+    pangrams,
+    puzzleLetters,
+    solutionsWithScores,
+    centralLetter,
+    rankingScheme,
+  } = game;
 
   const centralLetterUpper = centralLetter.toUpperCase();
   const puzzleLettersUpper = puzzleLetters.map((letter) =>
@@ -35,7 +42,7 @@ const MainPage: NextPage<DailyPuzzleProps> = ({ game }) => {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <TextElement>Welcome to the Spelling Bee Game 🐝</TextElement>
-      <ProgressBar />
+      <ProgressBar rankingScheme={rankingScheme} />
 
       <FeedbackMessage
         pangrams={pangrams}
@@ -55,6 +62,7 @@ const MainPage: NextPage<DailyPuzzleProps> = ({ game }) => {
         puzzleLetters={puzzleLettersUpper}
       />
       <NukeButtonDevOnly />
+      <ScoreButtonDevOnly />
       <ShuffleButton />
       <ResetButton />
       <ScoreDisplay />
