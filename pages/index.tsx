@@ -48,7 +48,6 @@ const MainPage: NextPage<DailyPuzzleProps> = ({ game }) => {
           (letter) => letter != centralLetterUpper
         )}
       ></GameGrid>
-      <TextElement textColour="Rust">{pangrams[0]}</TextElement>
       <BackSpaceButton />
       <EnterButton
         centralLetter={centralLetterUpper}

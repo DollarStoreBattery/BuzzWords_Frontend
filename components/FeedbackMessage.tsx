@@ -14,7 +14,6 @@ const ErrorMessageContainer = styled(Message)({
 
 const PraiseMessageContainer = styled(Message)({
   width: "auto",
-  // padding: "0 3rem",
   backgroundColor: "White",
   color: colours["Dark Sienna"],
   display: "flex",
@@ -58,6 +57,7 @@ const FeedbackMessage = ({
   scoringScheme: SolutionAndScore;
 }) => {
   const showPraise = usePlaySessionStore((state) => state.activeSuccess);
+  // const showPraise = true;
 
   const showError = usePlaySessionStore((state) => state.activeError);
   const mostRecentWord = usePlaySessionStore((state) => state.lastGuessedWord);

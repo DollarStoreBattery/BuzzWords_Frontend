@@ -1,6 +1,8 @@
 import { Puzzle } from "./gameTypes";
 
-const emojis = ["😴", "😐", "🙂", "😃", "😚", "😎", "🤩", "🔥", "🧠", "🐝"];
+export const emojis = ["😴", "😐", "🙂", "😃", "😚", "😎", "🤩", "🔥", "🧠"];
+
+const queenBeeEmoji = "🐝";
 
 export const dummyPuzzle: Puzzle = {
   gameId: "8754b810-3d36-41b5-9f1a-e54ebc4c3793",
