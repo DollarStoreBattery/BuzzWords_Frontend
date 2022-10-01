@@ -41,7 +41,7 @@ const MainPage: NextPage<DailyPuzzleProps> = ({ game }) => {
         <meta name="description" content="Spelling Bee Game" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <TextElement>Welcome to the Spelling Bee Game 🐝</TextElement>
+      <h2>Word Bee Game</h2>
       <ProgressBar rankingScheme={rankingScheme} />
 
       <FeedbackMessage

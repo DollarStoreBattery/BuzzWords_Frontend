@@ -6,14 +6,13 @@ import usePlaySessionStore from "../lib/usePlaySessionStore";
 const progressHeight = 4;
 
 const ProgressContainer = styled("div")({
-  marginBlock: "20px",
+  marginBlock: "35px 20px",
   backgroundColor: "darkgrey",
   width: "90%",
   height: progressHeight,
   borderRadius: "5px",
   display: "grid",
-  gridTemplateColumns: "repeat(8, auto)",
-  // gridTemplateColumns: "repeat(12.5%,8)",
+  gridTemplateColumns: "repeat(9, auto)",
   justifyContent: "space-between",
 });
 
@@ -22,7 +21,6 @@ const ProgressFiller = styled("div")<{ percentage: number }>(
     height: progressHeight,
     backgroundColor: "#4f8da3",
     borderRadius: "5px 0 0 5px",
-    width: "80%",
     transition: `width 500ms ease-in-out`,
     gridColumnStart: "span 9",
   },
@@ -35,9 +33,17 @@ const verticalEmojiAdjustment = "-70%";
 const horizontalEmojiAdjustment = "15px";
 
 const Bubble = styled("div")({
-  height: 20,
+  display: "flex",
+  flexDirection: "column",
+  alignItems: "center",
+  justifyContent: "center",
+  top: "-50%",
+  position: "relative",
+  width: 2,
+  transform: "translateY(-50%)",
+
   pointerEvents: "none",
-  filter: "grayscale(80%)",
+  filter: "grayscale(70%)",
   // opacity: 0.5,
   fontSize: "clamp(10px,4.5vw,25px)",
   // the progress filler consumes the whole row, making the bubbles spill over into a new row
@@ -45,31 +51,45 @@ const Bubble = styled("div")({
   // transform: `translateY(${verticalEmojiAdjustment})`,
 });
 
-// emojis dont fill the space so the boundary emojis leave an ugly gap
-// first bubble shifts left, last bubble shifts right
-const FirstBubble = styled(Bubble)({
-  // transform: `translate(-${horizontalEmojiAdjustment},${verticalEmojiAdjustment})`,
-});
-
-const LastBubble = styled(Bubble)({
-  // transform: `translate(${horizontalEmojiAdjustment},${verticalEmojiAdjustment})`,
+const Demarkation = styled("div")({
+  backgroundColor: "black",
+  opacity: 0.3,
+  height: 12,
+  width: 2,
 });
 
 const getRankingBounds = (
   currentScore: number,
   rankingScheme: RankingScheme
 ): {
+  pointsToNextRank: number | null;
   percent: number;
   currentRank: `${ScoreRankings}`;
-  nextRank: `${ScoreRankings}`;
+  nextRank: `${ScoreRankings}` | null;
 } => {
   const NUM_SEGMENTS = 8;
 
-  const scoreThresholds = Object.values(rankingScheme);
+  let scoreThresholds = Object.values(rankingScheme);
+  let rankTitles = Object.keys(rankingScheme) as Array<`${ScoreRankings}`>;
+
+  // queen bee doesn't get considered as a visible rank
+  scoreThresholds.pop();
+  rankTitles.pop();
+
+  // if we're at the highest possible rank
+  if (currentScore > scoreThresholds[scoreThresholds.length - 1]) {
+    return {
+      pointsToNextRank: null,
+      percent: 100,
+      currentRank: rankTitles[rankTitles.length - 1],
+      nextRank: null,
+    };
+  }
 
   const nextRankIndex = scoreThresholds.findIndex(
-    (score) => score >= currentScore
+    (score) => score > currentScore
   );
+
   const relativeUpperBound = scoreThresholds[nextRankIndex];
 
   let relativeLowerBound: number;
@@ -98,29 +118,36 @@ const getRankingBounds = (
     activeRankIndex * (100 / NUM_SEGMENTS) + scaledSegmentPercent;
 
   return {
+    pointsToNextRank: scoreThresholds[nextRankIndex] - currentScore,
     percent: scaledFullPercent,
-    currentRank: "Beginner",
-    nextRank: "Amazing",
+    currentRank: rankTitles[activeRankIndex],
+    nextRank: rankTitles[nextRankIndex],
   };
 };
 
 const ProgressBar = ({ rankingScheme }: { rankingScheme: RankingScheme }) => {
   const score = usePlaySessionStore((state) => state.score);
 
-  const { percent } = getRankingBounds(score, rankingScheme);
-  console.log(percent);
+  const { percent, currentRank, pointsToNextRank, nextRank } = getRankingBounds(
+    score,
+    rankingScheme
+  );
   const emojiElements = emojis.map((emoji, index) => {
-    if (index === 0) {
-      return <FirstBubble key={emoji}>{"|"}</FirstBubble>;
-    } else if (index === emojis.length - 1) {
-      return <LastBubble key={emoji}>{"|"}</LastBubble>;
-    } else return <Bubble key={emoji}>{"|"}</Bubble>;
+    return (
+      <Bubble key={emoji}>
+        <div>{emoji}</div>
+        <Demarkation />
+      </Bubble>
+    );
   });
   return (
-    <ProgressContainer>
-      <ProgressFiller percentage={percent} />
-      {emojiElements}
-    </ProgressContainer>
+    <div>
+      <div>{`you are rank ${currentRank} and need ${pointsToNextRank} to rank up to ${nextRank}`}</div>
+      <ProgressContainer>
+        <ProgressFiller percentage={percent} />
+        {emojiElements}
+      </ProgressContainer>
+    </div>
   );
 };
 
