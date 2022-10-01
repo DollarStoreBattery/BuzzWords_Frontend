@@ -36,7 +36,7 @@ export const blink = keyframes`
 }
 `;
 
-export const pulse = keyframes`
+export const pulseSmaller = keyframes`
 0%{
   transform:scale(1);
 }
@@ -45,6 +45,18 @@ export const pulse = keyframes`
 }
 100%{
   transform:scale(1);
+}
+`;
+
+export const rocking = keyframes`
+0%, 60%, 100%{
+  transform: rotate(0) scale(1);
+}
+20%{
+  transform:  rotate(-0.015turn) scale(1.05);
+}
+80%{
+  transform:  rotate(0.015turn) scale(1.05);
 }
 `;
 

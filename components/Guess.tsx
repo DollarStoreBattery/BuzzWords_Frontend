@@ -5,7 +5,12 @@ import usePlaySessionStore, {
 } from "../lib/usePlaySessionStore";
 import TextElement from "./basic/TextElement";
 import { colours, spacings } from "../styles/theme";
-import { blink, horizontalRock, shake, pulse } from "../styles/animations";
+import {
+  blink,
+  horizontalRock,
+  shake,
+  pulseSmaller,
+} from "../styles/animations";
 
 type GuessTextWrapperProps = {
   isShaking: boolean;
@@ -15,7 +20,7 @@ const GuessTextWrapper = styled("div")<GuessTextWrapperProps>((props) => ({
   animation: props.isShaking
     ? `${shake} ${UI_WAITING_TIME}ms ease`
     : props.isPulsing
-    ? `${pulse} ${UI_WAITING_TIME}ms ease`
+    ? `${pulseSmaller} ${UI_WAITING_TIME}ms ease`
     : "",
   display: "flex",
 }));

@@ -1,8 +1,9 @@
 import styled from "@emotion/styled";
 import { emojisToScores } from "../lib/dummy";
-import { RankingScheme, ScoreRankings } from "../lib/gameTypes";
+import { RankingScheme } from "../lib/gameTypes";
 import getRankingBounds from "../lib/getRankingBounds";
 import usePlaySessionStore from "../lib/usePlaySessionStore";
+import { rocking } from "../styles/animations";
 
 const progressHeight = 4;
 
@@ -50,22 +51,23 @@ const Demarkation = styled("div")({
   width: 2,
 });
 
-const darken = `brightness(0.4)`;
-const dull = `grayscale(0.4)`;
+const locked = `brightness(0.4)`;
+const surpassed = `grayscale(0.2) brightness(0.9)`;
 
 const EmojiContainer = styled("div")<{
   isActive: boolean;
   hasBeenSurpassed?: boolean;
 }>((props) => ({
   transitionProperty: "filter, transform",
-  transitionDuration: ` 500ms `,
+  transitionDuration: "500ms",
   transitionTimingFunction: "ease-in-out",
+  animation: props.isActive ? `${rocking} 5000ms linear infinite` : "none",
   transform: `${props.isActive ? "" : "scale(0.8) translateY(10%)"}`,
   filter: props.isActive
     ? "none"
     : props.hasBeenSurpassed
-    ? `${dull}`
-    : `${darken}`,
+    ? `${surpassed}`
+    : `${locked}`,
 }));
 
 // omit Queen Bee off the object as that's not supposed to show up on UI
