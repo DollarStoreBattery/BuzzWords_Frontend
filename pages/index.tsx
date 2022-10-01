@@ -17,6 +17,7 @@ import NukeButtonDevOnly from "../components/NukeButtonDevOnly";
 import FeedbackMessage from "../components/FeedbackMessage";
 import ProgressBar from "../components/ProgressBar";
 import ScoreButtonDevOnly from "../components/ScoreButtonDevOnly";
+import ScoreBoard from "../components/ScoreBoard";
 interface DailyPuzzleProps {
   game: Puzzle;
 }
@@ -41,7 +42,11 @@ const MainPage: NextPage<DailyPuzzleProps> = ({ game }) => {
         <meta name="description" content="Spelling Bee Game" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
+
       <h2>Word Bee Game</h2>
+
+      <ScoreBoard rankingScheme={rankingScheme} />
+
       <ProgressBar rankingScheme={rankingScheme} />
 
       <FeedbackMessage
@@ -49,23 +54,31 @@ const MainPage: NextPage<DailyPuzzleProps> = ({ game }) => {
         scoringScheme={solutionsWithScores}
       />
       <Guess centralLetter={centralLetterUpper} />
+
       <GameGrid
         centralLetter={centralLetterUpper}
         boundaryLetters={puzzleLettersUpper.filter(
           (letter) => letter != centralLetterUpper
         )}
       ></GameGrid>
+
       <BackSpaceButton />
+
       <EnterButton
         centralLetter={centralLetterUpper}
         solutionsWithScores={solutionsWithScores}
         puzzleLetters={puzzleLettersUpper}
       />
+
       <NukeButtonDevOnly />
       <ScoreButtonDevOnly />
+
       <ShuffleButton />
+
       <ResetButton />
+
       <ScoreDisplay />
+
       <FoundWordsList pangrams={pangrams} />
     </PageContainer>
   );

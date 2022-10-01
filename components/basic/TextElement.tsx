@@ -5,16 +5,17 @@ import styled from "@emotion/styled";
 type TextProps = {
   size?: FontSizes;
   textColour?: ColourNames;
+  unPadded?: boolean;
 };
 
 const TextElement = styled("p")<TextProps>(
   {
     display: "flex",
     textAlign: "center",
-    padding: spacings.sm,
-    margin: spacings.sm,
   },
   (props) => ({
+    padding: props.unPadded ? 0 : spacings.sm,
+    margin: props.unPadded ? 0 : spacings.sm,
     fontSize: props.size ? fontSizes[props.size] : fontSizes.md,
     color: props.textColour
       ? colours[props.textColour]

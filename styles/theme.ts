@@ -1,6 +1,7 @@
 import { ColourNames, FontSizes, PaddingSizes } from "./types";
 
 export const colours: { [key in ColourNames]: string } = {
+  "Soft White": "#fffaf2",
   "Antique White": "#fbefda",
   "Gold Crayola": "#f2c378",
   Gamboge: "#e49b30",
@@ -16,6 +17,7 @@ export const spacings: { [key in PaddingSizes]: string } = {
 };
 
 export const fontSizes: { [key in FontSizes]: string } = {
+  xs: "1.2rem",
   sm: "1.6rem",
   md: "2.2rem",
   lg: "3rem",

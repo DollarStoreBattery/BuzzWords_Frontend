@@ -4,6 +4,7 @@ export type ColourNames =
   | "Gamboge"
   | "Rust"
   | "Kobe"
-  | "Dark Sienna";
+  | "Dark Sienna"
+  | "Soft White";
 export type PaddingSizes = "sm" | "md" | "lg";
-export type FontSizes = "sm" | "md" | "lg" | "xl";
+export type FontSizes = "xs" | "sm" | "md" | "lg" | "xl";
