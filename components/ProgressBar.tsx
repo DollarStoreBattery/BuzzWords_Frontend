@@ -1,6 +1,7 @@
 import styled from "@emotion/styled";
-import { emojis } from "../lib/dummy";
+import { emojisToScores } from "../lib/dummy";
 import { RankingScheme, ScoreRankings } from "../lib/gameTypes";
+import getRankingBounds from "../lib/getRankingBounds";
 import usePlaySessionStore from "../lib/usePlaySessionStore";
 
 const progressHeight = 4;
@@ -29,10 +30,7 @@ const ProgressFiller = styled("div")<{ percentage: number }>(
   })
 );
 
-const verticalEmojiAdjustment = "-70%";
-const horizontalEmojiAdjustment = "15px";
-
-const Bubble = styled("div")({
+const Checkpoint = styled("div")({
   display: "flex",
   flexDirection: "column",
   alignItems: "center",
@@ -41,14 +39,8 @@ const Bubble = styled("div")({
   position: "relative",
   width: 2,
   transform: "translateY(-50%)",
-
   pointerEvents: "none",
-  filter: "grayscale(70%)",
-  // opacity: 0.5,
   fontSize: "clamp(10px,4.5vw,25px)",
-  // the progress filler consumes the whole row, making the bubbles spill over into a new row
-  // need to move them back upwards so they can overlap
-  // transform: `translateY(${verticalEmojiAdjustment})`,
 });
 
 const Demarkation = styled("div")({
@@ -58,96 +50,56 @@ const Demarkation = styled("div")({
   width: 2,
 });
 
-const getRankingBounds = (
-  currentScore: number,
-  rankingScheme: RankingScheme
-): {
-  pointsToNextRank: number | null;
-  percent: number;
-  currentRank: `${ScoreRankings}`;
-  nextRank: `${ScoreRankings}` | null;
-} => {
-  const NUM_SEGMENTS = 8;
+const darken = `brightness(0.4)`;
+const dull = `grayscale(0.4)`;
 
-  let scoreThresholds = Object.values(rankingScheme);
-  let rankTitles = Object.keys(rankingScheme) as Array<`${ScoreRankings}`>;
+const EmojiContainer = styled("div")<{
+  isActive: boolean;
+  hasBeenSurpassed?: boolean;
+}>((props) => ({
+  transitionProperty: "filter, transform",
+  transitionDuration: ` 500ms `,
+  transitionTimingFunction: "ease-in-out",
+  transform: `${props.isActive ? "" : "scale(0.8) translateY(10%)"}`,
+  filter: props.isActive
+    ? "none"
+    : props.hasBeenSurpassed
+    ? `${dull}`
+    : `${darken}`,
+}));
 
-  // queen bee doesn't get considered as a visible rank
-  scoreThresholds.pop();
-  rankTitles.pop();
-
-  // if we're at the highest possible rank
-  if (currentScore > scoreThresholds[scoreThresholds.length - 1]) {
-    return {
-      pointsToNextRank: null,
-      percent: 100,
-      currentRank: rankTitles[rankTitles.length - 1],
-      nextRank: null,
-    };
-  }
-
-  const nextRankIndex = scoreThresholds.findIndex(
-    (score) => score > currentScore
-  );
-
-  const relativeUpperBound = scoreThresholds[nextRankIndex];
-
-  let relativeLowerBound: number;
-  let activeRankIndex: number;
-
-  if (nextRankIndex === 0) {
-    relativeLowerBound = 0;
-    activeRankIndex = 0;
-  } else {
-    relativeLowerBound = scoreThresholds[nextRankIndex - 1];
-    activeRankIndex = nextRankIndex - 1;
-  }
-
-  let segmentPercent: number;
-
-  if (relativeUpperBound === 0) {
-    segmentPercent = 0;
-  } else {
-    segmentPercent =
-      (currentScore - relativeLowerBound) /
-      (relativeUpperBound - relativeLowerBound);
-  }
-
-  const scaledSegmentPercent = segmentPercent * (100 / NUM_SEGMENTS);
-  const scaledFullPercent =
-    activeRankIndex * (100 / NUM_SEGMENTS) + scaledSegmentPercent;
-
-  return {
-    pointsToNextRank: scoreThresholds[nextRankIndex] - currentScore,
-    percent: scaledFullPercent,
-    currentRank: rankTitles[activeRankIndex],
-    nextRank: rankTitles[nextRankIndex],
-  };
-};
+// omit Queen Bee off the object as that's not supposed to show up on UI
+const { "Queen Bee": string, ...displayableEmojisToScores } = emojisToScores;
+const emojis = Object.values(displayableEmojisToScores);
+const rankings = Object.keys(displayableEmojisToScores);
 
 const ProgressBar = ({ rankingScheme }: { rankingScheme: RankingScheme }) => {
   const score = usePlaySessionStore((state) => state.score);
-
   const { percent, currentRank, pointsToNextRank, nextRank } = getRankingBounds(
     score,
     rankingScheme
   );
+  const activeEmoji = emojisToScores[currentRank];
+
   const emojiElements = emojis.map((emoji, index) => {
     return (
-      <Bubble key={emoji}>
-        <div>{emoji}</div>
+      <Checkpoint key={emoji}>
+        <EmojiContainer
+          isActive={emoji === activeEmoji}
+          hasBeenSurpassed={index < rankings.indexOf(currentRank)}
+        >
+          {emoji}
+        </EmojiContainer>
         <Demarkation />
-      </Bubble>
+      </Checkpoint>
     );
   });
+
   return (
-    <div>
-      <div>{`you are rank ${currentRank} and need ${pointsToNextRank} to rank up to ${nextRank}`}</div>
-      <ProgressContainer>
-        <ProgressFiller percentage={percent} />
-        {emojiElements}
-      </ProgressContainer>
-    </div>
+    <ProgressContainer>
+      <ProgressFiller percentage={percent} />
+      {emojiElements}
+    </ProgressContainer>
   );
 };
 

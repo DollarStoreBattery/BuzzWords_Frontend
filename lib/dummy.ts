@@ -1,8 +1,17 @@
-import { Puzzle } from "./gameTypes";
+import { Puzzle, ScoreRankings } from "./gameTypes";
 
-export const emojis = ["😴", "😐", "🙂", "😃", "😚", "😎", "🤩", "🔥", "🧠"];
-
-const queenBeeEmoji = "🐝";
+export const emojisToScores: { [key in ScoreRankings]: string } = {
+  Beginner: "😴",
+  "Good Start": "😐",
+  "Moving Up": "🙂",
+  Good: "😃",
+  Solid: "😚",
+  Nice: "😎",
+  Great: "🤩",
+  Amazing: "🔥",
+  Genius: "🧠",
+  "Queen Bee": "🐝",
+};
 
 export const dummyPuzzle: Puzzle = {
   gameId: "8754b810-3d36-41b5-9f1a-e54ebc4c3793",
