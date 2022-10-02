@@ -7,7 +7,8 @@ import TextElement from "./basic/TextElement";
 
 const ScoreCardContainer = styled("div")({
   marginBlock: "10px 20px",
-  display: "flex",
+  display: "grid",
+  gridTemplateColumns: "repeat(auto-fit, minmax(60px,1fr))",
   width: "90%",
   maxWidth: "700px",
   justifyContent: "space-evenly",
@@ -26,7 +27,6 @@ const ScoreCard = styled("div")({
   fontSize: 30,
   color: colours["Dark Sienna"],
   height: 60,
-  width: "35%",
   borderRadius: 5,
 });
 
