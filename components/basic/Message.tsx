@@ -3,7 +3,6 @@ import { UI_WAITING_TIME } from "../../lib/usePlaySessionStore";
 import { fadeInOutSlide } from "../../styles/animations";
 import { colours, spacings } from "../../styles/theme";
 import { ColourNames } from "../../styles/types";
-import TextElement from "./TextElement";
 
 type MessageProps = {
   isShowing: boolean;
@@ -18,14 +17,15 @@ const Message = styled("div")<MessageProps>((props) => ({
   // the 33 is hex for 20% transparency
   boxShadow: `0px 5px 20px -0px ${colours["Dark Sienna"]}33`,
   animation: `${fadeInOutSlide} ${UI_WAITING_TIME}ms ease-in`,
-  position: "relative",
+  position: "absolute",
+  top: "200px",
   justifyContent: "center",
   alignItems: "center",
   zIndex: "2",
   width: "200px",
   height: "40px",
   fontSize: "1.6rem",
-  visibility: props.isShowing ? "visible" : "hidden",
+  display: props.isShowing ? "" : "none",
 }));
 
 export default Message;

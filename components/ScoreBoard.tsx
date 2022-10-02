@@ -9,7 +9,7 @@ const ScoreCardContainer = styled("div")({
   marginBlock: "10px 20px",
   display: "grid",
   gridTemplateColumns: "repeat(auto-fit, minmax(60px,1fr))",
-  width: "90%",
+  width: "100%",
   maxWidth: "700px",
   justifyContent: "space-evenly",
 });
@@ -30,6 +30,18 @@ const ScoreCard = styled("div")({
   borderRadius: 5,
 });
 
+const ScoreLabel = styled(TextElement)({
+  "@media (max-width: 430px)": {
+    fontSize: "1.2rem",
+  },
+});
+
+const ScoreValue = styled(TextElement)({
+  "@media (max-width: 430px)": {
+    fontSize: "1.3rem",
+  },
+});
+
 const ScoreBoard = ({ rankingScheme }: { rankingScheme: RankingScheme }) => {
   const score = usePlaySessionStore((state) => state.score);
   const { currentRank, pointsToNextRank } = getRankingBounds(
@@ -40,12 +52,12 @@ const ScoreBoard = ({ rankingScheme }: { rankingScheme: RankingScheme }) => {
   const CardElement = (label: string, value: string | number) => {
     return (
       <ScoreCard>
-        <TextElement size="xs" unPadded={true} textColour={"Kobe"}>
+        <ScoreLabel size="xs" unPadded={true} textColour={"Kobe"}>
           {label}
-        </TextElement>
-        <TextElement size="md" unPadded={true}>
+        </ScoreLabel>
+        <ScoreValue size="md" unPadded={true}>
           {value}
-        </TextElement>
+        </ScoreValue>
       </ScoreCard>
     );
   };
@@ -55,7 +67,7 @@ const ScoreBoard = ({ rankingScheme }: { rankingScheme: RankingScheme }) => {
       {CardElement("Score", score)}
       {CardElement("Rank", currentRank)}
       {pointsToNextRank ? (
-        CardElement("Pts til next Rank", pointsToNextRank)
+        CardElement("Pts to next Rank", pointsToNextRank)
       ) : (
         <></>
       )}

@@ -57,11 +57,9 @@ const FeedbackMessage = ({
   scoringScheme: SolutionAndScore;
 }) => {
   const showPraise = usePlaySessionStore((state) => state.activeSuccess);
-  // const showPraise = true;
-
   const showError = usePlaySessionStore((state) => state.activeError);
-  const mostRecentWord = usePlaySessionStore((state) => state.lastGuessedWord);
 
+  const mostRecentWord = usePlaySessionStore((state) => state.lastGuessedWord);
   const errorMessage = usePlaySessionStore((state) => state.badGuessReason);
 
   if (showPraise) {
