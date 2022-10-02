@@ -17,6 +17,7 @@ type GuessTextWrapperProps = {
   isPulsing: boolean;
 };
 const GuessTextWrapper = styled("div")<GuessTextWrapperProps>((props) => ({
+  marginBlock: "0",
   animation: props.isShaking
     ? `${shake} ${UI_WAITING_TIME}ms ease`
     : props.isPulsing
@@ -31,7 +32,7 @@ const GuessText = styled(TextElement)({
   // todo: add media queries for font size and minheight
   fontSize: "4rem",
   minHeight: "70px",
-  margin: spacings.lg,
+  margin: spacings.md,
   maxWidth: "100%",
   animation: `${horizontalRock} 100ms ease`,
 });

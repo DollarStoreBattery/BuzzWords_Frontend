@@ -2,7 +2,7 @@ import styled from "@emotion/styled";
 import { useEffect } from "react";
 
 import usePlaySessionStore from "../lib/usePlaySessionStore";
-import { fadeIn, horizontalRock } from "../styles/animations";
+import { fadeIn } from "../styles/animations";
 
 import { colours } from "../styles/theme";
 import { ColourNames } from "../styles/types";
@@ -12,7 +12,7 @@ import TextElement from "./basic/TextElement";
 
 const HoneyCombContainer = styled.div({
   display: "grid",
-  marginBlock: "100px 120px",
+  marginBlock: "min(20vw,100px) 120px",
 });
 
 type HoneyCombType = {
