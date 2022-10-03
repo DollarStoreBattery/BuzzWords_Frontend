@@ -6,16 +6,11 @@ import PageContainer from "../components/basic/PageContainer";
 import { dummyPuzzle } from "../lib/dummy";
 import GameGrid from "../components/GameGrid";
 import Guess from "../components/Guess";
-import ResetButton from "../components/ClearButton";
-import EnterButton from "../components/EnterButton";
 import FoundWordsList from "../components/FoundWordsList";
-import BackSpaceButton from "../components/BackSpaceButton";
-import ShuffleButton from "../components/ShuffleButton";
-import NukeButtonDevOnly from "../components/NukeButtonDevOnly";
 import FeedbackMessage from "../components/FeedbackMessage";
 import ProgressBar from "../components/ProgressBar";
-import ScoreButtonDevOnly from "../components/ScoreButtonDevOnly";
 import ScoreBoard from "../components/ScoreBoard";
+import ControlsPanel from "../components/ControlsPanel";
 interface DailyPuzzleProps {
   game: Puzzle;
 }
@@ -41,7 +36,9 @@ const MainPage: NextPage<DailyPuzzleProps> = ({ game }) => {
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      <h2>Word Bee Game</h2>
+      <p>Word Bee Game</p>
+
+      <FoundWordsList pangrams={pangrams} />
 
       <ScoreBoard rankingScheme={rankingScheme} />
 
@@ -60,22 +57,11 @@ const MainPage: NextPage<DailyPuzzleProps> = ({ game }) => {
         )}
       ></GameGrid>
 
-      <BackSpaceButton />
-
-      <EnterButton
+      <ControlsPanel
         centralLetter={centralLetterUpper}
         solutionsWithScores={solutionsWithScores}
         puzzleLetters={puzzleLettersUpper}
-      />
-
-      <NukeButtonDevOnly />
-      <ScoreButtonDevOnly />
-
-      <ShuffleButton />
-
-      <ResetButton />
-
-      <FoundWordsList pangrams={pangrams} />
+      ></ControlsPanel>
     </PageContainer>
   );
 };

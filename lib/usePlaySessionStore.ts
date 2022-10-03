@@ -1,5 +1,4 @@
 import create from "zustand";
-import { ScoreRankings } from "./gameTypes";
 import shuffle from "lodash.shuffle";
 
 export const UI_WAITING_TIME = 900; // in milliseconds
@@ -16,7 +15,6 @@ export enum BadGuessReasons {
 interface PlaySessionState {
   wordsFound: Array<string>;
   score: number;
-  ranking: keyof typeof ScoreRankings;
   currentGuess: string;
   //   the exact sorted version of how the letters get rendered into the honeycomb grid
   boundaryLetters: Array<string>;
@@ -160,7 +158,6 @@ const usePlaySessionStore = create<PlaySessionState>()((set, get) => ({
     "YIELDED",
   ],
   score: 0,
-  ranking: "BEGINNER",
   currentGuess: "",
   boundaryLetters: [],
   lastGuessedWord: "",

@@ -6,7 +6,6 @@ const PageContainer = styled.div({
   display: "flex",
   flex: "1",
   flexDirection: "column",
-  justifyContent: "center",
   alignItems: "center",
   padding: "2rem 2rem",
   minHeight: "100vh",
