@@ -15,6 +15,7 @@ const ShuffleButton = () => {
   );
   return (
     <GameButton
+      aria-label="Shuffle"
       css={{ height: 40, width: 40, borderRadius: "50%" }}
       onClick={shuffleBoundaryLetters}
     >

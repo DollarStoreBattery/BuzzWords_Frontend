@@ -18,6 +18,10 @@ const GameButton = styled("button")({
   display: "flex",
   justifyContent: "center",
   alignItems: "center",
+  transition: "transform 0.5s ease",
+  ":active": {
+    transform: `scale(1.2)`,
+  },
 });
 
 export default GameButton;

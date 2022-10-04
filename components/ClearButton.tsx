@@ -3,7 +3,11 @@ import GameButton from "./basic/GameButton";
 
 const ClearButton = () => {
   const clearGuess = usePlaySessionStore((state) => state.clearGuess);
-  return <GameButton onClick={clearGuess}>Clear</GameButton>;
+  return (
+    <GameButton aria-label="Clear Guess" onClick={clearGuess}>
+      Clear
+    </GameButton>
+  );
 };
 
 export default ClearButton;
