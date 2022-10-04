@@ -4,7 +4,6 @@ import BackSpaceButton from "./BackSpaceButton";
 import ClearButton from "./ClearButton";
 import EnterButton from "./EnterButton";
 import NukeButtonDevOnly from "./NukeButtonDevOnly";
-import ScoreButtonDevOnly from "./ScoreButtonDevOnly";
 import ShuffleButton from "./ShuffleButton";
 
 const ControlsPanelElement = styled("div")({

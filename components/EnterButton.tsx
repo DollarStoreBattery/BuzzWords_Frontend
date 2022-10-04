@@ -19,23 +19,23 @@ const EnterButton = ({
   const badGuessActive = usePlaySessionStore((state) => state.activeError);
   const successActive = usePlaySessionStore((state) => state.activeSuccess);
 
-  const keyboardInputHandler = (event: KeyboardEvent): void => {
-    const key = event.key;
-    // dissallow inputs while an error/success is showing
-    if (
-      !badGuessActive &&
-      !successActive &&
-      puzzleLetters.includes(key.toUpperCase())
-    ) {
-      addtoGuess(key.toUpperCase());
-    } else if (key == "Enter") {
-      handleGuessSubmit(centralLetter, solutionsWithScores);
-    } else if (key == "Backspace") {
-      backspaceGuess();
-    }
-  };
-
   useEffect(() => {
+    const keyboardInputHandler = (event: KeyboardEvent): void => {
+      const key = event.key;
+      // dissallow inputs while an error/success is showing
+      if (
+        !badGuessActive &&
+        !successActive &&
+        puzzleLetters.includes(key.toUpperCase())
+      ) {
+        addtoGuess(key.toUpperCase());
+      } else if (key == "Enter") {
+        handleGuessSubmit(centralLetter, solutionsWithScores);
+      } else if (key == "Backspace") {
+        backspaceGuess();
+      }
+    };
+
     window.addEventListener("keydown", keyboardInputHandler);
     return () => {
       window.removeEventListener("keydown", keyboardInputHandler);

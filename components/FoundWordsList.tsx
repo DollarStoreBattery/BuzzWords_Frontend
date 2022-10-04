@@ -5,7 +5,6 @@ import { Pangrams } from "../lib/gameTypes";
 import usePlaySessionStore from "../lib/usePlaySessionStore";
 import { colours, spacings } from "../styles/theme";
 import TextElement from "./basic/TextElement";
-import Chevron from "./icons/Chevron";
 
 const commonStyles = css({
   width: "min(700px, 90vw)",
@@ -71,7 +70,7 @@ const Pangram = styled(WordsLi)({
   color: colours["Gamboge"],
 });
 
-const CollapseIcon = styled(Chevron)<CollapseType>(
+const CollapseIcon = styled("svg")<CollapseType>(
   {
     color: colours.Kobe,
     marginLeft: 20,
@@ -104,13 +103,25 @@ const FoundWordsList = ({ pangrams }: { pangrams: Pangrams }) => {
         {`${wordsFound.length} word${
           wordsFound.length == 1 ? "" : "s"
         } found so far`}
-        <CollapseIcon opened={isOpen} />
+        <CollapseIcon
+          opened={isOpen}
+          fill="none"
+          viewBox="0 0 24 24"
+          height="1em"
+          width="1em"
+        >
+          <path
+            fill="currentColor"
+            d="M17.657 16.243l1.414-1.414-7.07-7.072-7.072 7.072 1.414 1.414L12 10.586l5.657 5.657z"
+          />
+        </CollapseIcon>
       </CollapsibleController>
-      <WordsContainer opened={isOpen}>
+
+      <WordsContainer opened={isOpen ? true : false}>
         {wordsAsList.length > 0 ? (
           <WordsUl>{wordsAsList}</WordsUl>
         ) : (
-          <TextElement>You haven't found any words yet!</TextElement>
+          <TextElement>{"You haven't found any words yet!"}</TextElement>
         )}
       </WordsContainer>
     </>

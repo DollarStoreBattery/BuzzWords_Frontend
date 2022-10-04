@@ -76,7 +76,7 @@ const GameGrid = ({ centralLetter, boundaryLetters }: GameGridProps) => {
 
   useEffect(() => {
     setStatefulBoundaryLetters(boundaryLetters);
-  }, [boundaryLetters]);
+  }, [boundaryLetters, setStatefulBoundaryLetters]);
 
   const BoundaryCells = statefulBoundaryLetters.map((letter, index) => {
     return (
