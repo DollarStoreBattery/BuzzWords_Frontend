@@ -10,12 +10,14 @@ import {
   shake,
   pulseSmaller,
 } from "../styles/animations";
+import useFitText from "use-fit-text";
 
 type GuessTextWrapperProps = {
   isShaking: boolean;
   isPulsing: boolean;
 };
 const GuessTextWrapper = styled("div")<GuessTextWrapperProps>((props) => ({
+  width: "100%",
   marginBlock: "0",
   animation: props.isShaking
     ? `${shake} ${UI_WAITING_TIME}ms ease`
@@ -23,18 +25,24 @@ const GuessTextWrapper = styled("div")<GuessTextWrapperProps>((props) => ({
     ? `${pulseSmaller} ${UI_WAITING_TIME}ms ease`
     : "",
   display: "flex",
+  justifyContent: "center",
 }));
 
-const GuessText = styled(TextElement)({
-  // 1A corresponds to 10% transparency
-  backgroundColor: `${colours["Kobe"]}1A`,
-  // todo: add media queries for font size and minheight
-  fontSize: "4rem",
-  minHeight: "70px",
-  margin: spacings.md,
-  maxWidth: "100%",
-  animation: `${horizontalRock} 100ms ease`,
-});
+const GuessText = styled(TextElement)<{ fontSize: string }>(
+  {
+    alignItems: "center",
+    fontSize: "4rem",
+    // 1A corresponds to 10% transparency
+    backgroundColor: `${colours["Kobe"]}1A`,
+    minHeight: "70px",
+    margin: spacings.md,
+    maxWidth: "78%",
+    animation: `${horizontalRock} 100ms ease`,
+  },
+  (props) => ({
+    fontSize: props.fontSize,
+  })
+);
 
 const StyledCentralLetter = styled("span")({
   color: colours["Kobe"],
@@ -77,10 +85,22 @@ const Guess = ({ centralLetter }: { centralLetter: string }) => {
         );
       } else return character;
     });
+
+  // so if the guess text gets too long, this will shrink it to fit into its parent div
+  const { fontSize: guessFontSize, ref } = useFitText({
+    maxFontSize: 180,
+    resolution: 30,
+  });
+
   return (
     <GuessTextWrapper isShaking={activeError} isPulsing={activeSuccess}>
       {/* key is vital for rerendering so that the animation can play everytime the guess is changed */}
-      <GuessText size="xl" key={currentGuess}>
+      <GuessText
+        ref={ref}
+        fontSize={guessFontSize}
+        size="xl"
+        key={currentGuess}
+      >
         {formattedGuess}
         <BlinkingCaretCursor />
       </GuessText>
