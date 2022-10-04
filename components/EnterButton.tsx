@@ -2,6 +2,7 @@ import { useEffect } from "react";
 import { SolutionAndScore } from "../lib/gameTypes";
 import { handleGuessSubmit } from "../lib/handleGuessSubmit";
 import usePlaySessionStore from "../lib/usePlaySessionStore";
+import GameButton from "./basic/GameButton";
 
 type EnterButtonProps = {
   solutionsWithScores: SolutionAndScore;
@@ -43,11 +44,11 @@ const EnterButton = ({
   }, [badGuessActive, successActive]);
 
   return (
-    <button
+    <GameButton
       onClick={(e) => handleGuessSubmit(centralLetter, solutionsWithScores)}
     >
       Enter
-    </button>
+    </GameButton>
   );
 };
 

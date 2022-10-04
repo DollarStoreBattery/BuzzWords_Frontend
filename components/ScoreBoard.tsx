@@ -32,13 +32,13 @@ const ScoreCard = styled("div")({
 
 const ScoreLabel = styled(TextElement)({
   fontFamily: "Oxygen",
-  "@media (max-width: 430px)": {
+  "@media (max-width: 380px)": {
     fontSize: "1.2rem",
   },
 });
 
 const ScoreValue = styled(TextElement)({
-  "@media (max-width: 430px)": {
+  "@media (max-width: 380px)": {
     fontSize: "1.4rem",
   },
 });

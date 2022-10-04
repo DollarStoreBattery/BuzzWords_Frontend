@@ -22,18 +22,17 @@ const ControlsPanel = ({
 }) => {
   return (
     <ControlsPanelElement>
+      {/* <NukeButtonDevOnly /> */}
+      {/* <ScoreButtonDevOnly /> */}
+      {/* <BackSpaceButton /> */}
+      <ClearButton />
+
+      <ShuffleButton />
       <EnterButton
         centralLetter={centralLetter}
         solutionsWithScores={solutionsWithScores}
         puzzleLetters={puzzleLetters}
       />
-      <NukeButtonDevOnly />
-      {/* <ScoreButtonDevOnly /> */}
-      <BackSpaceButton />
-
-      <ShuffleButton />
-
-      <ClearButton />
     </ControlsPanelElement>
   );
 };
