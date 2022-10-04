@@ -1,5 +1,6 @@
 import styled from "@emotion/styled";
 import { SolutionAndScore } from "../lib/gameTypes";
+import BackSpaceButton from "./BackSpaceButton";
 import ClearButton from "./ClearButton";
 import EnterButton from "./EnterButton";
 import NukeButtonDevOnly from "./NukeButtonDevOnly";
@@ -29,6 +30,7 @@ const ControlsPanel = ({
       />
       <NukeButtonDevOnly />
       {/* <ScoreButtonDevOnly /> */}
+      <BackSpaceButton />
 
       <ShuffleButton />
 
