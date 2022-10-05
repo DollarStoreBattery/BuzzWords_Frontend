@@ -12,7 +12,7 @@ import TextElement from "./basic/TextElement";
 
 const HoneyCombContainer = styled.div({
   display: "grid",
-  marginBlock: "min(20vw,100px) min(28vw,120px)",
+  marginBlock: "min(24vw,110px) min(26vw,120px)",
 });
 
 type HoneyCombType = {
@@ -28,8 +28,8 @@ const HoneyCombElement = styled("div")<HoneyCombType>(
     alignContent: "center",
     justifyContent: "center",
     gridArea: "1/1",
-    width: "min(20vw,100px)",
-    height: "min(18vw,90px)",
+    width: "min(22vw,105px)",
+    height: "min(20vw,95px)",
     userSelect: "none",
     clipPath: "polygon(25% 0%, 75% 0%, 100% 50%,75% 100%,25% 100%,0 50%)",
     transition: ".1s linear",

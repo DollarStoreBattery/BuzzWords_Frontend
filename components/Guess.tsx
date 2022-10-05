@@ -11,6 +11,7 @@ import {
   pulseSmaller,
 } from "../styles/animations";
 import useFitText from "use-fit-text";
+import IconButton from "./basic/IconButton";
 
 type GuessTextWrapperProps = {
   isShaking: boolean;
@@ -35,7 +36,7 @@ const GuessText = styled(TextElement)<{ fontSize: string }>(
     // 1A corresponds to 10% transparency
     backgroundColor: `${colours["Kobe"]}1A`,
     minHeight: "70px",
-    margin: spacings.md,
+    margin: spacings.sm,
     maxWidth: "78%",
     animation: `${horizontalRock} 100ms ease`,
   },
@@ -53,14 +54,6 @@ const BlinkingCaretCursor = styled("span")({
   height: "50px",
   marginLeft: "2px",
   animation: `${blink} 1s cubic-bezier(0.22, 0.61, 0.36, 1) infinite`,
-});
-
-const ClearButton = styled("button")({
-  background: "none",
-  outline: "none",
-  border: "none",
-  cursor: "pointer",
-  ":hover": { filter: "brightness(90%)" },
 });
 
 const BackSpaceIcon = styled("svg")({
@@ -105,7 +98,7 @@ const Guess = ({ centralLetter }: { centralLetter: string }) => {
         <BlinkingCaretCursor />
       </GuessText>
       {currentGuess.length > 0 && (
-        <ClearButton onClick={backspaceGuess}>
+        <IconButton onClick={backspaceGuess}>
           <BackSpaceIcon
             viewBox="0 0 24 24"
             fill="currentColor"
@@ -114,7 +107,7 @@ const Guess = ({ centralLetter }: { centralLetter: string }) => {
           >
             <path d="M22 3H7c-.69 0-1.23.35-1.59.88L0 12l5.41 8.11c.36.53.9.89 1.59.89h15a2 2 0 002-2V5a2 2 0 00-2-2m-3 12.59L17.59 17 14 13.41 10.41 17 9 15.59 12.59 12 9 8.41 10.41 7 14 10.59 17.59 7 19 8.41 15.41 12" />
           </BackSpaceIcon>
-        </ClearButton>
+        </IconButton>
       )}
     </GuessTextWrapper>
   );

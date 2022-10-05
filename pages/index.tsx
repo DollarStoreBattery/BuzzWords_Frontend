@@ -11,6 +11,7 @@ import FeedbackMessage from "../components/FeedbackMessage";
 import ProgressBar from "../components/ProgressBar";
 import ScoreBoard from "../components/ScoreBoard";
 import ControlsPanel from "../components/ControlsPanel";
+import NavBar from "../components/NavBar";
 interface DailyPuzzleProps {
   game: Puzzle;
 }
@@ -29,40 +30,41 @@ const MainPage: NextPage<DailyPuzzleProps> = ({ game }) => {
     letter.toUpperCase()
   );
   return (
-    <PageContainer>
-      <Head>
-        <title>Spelling Bee Game</title>
-        <meta name="description" content="Spelling Bee Game" />
-        <link rel="icon" href="/favicon.ico" />
-      </Head>
+    <>
+      <NavBar />
+      <PageContainer>
+        <Head>
+          <title>Spelling Bee Game</title>
+          <meta name="description" content="Spelling Bee Game" />
+          <link rel="icon" href="/favicon.ico" />
+        </Head>
 
-      <p>Word Bee Game</p>
+        <FoundWordsList pangrams={pangrams} />
 
-      <FoundWordsList pangrams={pangrams} />
+        <ScoreBoard rankingScheme={rankingScheme} />
 
-      <ScoreBoard rankingScheme={rankingScheme} />
+        <ProgressBar rankingScheme={rankingScheme} />
 
-      <ProgressBar rankingScheme={rankingScheme} />
+        <FeedbackMessage
+          pangrams={pangrams}
+          scoringScheme={solutionsWithScores}
+        />
+        <Guess centralLetter={centralLetterUpper} />
 
-      <FeedbackMessage
-        pangrams={pangrams}
-        scoringScheme={solutionsWithScores}
-      />
-      <Guess centralLetter={centralLetterUpper} />
+        <GameGrid
+          centralLetter={centralLetterUpper}
+          boundaryLetters={puzzleLettersUpper.filter(
+            (letter) => letter != centralLetterUpper
+          )}
+        ></GameGrid>
 
-      <GameGrid
-        centralLetter={centralLetterUpper}
-        boundaryLetters={puzzleLettersUpper.filter(
-          (letter) => letter != centralLetterUpper
-        )}
-      ></GameGrid>
-
-      <ControlsPanel
-        centralLetter={centralLetterUpper}
-        solutionsWithScores={solutionsWithScores}
-        puzzleLetters={puzzleLettersUpper}
-      ></ControlsPanel>
-    </PageContainer>
+        <ControlsPanel
+          centralLetter={centralLetterUpper}
+          solutionsWithScores={solutionsWithScores}
+          puzzleLetters={puzzleLettersUpper}
+        ></ControlsPanel>
+      </PageContainer>
+    </>
   );
 };
 

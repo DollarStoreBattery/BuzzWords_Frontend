@@ -18,9 +18,9 @@ const GameButton = styled("button")({
   display: "flex",
   justifyContent: "center",
   alignItems: "center",
-  transition: "transform 0.5s ease",
+  transition: "transform 0.08s ease-in-out",
   ":active": {
-    transform: `scale(1.2)`,
+    transform: `scale(0.9)`,
   },
 });
 

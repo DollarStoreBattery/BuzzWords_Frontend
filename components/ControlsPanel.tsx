@@ -7,6 +7,7 @@ import NukeButtonDevOnly from "./NukeButtonDevOnly";
 import ShuffleButton from "./ShuffleButton";
 
 const ControlsPanelElement = styled("div")({
+  marginBlock: 20,
   display: "flex",
   flexDirection: "row",
 });
