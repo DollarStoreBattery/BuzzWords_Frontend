@@ -1,4 +1,4 @@
-import { ColourNames, FontSizes, PaddingSizes } from "./types";
+import { ColourNames, FontFamilies, FontSizes, PaddingSizes } from "./types";
 
 export const colours: { [key in ColourNames]: string } = {
   "Soft White": "#fffaf2",
@@ -22,4 +22,9 @@ export const fontSizes: { [key in FontSizes]: string } = {
   md: "2.2rem",
   lg: "3rem",
   xl: "4rem",
+};
+
+export const fontFamilies: { [key in FontFamilies]: string } = {
+  Decorative: "Patua One",
+  Simple: "Oxygen",
 };

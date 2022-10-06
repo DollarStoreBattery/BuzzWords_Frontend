@@ -89,6 +89,7 @@ const Guess = ({ centralLetter }: { centralLetter: string }) => {
     <GuessTextWrapper isShaking={activeError} isPulsing={activeSuccess}>
       {/* key is vital for rerendering so that the animation can play everytime the guess is changed */}
       <GuessText
+        fontFamily="Decorative"
         ref={ref}
         fontSize={guessFontSize}
         size="xl"

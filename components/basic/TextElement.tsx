@@ -1,11 +1,12 @@
-import { colours, fontSizes, spacings } from "../../styles/theme";
-import { ColourNames, FontSizes } from "../../styles/types";
+import { colours, fontFamilies, fontSizes, spacings } from "../../styles/theme";
+import { ColourNames, FontFamilies, FontSizes } from "../../styles/types";
 import styled from "@emotion/styled";
 
 type TextProps = {
   size?: FontSizes;
   textColour?: ColourNames;
   unPadded?: boolean;
+  fontFamily?: FontFamilies;
 };
 
 const TextElement = styled("p")<TextProps>(
@@ -20,6 +21,7 @@ const TextElement = styled("p")<TextProps>(
     color: props.textColour
       ? colours[props.textColour]
       : colours["Dark Sienna"],
+    fontFamily: props.fontFamily ? fontFamilies[props.fontFamily] : "Oxygen",
   })
 );
 

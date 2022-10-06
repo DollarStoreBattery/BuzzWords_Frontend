@@ -29,7 +29,6 @@ const CollapsibleController = styled("button")<CollapseType>(
     backgroundColor: colours["Gold Crayola"],
     height: "35px",
     ":hover": { filter: "brightness(90%)" },
-    zIndex: 6,
   },
   (props) => ({
     backgroundColor: props.opened ? colours.Gamboge : colours["Gold Crayola"],
@@ -41,12 +40,12 @@ const WordsContainer = styled("div")<CollapseType>(
   {
     overflowY: "auto",
     position: "absolute",
-    top: 120,
+    top: 95,
     fontFamily: "Oxygen",
     backgroundColor: colours["Soft White"],
     opacity: 0.98,
     maxHeight: "75vh",
-    zIndex: 5,
+    zIndex: 1,
     transition: "height 0.15s ease",
   },
   (props) => ({

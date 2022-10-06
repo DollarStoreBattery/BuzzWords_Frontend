@@ -1,8 +1,9 @@
 import styled from "@emotion/styled";
-import { colours, fontSizes } from "../styles/theme";
-import IconButton from "./basic/IconButton";
+import { gameName } from "../../lib/constants";
+import { colours, fontSizes } from "../../styles/theme";
+import IconButton from "./IconButton";
 
-const Navigation = styled("div")({
+export const Navigation = styled("div")({
   display: "flex",
   height: 40,
   width: "100%",
@@ -12,22 +13,27 @@ const Navigation = styled("div")({
   justifyContent: "center",
   alignItems: "center",
   fontSize: fontSizes.md,
-  zIndex: 20,
 });
 
-const NavigationInner = styled("div")({
+export const NavigationInner = styled("div")({
   display: "flex",
   justifyContent: "space-around",
   alignItems: "center",
   width: "min(100%,500px)",
 });
 
-const NavIcon = styled("svg")({
+export const NavIcon = styled("svg")({
   width: 30,
   height: 30,
 });
 
-const NavBar = () => {
+const NavBar = ({
+  instructionClickHandler,
+}: {
+  instructionClickHandler: (() => void) | undefined;
+  yesterdayClickHandler?: () => void;
+}) => {
+  console.log(instructionClickHandler);
   return (
     <Navigation>
       <NavigationInner>
@@ -41,8 +47,14 @@ const NavBar = () => {
             <path d="M19 3h-1V1h-2v2H8V1H6v2H5c-1.11 0-2 .89-2 2v14a2 2 0 002 2h14c1.1 0 2-.9 2-2V5a2 2 0 00-2-2m0 16H5V8h14v11m-7-9v2h4v3h-4v2l-4-3.5 4-3.5z" />
           </NavIcon>
         </IconButton>
-        <span>Spelling Bee Game</span>
-        <IconButton>
+        <span> {gameName}</span>
+        <IconButton
+          onClick={(e) => {
+            if (instructionClickHandler) {
+              instructionClickHandler();
+            }
+          }}
+        >
           <NavIcon
             viewBox="0 0 1024 1024"
             fill="currentColor"

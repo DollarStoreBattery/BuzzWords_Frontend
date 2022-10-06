@@ -56,7 +56,7 @@ const ScoreBoard = ({ rankingScheme }: { rankingScheme: RankingScheme }) => {
         <ScoreLabel size="xs" unPadded={true} textColour={"Kobe"}>
           {label}
         </ScoreLabel>
-        <ScoreValue size="md" unPadded={true}>
+        <ScoreValue size="md" unPadded={true} fontFamily="Decorative">
           {value}
         </ScoreValue>
       </ScoreCard>

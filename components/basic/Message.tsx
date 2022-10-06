@@ -21,7 +21,6 @@ const Message = styled("div")<MessageProps>((props) => ({
   top: "200px",
   justifyContent: "center",
   alignItems: "center",
-  zIndex: "2",
   width: "200px",
   height: "40px",
   fontSize: "1.6rem",

@@ -92,6 +92,7 @@ const GameGrid = ({ centralLetter, boundaryLetters }: GameGridProps) => {
         }}
       >
         <TextElement
+          fontFamily="Decorative"
           key={`${letter}_${statefulBoundaryLetters.toString()}`}
           size="lg"
           css={{
@@ -115,7 +116,11 @@ const GameGrid = ({ centralLetter, boundaryLetters }: GameGridProps) => {
         xOffset={0}
         yOffset={0}
       >
-        <TextElement textColour="Antique White" size="lg">
+        <TextElement
+          fontFamily="Decorative"
+          textColour="Antique White"
+          size="lg"
+        >
           {centralLetter}
         </TextElement>
       </HoneyCombCenter>

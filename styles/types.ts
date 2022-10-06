@@ -8,3 +8,4 @@ export type ColourNames =
   | "Soft White";
 export type PaddingSizes = "sm" | "md" | "lg";
 export type FontSizes = "xs" | "sm" | "md" | "lg" | "xl";
+export type FontFamilies = "Decorative" | "Simple";
