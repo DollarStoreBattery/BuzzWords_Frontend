@@ -47,6 +47,18 @@ const CloseIcon = styled("svg")({
   color: colours["Dark Sienna"],
 });
 
+const getHeadingElement = (heading: string) => {
+  return (
+    <TextElement
+      unPadded={true}
+      fontFamily="Decorative"
+      css={{ alignSelf: "flex-start" }}
+    >
+      {heading}
+    </TextElement>
+  );
+};
+
 const InstructionModal = ({
   isOpened,
   setIsOpened,
@@ -95,16 +107,14 @@ const InstructionModal = ({
           A new game drops every midnight (Eastern Standard Time).
         </TextElement>
 
-        <TextElement unPadded={true} fontFamily="Decorative">
-          Goal
-        </TextElement>
-        <TextElement size={"sm"}>
+        {getHeadingElement("Goal")}
+
+        <TextElement size={"sm"} css={{ alignSelf: "flex-start" }}>
           Find as many words as possible with the provided letters.
         </TextElement>
 
-        <TextElement unPadded={true} fontFamily="Decorative">
-          Rules
-        </TextElement>
+        {getHeadingElement("Rules")}
+
         <StyledList>
           <StyledListItem>Words must contain the central letter</StyledListItem>
           <StyledListItem>Words must be at least 4 letters</StyledListItem>
@@ -113,9 +123,8 @@ const InstructionModal = ({
           </StyledListItem>
         </StyledList>
 
-        <TextElement unPadded={true} fontFamily="Decorative">
-          Scoring
-        </TextElement>
+        {getHeadingElement("Scoring")}
+
         <StyledList>
           <StyledListItem>Four-letter words are worth 1 point</StyledListItem>
           <StyledListItem>
@@ -127,9 +136,8 @@ const InstructionModal = ({
           </StyledListItem>
         </StyledList>
 
-        <TextElement unPadded={true} fontFamily="Decorative">
-          F.A.Q.
-        </TextElement>
+        {getHeadingElement("F.A.Q.")}
+
         <StyledList>
           <StyledListItem>
             How do rankings work?
@@ -162,7 +170,7 @@ const InstructionModal = ({
             Does this game have a paywall?
             <StyledList>
               <StyledListItem>
-                It's free! Though if you'd like, you can support me below.
+                Nope! Though if you'd like, you can support me below.
               </StyledListItem>
             </StyledList>
           </StyledListItem>

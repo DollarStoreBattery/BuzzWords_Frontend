@@ -2,7 +2,7 @@ import styled from "@emotion/styled";
 import { fontFamilies, fontSizes } from "../../styles/theme";
 
 export const StyledList = styled("ul")({
-  paddingLeft: 10,
+  paddingLeft: 20,
   alignSelf: "flex-start",
   listStylePosition: "inside",
   fontSize: fontSizes.sm,
