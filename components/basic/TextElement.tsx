@@ -11,6 +11,7 @@ type TextProps = {
 
 const TextElement = styled("p")<TextProps>(
   {
+    fontFamily: fontFamilies.Simple,
     display: "flex",
     textAlign: "center",
   },
@@ -21,7 +22,7 @@ const TextElement = styled("p")<TextProps>(
     color: props.textColour
       ? colours[props.textColour]
       : colours["Dark Sienna"],
-    fontFamily: props.fontFamily ? fontFamilies[props.fontFamily] : "Oxygen",
+    fontFamily: props.fontFamily ? fontFamilies[props.fontFamily] : "",
   })
 );
 

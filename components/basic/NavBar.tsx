@@ -1,4 +1,5 @@
 import styled from "@emotion/styled";
+import { Dispatch, SetStateAction, useEffect, useState } from "react";
 import { gameName } from "../../lib/constants";
 import { colours, fontSizes } from "../../styles/theme";
 import IconButton from "./IconButton";
@@ -25,15 +26,14 @@ export const NavigationInner = styled("div")({
 export const NavIcon = styled("svg")({
   width: 30,
   height: 30,
+  ":hover": { filter: "opacity(0.8)" },
 });
 
 const NavBar = ({
-  instructionClickHandler,
+  toggleInstructions,
 }: {
-  instructionClickHandler: (() => void) | undefined;
-  yesterdayClickHandler?: () => void;
+  toggleInstructions: Dispatch<SetStateAction<boolean>>;
 }) => {
-  console.log(instructionClickHandler);
   return (
     <Navigation>
       <NavigationInner>
@@ -48,13 +48,7 @@ const NavBar = ({
           </NavIcon>
         </IconButton>
         <span> {gameName}</span>
-        <IconButton
-          onClick={(e) => {
-            if (instructionClickHandler) {
-              instructionClickHandler();
-            }
-          }}
-        >
+        <IconButton onClick={(e) => toggleInstructions(true)}>
           <NavIcon
             viewBox="0 0 1024 1024"
             fill="currentColor"

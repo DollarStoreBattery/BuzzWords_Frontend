@@ -17,6 +17,7 @@ type CollapseType = {
 const CollapsibleController = styled("button")<CollapseType>(
   commonStyles,
   {
+    zIndex: 3,
     fontSize: "1.6rem",
     boxShadow: `0 1px 1px ${colours["Dark Sienna"]}`,
     border: "none",

@@ -1,7 +1,7 @@
 import styled from "@emotion/styled";
-import { forwardRef } from "react";
+import { Dispatch, SetStateAction, useEffect, useRef } from "react";
 import { gameName } from "../lib/constants";
-import { colours, fontSizes, spacings } from "../styles/theme";
+import { colours, fontFamilies, fontSizes, spacings } from "../styles/theme";
 import { StyledList, StyledListItem } from "./basic/List";
 import TextElement from "./basic/TextElement";
 
@@ -9,28 +9,87 @@ export const ModalContainer = styled("dialog")({
   border: "1px solid #80808057",
   backgroundColor: colours["Soft White"],
   height: "95%",
-  width: "min(650px,85vw)",
-  padding: spacings.lg,
+  width: "min(650px,95vw)",
   fontSize: fontSizes.md,
   "::backdrop": {
-    background: "rgba(0, 0, 0, 0.3)",
+    background: "rgba(0, 0, 0, 0.4)",
   },
+  padding: 0,
 });
 
 export const ModalContent = styled("div")({
-  fontFamily: "oxygen",
+  padding: spacings.lg,
   display: "flex",
   justifyContent: "center",
   flexDirection: "column",
   alignItems: "center",
 });
 
-const InstructionModal = forwardRef<HTMLDialogElement>((_props, ref) => {
+const ModalCloseButton = styled("button")({
+  justifyContent: "space-between",
+  alignItems: "center",
+  display: "flex",
+  cursor: "pointer",
+  outline: "none",
+  backgroundColor: colours["Gamboge"],
+  fontFamily: fontFamilies.Simple,
+  height: 40,
+  width: "100%",
+  position: "sticky",
+  top: 0,
+  border: "1px solid #80808057",
+  ":hover": { filter: "brightness(90%)" },
+});
+
+const CloseIcon = styled("svg")({
+  width: 35,
+  height: 35,
+  color: colours["Dark Sienna"],
+});
+
+const InstructionModal = ({
+  isOpened,
+  setIsOpened,
+}: {
+  isOpened: boolean;
+  setIsOpened: Dispatch<SetStateAction<boolean>>;
+}) => {
+  const instructionsElement = useRef<HTMLDialogElement>(null);
+  useEffect(() => {
+    if (isOpened) {
+      instructionsElement.current?.removeAttribute("open");
+
+      instructionsElement.current?.showModal();
+    } else {
+      instructionsElement.current?.close();
+    }
+  }, [isOpened, instructionsElement]);
+
   return (
-    <ModalContainer ref={ref}>
+    <ModalContainer
+      ref={instructionsElement}
+      onCancel={(e) => {
+        setIsOpened(false);
+      }}
+    >
+      <ModalCloseButton
+        onClick={(e) => {
+          setIsOpened(false);
+        }}
+      >
+        <>Close</>
+        <CloseIcon
+          viewBox="0 0 512 512"
+          fill="currentColor"
+          height="1em"
+          width="1em"
+        >
+          <path d="M289.94 256l95-95A24 24 0 00351 127l-95 95-95-95a24 24 0 00-34 34l95 95-95 95a24 24 0 1034 34l95-95 95 95a24 24 0 0034-34z" />
+        </CloseIcon>
+      </ModalCloseButton>
       <ModalContent>
-        <TextElement fontFamily="Decorative">
-          {`🐝 Welcome to the ${gameName}🐝`}
+        <TextElement fontFamily="Decorative" unPadded={true}>
+          {`Welcome to the ${gameName}🐝`}
         </TextElement>
         <TextElement size={"sm"}>
           A new game drops every midnight (Eastern Standard Time).
@@ -103,7 +162,7 @@ const InstructionModal = forwardRef<HTMLDialogElement>((_props, ref) => {
             Does this game have a paywall?
             <StyledList>
               <StyledListItem>
-                No, it's free. Though if you'd like, you can buy me a coffee.
+                It's free! Though if you'd like, you can support me below.
               </StyledListItem>
             </StyledList>
           </StyledListItem>
@@ -118,6 +177,6 @@ const InstructionModal = forwardRef<HTMLDialogElement>((_props, ref) => {
       </ModalContent>
     </ModalContainer>
   );
-});
+};
 
 export default InstructionModal;
