@@ -59,6 +59,8 @@ const EmojiContainer = styled("div")<{
   isActive: boolean;
   hasBeenSurpassed?: boolean;
 }>((props) => ({
+  userSelect: "none",
+  "-webkit-user-select": "none",
   transitionProperty: "filter, transform",
   transitionDuration: "500ms",
   transitionTimingFunction: "ease-in-out",
