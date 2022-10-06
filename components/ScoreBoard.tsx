@@ -1,6 +1,7 @@
 import styled from "@emotion/styled";
 import { RankingScheme } from "../lib/gameTypes";
 import getRankingBounds from "../lib/getRankingBounds";
+import useHydration from "../lib/useHydration";
 import usePlaySessionStore from "../lib/usePlaySessionStore";
 import { colours } from "../styles/theme";
 import TextElement from "./basic/TextElement";
@@ -43,6 +44,19 @@ const ScoreValue = styled(TextElement)({
   },
 });
 
+const CardElement = (label: string, value: string | number) => {
+  return (
+    <ScoreCard>
+      <ScoreLabel size="xs" unPadded={true} textColour={"Kobe"}>
+        {label}
+      </ScoreLabel>
+      <ScoreValue size="md" unPadded={true} fontFamily="Decorative">
+        {value}
+      </ScoreValue>
+    </ScoreCard>
+  );
+};
+
 const ScoreBoard = ({ rankingScheme }: { rankingScheme: RankingScheme }) => {
   const score = usePlaySessionStore((state) => state.score);
   const { currentRank, pointsToNextRank } = getRankingBounds(
@@ -50,30 +64,22 @@ const ScoreBoard = ({ rankingScheme }: { rankingScheme: RankingScheme }) => {
     rankingScheme
   );
 
-  const CardElement = (label: string, value: string | number) => {
-    return (
-      <ScoreCard>
-        <ScoreLabel size="xs" unPadded={true} textColour={"Kobe"}>
-          {label}
-        </ScoreLabel>
-        <ScoreValue size="md" unPadded={true} fontFamily="Decorative">
-          {value}
-        </ScoreValue>
-      </ScoreCard>
-    );
-  };
+  const hasHydrated = useHydration();
 
-  return (
-    <ScoreCardContainer>
-      {CardElement("Score", score)}
-      {CardElement("Rank", currentRank)}
-      {pointsToNextRank ? (
-        CardElement("Pts to next Rank", pointsToNextRank)
-      ) : (
-        <></>
-      )}
-    </ScoreCardContainer>
-  );
+  if (!hasHydrated) {
+    return <></>;
+  } else
+    return (
+      <ScoreCardContainer>
+        {CardElement("Score", score)}
+        {CardElement("Rank", currentRank)}
+        {pointsToNextRank ? (
+          CardElement("Pts to next Rank", pointsToNextRank)
+        ) : (
+          <></>
+        )}
+      </ScoreCardContainer>
+    );
 };
 
 export default ScoreBoard;

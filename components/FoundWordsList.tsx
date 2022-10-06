@@ -1,7 +1,8 @@
 import { css } from "@emotion/react";
 import styled from "@emotion/styled";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Pangrams } from "../lib/gameTypes";
+import useHydration from "../lib/useHydration";
 import usePlaySessionStore from "../lib/usePlaySessionStore";
 import { colours, spacings } from "../styles/theme";
 import TextElement from "./basic/TextElement";
@@ -94,32 +95,37 @@ const FoundWordsList = ({ pangrams }: { pangrams: Pangrams }) => {
   });
 
   const [isOpen, setIsOpen] = useState(false);
-  return (
-    <>
-      <CollapsibleController
-        opened={isOpen}
-        onClick={(e) => setIsOpen(!isOpen)}
-      >
-        {`${wordsFound.length} word${
-          wordsFound.length == 1 ? "" : "s"
-        } found so far`}
-        <CollapseIcon opened={isOpen} fill="none" viewBox="0 0 24 24">
-          <path
-            fill="currentColor"
-            d="M17.657 16.243l1.414-1.414-7.07-7.072-7.072 7.072 1.414 1.414L12 10.586l5.657 5.657z"
-          />
-        </CollapseIcon>
-      </CollapsibleController>
+  const hasHydrated = useHydration();
 
-      <WordsContainer opened={isOpen ? true : false}>
-        {wordsAsList.length > 0 ? (
-          <WordsUl>{wordsAsList}</WordsUl>
-        ) : (
-          <TextElement>{"You haven't found any words yet!"}</TextElement>
-        )}
-      </WordsContainer>
-    </>
-  );
+  if (!hasHydrated) {
+    return <></>;
+  } else
+    return (
+      <>
+        <CollapsibleController
+          opened={isOpen}
+          onClick={(e) => setIsOpen(!isOpen)}
+        >
+          {`${wordsFound.length} word${
+            wordsFound.length == 1 ? "" : "s"
+          } found so far`}
+          <CollapseIcon opened={isOpen} fill="none" viewBox="0 0 24 24">
+            <path
+              fill="currentColor"
+              d="M17.657 16.243l1.414-1.414-7.07-7.072-7.072 7.072 1.414 1.414L12 10.586l5.657 5.657z"
+            />
+          </CollapseIcon>
+        </CollapsibleController>
+
+        <WordsContainer opened={isOpen ? true : false}>
+          {wordsAsList.length > 0 ? (
+            <WordsUl>{wordsAsList}</WordsUl>
+          ) : (
+            <TextElement>{"You haven't found any words yet!"}</TextElement>
+          )}
+        </WordsContainer>
+      </>
+    );
 };
 
 export default FoundWordsList;

@@ -1,5 +1,6 @@
 import create from "zustand";
 import shuffle from "lodash.shuffle";
+import { persist } from "zustand/middleware";
 
 export const UI_WAITING_TIME = 900; // in milliseconds
 const GUESS_LENGTH_LIMIT = 20; // number of characters before you get yelled at
@@ -35,67 +36,81 @@ interface PlaySessionState {
   setScoreDevOnly: (score: number) => void;
 }
 
-const usePlaySessionStore = create<PlaySessionState>()((set, get) => ({
-  activeError: false,
-  activeSuccess: false,
-  wordsFound: [],
-  score: 0,
-  currentGuess: "",
-  boundaryLetters: [],
-  lastGuessedWord: "",
-  setScoreDevOnly: (score) => {
-    set(() => ({ score: score }));
-  },
-  nukeWordsDevOnly: () => set({ wordsFound: [], score: 0 }),
-  setBadGuessReason: (reason) => {
-    set(() => ({ badGuessReason: reason }));
-    set(() => ({ activeError: true }));
-    setTimeout(get().clearGuess, UI_WAITING_TIME);
-    setTimeout(get().clearError, UI_WAITING_TIME);
-  },
-  clearError: () => {
-    set(() => ({ activeError: false }));
-  },
-  clearSuccess: () => {
-    set(() => ({ activeSuccess: false }));
-  },
-  setBoundaryLetters: (letters) => {
-    set(() => ({
-      boundaryLetters: letters.map((letter) => letter.toUpperCase()),
-    }));
-  },
-  addToGuess: (newLetter) => {
-    if (get().currentGuess.length > GUESS_LENGTH_LIMIT) {
-      get().setBadGuessReason(BadGuessReasons.TOO_LONG);
+const usePlaySessionStore = create<PlaySessionState>()(
+  persist(
+    (set, get) => ({
+      activeError: false,
+      activeSuccess: false,
+      wordsFound: [],
+      score: 0,
+      currentGuess: "",
+      boundaryLetters: [],
+      lastGuessedWord: "",
+      setScoreDevOnly: (score) => {
+        set(() => ({ score: score }));
+      },
+      nukeWordsDevOnly: () => set({ wordsFound: [], score: 0 }),
+      setBadGuessReason: (reason) => {
+        set(() => ({ badGuessReason: reason }));
+        set(() => ({ activeError: true }));
+        setTimeout(get().clearGuess, UI_WAITING_TIME);
+        setTimeout(get().clearError, UI_WAITING_TIME);
+      },
+      clearError: () => {
+        set(() => ({ activeError: false }));
+      },
+      clearSuccess: () => {
+        set(() => ({ activeSuccess: false }));
+      },
+      setBoundaryLetters: (letters) => {
+        set(() => ({
+          boundaryLetters: letters.map((letter) => letter.toUpperCase()),
+        }));
+      },
+      addToGuess: (newLetter) => {
+        if (get().currentGuess.length > GUESS_LENGTH_LIMIT) {
+          get().setBadGuessReason(BadGuessReasons.TOO_LONG);
+        }
+        set((state) => ({ currentGuess: state.currentGuess + newLetter }));
+      },
+      clearGuess: () => {
+        set(() => ({ currentGuess: "" }));
+      },
+      backspaceGuess: () => {
+        if (get().currentGuess.length == 0) {
+          return;
+        }
+        set((state) => ({
+          currentGuess: state.currentGuess.slice(
+            0,
+            state.currentGuess.length - 1
+          ),
+        }));
+      },
+      shuffleBoundaryLetters: () => {
+        const shuffledLetters = shuffle(get().boundaryLetters);
+        set(() => ({ boundaryLetters: shuffledLetters }));
+      },
+      submitGuess: (guessScore) => {
+        set((state) => ({
+          activeSuccess: true,
+          wordsFound: [...state.wordsFound, get().currentGuess],
+          score: state.score + guessScore,
+          lastGuessedWord: get().currentGuess,
+        }));
+        setTimeout(get().clearSuccess, UI_WAITING_TIME);
+        setTimeout(get().clearGuess, UI_WAITING_TIME);
+      },
+    }),
+    {
+      name: "game-storage", // name of item in the storage (must be unique)
+      partialize: (state) => ({
+        wordsFound: state.wordsFound,
+        score: state.score,
+      }),
     }
-    set((state) => ({ currentGuess: state.currentGuess + newLetter }));
-  },
-  clearGuess: () => {
-    set(() => ({ currentGuess: "" }));
-  },
-  backspaceGuess: () => {
-    if (get().currentGuess.length == 0) {
-      return;
-    }
-    set((state) => ({
-      currentGuess: state.currentGuess.slice(0, state.currentGuess.length - 1),
-    }));
-  },
-  shuffleBoundaryLetters: () => {
-    const shuffledLetters = shuffle(get().boundaryLetters);
-    set(() => ({ boundaryLetters: shuffledLetters }));
-  },
-  submitGuess: (guessScore) => {
-    set((state) => ({
-      activeSuccess: true,
-      wordsFound: [...state.wordsFound, get().currentGuess],
-      score: state.score + guessScore,
-      lastGuessedWord: get().currentGuess,
-    }));
-    setTimeout(get().clearSuccess, UI_WAITING_TIME);
-    setTimeout(get().clearGuess, UI_WAITING_TIME);
-  },
-}));
+  )
+);
 
 export default usePlaySessionStore;
 

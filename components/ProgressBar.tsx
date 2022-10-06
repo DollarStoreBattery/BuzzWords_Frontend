@@ -2,6 +2,7 @@ import styled from "@emotion/styled";
 import { emojisToScores } from "../lib/dummy";
 import { RankingScheme } from "../lib/gameTypes";
 import getRankingBounds from "../lib/getRankingBounds";
+import useHydration from "../lib/useHydration";
 import usePlaySessionStore from "../lib/usePlaySessionStore";
 import { rocking } from "../styles/animations";
 
@@ -77,10 +78,7 @@ const rankings = Object.keys(displayableEmojisToScores);
 
 const ProgressBar = ({ rankingScheme }: { rankingScheme: RankingScheme }) => {
   const score = usePlaySessionStore((state) => state.score);
-  const { percent, currentRank, pointsToNextRank, nextRank } = getRankingBounds(
-    score,
-    rankingScheme
-  );
+  const { percent, currentRank } = getRankingBounds(score, rankingScheme);
   const activeEmoji = emojisToScores[currentRank];
 
   const emojiElements = emojis.map((emoji, index) => {
@@ -96,13 +94,17 @@ const ProgressBar = ({ rankingScheme }: { rankingScheme: RankingScheme }) => {
       </Checkpoint>
     );
   });
+  const hasHydrated = useHydration();
 
-  return (
-    <ProgressContainer>
-      <ProgressFiller percentage={percent} />
-      {emojiElements}
-    </ProgressContainer>
-  );
+  if (!hasHydrated) {
+    return <>Loading...</>;
+  } else
+    return (
+      <ProgressContainer>
+        <ProgressFiller percentage={percent} />
+        {emojiElements}
+      </ProgressContainer>
+    );
 };
 
 export default ProgressBar;
