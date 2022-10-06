@@ -9,7 +9,6 @@ const GameButton = styled("button")({
   maxWidth: 200,
   height: 40,
   borderRadius: "10px",
-  outline: "none",
   border: "1px solid #80808057",
   cursor: "pointer",
   ":hover": { filter: "brightness(90%)" },

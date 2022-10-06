@@ -22,7 +22,6 @@ const CollapsibleController = styled("button")<CollapseType>(
     fontSize: "1.6rem",
     boxShadow: `0 1px 1px ${colours["Dark Sienna"]}`,
     border: "none",
-    outline: "none",
     display: "flex",
     justifyContent: "center",
     alignItems: "center",
