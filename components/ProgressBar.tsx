@@ -1,5 +1,5 @@
 import styled from "@emotion/styled";
-import { emojisToScores } from "../lib/dummy";
+import { rankAndEmojis } from "../lib/dummy";
 import { RankingScheme } from "../lib/gameTypes";
 import getRankingBounds from "../lib/getRankingBounds";
 import useHydration from "../lib/useHydration";
@@ -60,7 +60,7 @@ const EmojiContainer = styled("div")<{
   hasBeenSurpassed?: boolean;
 }>((props) => ({
   userSelect: "none",
-  "-webkit-user-select": "none",
+  WebkitUserSelect: "none",
   transitionProperty: "filter, transform",
   transitionDuration: "500ms",
   transitionTimingFunction: "ease-in-out",
@@ -74,14 +74,14 @@ const EmojiContainer = styled("div")<{
 }));
 
 // omit Queen Bee off the object as that's not supposed to show up on UI
-const { "Queen Bee": string, ...displayableEmojisToScores } = emojisToScores;
+const { "Queen Bee": string, ...displayableEmojisToScores } = rankAndEmojis;
 const emojis = Object.values(displayableEmojisToScores);
 const rankings = Object.keys(displayableEmojisToScores);
 
 const ProgressBar = ({ rankingScheme }: { rankingScheme: RankingScheme }) => {
   const score = usePlaySessionStore((state) => state.score);
   const { percent, currentRank } = getRankingBounds(score, rankingScheme);
-  const activeEmoji = emojisToScores[currentRank];
+  const activeEmoji = rankAndEmojis[currentRank];
 
   const emojiElements = emojis.map((emoji, index) => {
     return (

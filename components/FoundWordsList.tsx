@@ -1,64 +1,79 @@
 import { css } from "@emotion/react";
 import styled from "@emotion/styled";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { Pangrams } from "../lib/gameTypes";
 import useHydration from "../lib/useHydration";
 import usePlaySessionStore from "../lib/usePlaySessionStore";
 import { colours, spacings } from "../styles/theme";
 import TextElement from "./basic/TextElement";
 
-const commonStyles = css({
-  width: "min(700px, 90vw)",
-});
+const narrowScreenWidth = "min(700px, 90vw)";
+const wideScreenWidth = "100%";
 
 type CollapseType = {
   opened: boolean;
 };
 
-const CollapsibleController = styled("button")<CollapseType>(
-  commonStyles,
-  {
-    zIndex: 3,
-    fontSize: "1.6rem",
-    boxShadow: `0 1px 1px ${colours["Dark Sienna"]}`,
-    border: "none",
-    display: "flex",
-    justifyContent: "center",
-    alignItems: "center",
-    cursor: "pointer",
-    fontFamily: "Oxygen",
-    backgroundColor: colours["Gold Crayola"],
-    height: "35px",
-    ":hover": { filter: "brightness(90%)" },
-  },
+const collapsibleHeaderStyles = css({
+  zIndex: 3,
+  fontSize: "1.6rem",
+  boxShadow: `0 1px 1px ${colours["Dark Sienna"]}`,
+  border: "none",
+  display: "flex",
+  justifyContent: "center",
+  alignItems: "center",
+  fontFamily: "Oxygen",
+  backgroundColor: colours["Gold Crayola"],
+  height: "35px",
+});
+
+const ControllerAndListContainer = styled("div")({
+  flex: "0 1 45%",
+  display: "flex",
+  flexDirection: "column",
+  alignItems: "center",
+  alignSelf: "flex-start",
+});
+
+const CollapsibleController = styled("button")<
+  CollapseType & { isAbsolute: boolean }
+>(collapsibleHeaderStyles, (props) => ({
+  width: props.isAbsolute ? narrowScreenWidth : wideScreenWidth,
+  cursor: "pointer",
+  ":hover": { filter: "brightness(90%)" },
+  backgroundColor: props.opened ? colours.Gamboge : colours["Gold Crayola"],
+}));
+
+const CollapsibleHeader = styled("div")<{ isAbsolute: boolean }>(
+  collapsibleHeaderStyles,
   (props) => ({
-    backgroundColor: props.opened ? colours.Gamboge : colours["Gold Crayola"],
+    width: props.isAbsolute ? narrowScreenWidth : wideScreenWidth,
   })
 );
 
-const WordsContainer = styled("div")<CollapseType>(
-  commonStyles,
+const WordsContainer = styled("div")<CollapseType & { isAbsolute: boolean }>(
   {
     overflowY: "auto",
-    position: "absolute",
-    top: 95,
     fontFamily: "Oxygen",
     backgroundColor: colours["Soft White"],
     opacity: 0.98,
-    maxHeight: "75vh",
     zIndex: 1,
     transition: "height 0.15s ease",
   },
   (props) => ({
+    width: props.isAbsolute ? narrowScreenWidth : wideScreenWidth,
     padding: props.opened ? spacings.lg : 0,
-    height: props.opened ? "75vh" : "0",
+    height: props.opened ? (props.isAbsolute ? "75vh" : "100%") : "0",
+    position: props.isAbsolute ? "absolute" : "inherit",
+    top: props.isAbsolute ? 95 : "",
+    maxHeight: props.isAbsolute ? "75vh" : "max(440px,60vh)",
   })
 );
 
 const WordsUl = styled("ul")({
   marginTop: 0,
   display: "grid",
-  gridTemplateColumns: "repeat(auto-fill, minmax(max(180px, 100%/3), 1fr))",
+  gridTemplateColumns: "repeat(auto-fill, minmax(max(130px, 100%/3), 1fr))",
   listStylePosition: "outside",
 });
 
@@ -82,7 +97,14 @@ const CollapseIcon = styled("svg")<CollapseType>(
     transform: props.opened ? "rotate(0turn)" : "rotate(-0.5turn)",
   })
 );
-const FoundWordsList = ({ pangrams }: { pangrams: Pangrams }) => {
+
+const FoundWordsList = ({
+  pangrams,
+  isAbsolutelyPosition,
+}: {
+  pangrams: Pangrams;
+  isAbsolutelyPosition: boolean;
+}) => {
   const wordsFound = usePlaySessionStore((state) => state.wordsFound);
   // use memo on the sorted version of words found?
   const wordsAsList = wordsFound.map((word) => {
@@ -93,21 +115,31 @@ const FoundWordsList = ({ pangrams }: { pangrams: Pangrams }) => {
     } else return <WordsLi key={`wordslist_${word}`}>{titleCaseWord}</WordsLi>;
   });
 
+  const wordContainerContents =
+    wordsAsList.length > 0 ? (
+      <WordsUl>{wordsAsList}</WordsUl>
+    ) : (
+      <TextElement>{"You haven't found any words yet!"}</TextElement>
+    );
+
+  const collapsibleContents = `${wordsFound.length} word${
+    wordsFound.length == 1 ? "" : "s"
+  } found so far`;
+
   const [isOpen, setIsOpen] = useState(false);
   const hasHydrated = useHydration();
 
   if (!hasHydrated) {
     return <></>;
-  } else
+  } else if (isAbsolutelyPosition)
     return (
       <>
         <CollapsibleController
+          isAbsolute={isAbsolutelyPosition}
           opened={isOpen}
           onClick={(e) => setIsOpen(!isOpen)}
         >
-          {`${wordsFound.length} word${
-            wordsFound.length == 1 ? "" : "s"
-          } found so far`}
+          {collapsibleContents}
           <CollapseIcon opened={isOpen} fill="none" viewBox="0 0 24 24">
             <path
               fill="currentColor"
@@ -116,13 +148,25 @@ const FoundWordsList = ({ pangrams }: { pangrams: Pangrams }) => {
           </CollapseIcon>
         </CollapsibleController>
 
-        <WordsContainer opened={isOpen ? true : false}>
-          {wordsAsList.length > 0 ? (
-            <WordsUl>{wordsAsList}</WordsUl>
-          ) : (
-            <TextElement>{"You haven't found any words yet!"}</TextElement>
-          )}
+        <WordsContainer
+          opened={isOpen ? true : false}
+          isAbsolute={isAbsolutelyPosition}
+        >
+          {wordContainerContents}
         </WordsContainer>
+      </>
+    );
+  else
+    return (
+      <>
+        <ControllerAndListContainer>
+          <CollapsibleHeader isAbsolute={isAbsolutelyPosition}>
+            {collapsibleContents}
+          </CollapsibleHeader>
+          <WordsContainer opened={true} isAbsolute={isAbsolutelyPosition}>
+            {wordContainerContents}
+          </WordsContainer>
+        </ControllerAndListContainer>
       </>
     );
 };

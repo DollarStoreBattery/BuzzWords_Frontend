@@ -15,6 +15,8 @@ import NavBar from "../components/basic/NavBar";
 import { useState } from "react";
 import InstructionModal from "../components/InstructionModal";
 import { gameName } from "../lib/constants";
+import { GameElementsDiv, WideGameLayout } from "../components/basic/Layouts";
+import useWindowSize from "../lib/useWindowSize";
 interface DailyPuzzleProps {
   game: Puzzle;
 }
@@ -35,6 +37,28 @@ const MainPage: NextPage<DailyPuzzleProps> = ({ game }) => {
 
   const [isInstructionsVisible, setIsInstructionsVisible] =
     useState<boolean>(false);
+
+  const size = useWindowSize();
+  const breakpoint = 768;
+
+  const gameContents = (
+    <>
+      <Guess centralLetter={centralLetterUpper} />
+
+      <GameGrid
+        centralLetter={centralLetterUpper}
+        boundaryLetters={puzzleLettersUpper.filter(
+          (letter) => letter != centralLetterUpper
+        )}
+      ></GameGrid>
+
+      <ControlsPanel
+        centralLetter={centralLetterUpper}
+        solutionsWithScores={solutionsWithScores}
+        puzzleLetters={puzzleLettersUpper}
+      ></ControlsPanel>
+    </>
+  );
   return (
     <>
       <NavBar toggleInstructions={setIsInstructionsVisible} />
@@ -50,7 +74,9 @@ const MainPage: NextPage<DailyPuzzleProps> = ({ game }) => {
           <link rel="icon" href="/favicon.ico" />
         </Head>
 
-        <FoundWordsList pangrams={pangrams} />
+        {size.width && size.width < breakpoint && (
+          <FoundWordsList pangrams={pangrams} isAbsolutelyPosition={true} />
+        )}
 
         <ScoreBoard rankingScheme={rankingScheme} />
 
@@ -60,20 +86,15 @@ const MainPage: NextPage<DailyPuzzleProps> = ({ game }) => {
           pangrams={pangrams}
           scoringScheme={solutionsWithScores}
         />
-        <Guess centralLetter={centralLetterUpper} />
-
-        <GameGrid
-          centralLetter={centralLetterUpper}
-          boundaryLetters={puzzleLettersUpper.filter(
-            (letter) => letter != centralLetterUpper
-          )}
-        ></GameGrid>
-
-        <ControlsPanel
-          centralLetter={centralLetterUpper}
-          solutionsWithScores={solutionsWithScores}
-          puzzleLetters={puzzleLettersUpper}
-        ></ControlsPanel>
+        {/* on small screens, the layout is vertically */}
+        {size.width && size.width < breakpoint && gameContents}
+        {/* on big screens, the layout is wider */}
+        {size.width && size.width >= breakpoint && (
+          <WideGameLayout>
+            <GameElementsDiv>{gameContents}</GameElementsDiv>
+            <FoundWordsList pangrams={pangrams} isAbsolutelyPosition={false} />
+          </WideGameLayout>
+        )}
       </PageContainer>
     </>
   );

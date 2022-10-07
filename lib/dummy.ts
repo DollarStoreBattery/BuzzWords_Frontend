@@ -1,6 +1,6 @@
 import { Puzzle, ScoreRankings } from "./gameTypes";
 
-export const emojisToScores: { [key in ScoreRankings]: string } = {
+export const rankAndEmojis: { [key in ScoreRankings]: string } = {
   Beginner: "😴",
   "Good Start": "😐",
   "Moving Up": "🙂",
