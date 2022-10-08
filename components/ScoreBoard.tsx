@@ -7,7 +7,7 @@ import { colours } from "../styles/theme";
 import TextElement from "./basic/TextElement";
 
 const ScoreCardContainer = styled("div")({
-  marginBlock: "5px 20px",
+  marginBlock: "10px 20px",
   display: "grid",
   gridTemplateColumns: "repeat(auto-fit, minmax(60px,1fr))",
   width: "100%",
@@ -27,7 +27,7 @@ const ScoreCard = styled("div")({
   boxShadow: `0 3px 5px ${colours["Dark Sienna"]}`,
   fontSize: 30,
   color: colours["Dark Sienna"],
-  height: 60,
+  height: 50,
   borderRadius: 5,
 });
 

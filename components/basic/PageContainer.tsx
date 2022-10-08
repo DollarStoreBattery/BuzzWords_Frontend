@@ -1,4 +1,4 @@
-import { colours, fontSizes } from "../../styles/theme";
+import { colours, fontSizes, spacings } from "../../styles/theme";
 
 import styled from "@emotion/styled";
 
@@ -7,7 +7,7 @@ const PageContainer = styled.div({
   flex: "1",
   flexDirection: "column",
   alignItems: "center",
-  padding: "2rem 2rem",
+  padding: spacings.md,
   height: "100%",
   minHeight: "100vh",
   maxWidth: "100vw",

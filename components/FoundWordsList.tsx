@@ -8,7 +8,9 @@ import { colours, spacings } from "../styles/theme";
 import TextElement from "./basic/TextElement";
 
 const narrowScreenWidth = "min(700px, 90vw)";
+const narrowScreeHeight = "75vh";
 const wideScreenWidth = "100%";
+const wideScreenHeight = "max(440px,60vh)";
 
 type CollapseType = {
   opened: boolean;
@@ -63,10 +65,14 @@ const WordsContainer = styled("div")<CollapseType & { isAbsolute: boolean }>(
   (props) => ({
     width: props.isAbsolute ? narrowScreenWidth : wideScreenWidth,
     padding: props.opened ? spacings.lg : 0,
-    height: props.opened ? (props.isAbsolute ? "75vh" : "100%") : "0",
+    height: props.isAbsolute
+      ? props.opened
+        ? narrowScreeHeight
+        : "0"
+      : wideScreenHeight,
     position: props.isAbsolute ? "absolute" : "inherit",
     top: props.isAbsolute ? 95 : "",
-    maxHeight: props.isAbsolute ? "75vh" : "max(440px,60vh)",
+    maxHeight: props.isAbsolute ? narrowScreeHeight : wideScreenHeight,
   })
 );
 

@@ -7,7 +7,6 @@ import { dummyPuzzle } from "../lib/dummy";
 import GameGrid from "../components/GameGrid";
 import Guess from "../components/Guess";
 import FoundWordsList from "../components/FoundWordsList";
-import FeedbackMessage from "../components/FeedbackMessage";
 import ProgressBar from "../components/ProgressBar";
 import ScoreBoard from "../components/ScoreBoard";
 import ControlsPanel from "../components/ControlsPanel";
@@ -43,7 +42,11 @@ const MainPage: NextPage<DailyPuzzleProps> = ({ game }) => {
 
   const gameContents = (
     <>
-      <Guess centralLetter={centralLetterUpper} />
+      <Guess
+        centralLetter={centralLetterUpper}
+        pangrams={pangrams}
+        scoringScheme={solutionsWithScores}
+      />
 
       <GameGrid
         centralLetter={centralLetterUpper}
@@ -82,10 +85,6 @@ const MainPage: NextPage<DailyPuzzleProps> = ({ game }) => {
 
         <ProgressBar rankingScheme={rankingScheme} />
 
-        <FeedbackMessage
-          pangrams={pangrams}
-          scoringScheme={solutionsWithScores}
-        />
         {/* on small screens, the layout is vertically */}
         {size.width && size.width < breakpoint && gameContents}
         {/* on big screens, the layout is wider */}

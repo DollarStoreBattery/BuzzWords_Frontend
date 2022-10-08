@@ -1,4 +1,5 @@
 import styled from "@emotion/styled";
+import { Position } from "../lib/constants";
 import { Pangrams, SolutionAndScore } from "../lib/gameTypes";
 import usePlaySessionStore from "../lib/usePlaySessionStore";
 import { colours } from "../styles/theme";
@@ -12,13 +13,19 @@ const ErrorMessageContainer = styled(Message)({
   borderRadius: "20px",
 });
 
-const PraiseMessageContainer = styled(Message)({
-  width: "auto",
-  backgroundColor: "White",
-  color: colours["Dark Sienna"],
-  display: "flex",
-  justifyContent: "space-around",
-});
+const praiseWidth = 125;
+const PraiseMessageContainer = styled(Message)(
+  {
+    width: praiseWidth,
+    backgroundColor: "White",
+    color: colours["Dark Sienna"],
+    display: "flex",
+    justifyContent: "space-around",
+  },
+  (props) => ({
+    left: props.position.midpoint - praiseWidth * 0.5,
+  })
+);
 
 const PraiseMessage = styled(TextElement)({
   padding: "0 5px",
@@ -52,13 +59,14 @@ const getPraiseMessage = (score: number, isPangram: boolean) => {
 const FeedbackMessage = ({
   pangrams,
   scoringScheme,
+  position,
 }: {
   pangrams: Pangrams;
   scoringScheme: SolutionAndScore;
+  position: Position;
 }) => {
   const showPraise = usePlaySessionStore((state) => state.activeSuccess);
   const showError = usePlaySessionStore((state) => state.activeError);
-
   const mostRecentWord = usePlaySessionStore((state) => state.lastGuessedWord);
   const errorMessage = usePlaySessionStore((state) => state.badGuessReason);
 
@@ -71,6 +79,7 @@ const FeedbackMessage = ({
 
     return (
       <PraiseMessageContainer
+        position={position}
         key={`error_${showPraise}`}
         isShowing={showPraise}
       >
@@ -79,7 +88,11 @@ const FeedbackMessage = ({
     );
   } else {
     return (
-      <ErrorMessageContainer key={`error_${showError}`} isShowing={showError}>
+      <ErrorMessageContainer
+        position={position}
+        key={`error_${showError}`}
+        isShowing={showError}
+      >
         {errorMessage}
       </ErrorMessageContainer>
     );

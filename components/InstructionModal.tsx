@@ -170,18 +170,20 @@ const InstructionModal = ({
             Does this game have a paywall?
             <StyledList>
               <StyledListItem>
-                Nope! Though if you'd like, you can support me below.
+                Nope!
+                {/* Nope! Though if you'd like, you can support me below. */}
               </StyledListItem>
             </StyledList>
           </StyledListItem>
         </StyledList>
-        <a href="https://ko-fi.com/U6U4FI5BD" target="_blank">
+        {/* todo: figure out when the site is ready for this */}
+        {/* <a href="https://ko-fi.com/U6U4FI5BD" target="_blank">
           <img
             height="36"
             src="https://cdn.ko-fi.com/cdn/kofi2.png?v=3"
             alt="Buy Me a Coffee at ko-fi.com"
           />
-        </a>
+        </a> */}
       </ModalContent>
     </ModalContainer>
   );
