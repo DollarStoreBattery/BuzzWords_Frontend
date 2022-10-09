@@ -34,6 +34,7 @@ const GuessTextWrapper = styled("div")<GuessTextWrapperProps>((props) => ({
   justifyContent: "center",
 }));
 
+const guessPadding = 10;
 const GuessText = styled(TextElement)<{ fontSize: string }>(
   {
     alignItems: "center",
@@ -41,8 +42,10 @@ const GuessText = styled(TextElement)<{ fontSize: string }>(
     // 1A corresponds to 10% transparency
     backgroundColor: `${colours["Kobe"]}1A`,
     minHeight: "70px",
-    margin: spacings.sm,
-    maxWidth: "78%",
+    padding: guessPadding,
+    margin: guessPadding,
+    maxWidth: "70%",
+    width: "auto",
     animation: `${horizontalRock} 100ms ease`,
   },
   (props) => ({
@@ -54,8 +57,10 @@ const StyledCentralLetter = styled("span")({
   color: colours["Kobe"],
 });
 
+const blinkingCursorThickness = 3;
+
 const BlinkingCaretCursor = styled("span")({
-  borderRight: `3px solid ${colours["Rust"]}`,
+  borderRight: `${blinkingCursorThickness}px solid ${colours["Rust"]}`,
   height: "50px",
   marginLeft: "2px",
   animation: `${blink} 1s cubic-bezier(0.22, 0.61, 0.36, 1) infinite`,
@@ -93,9 +98,9 @@ const Guess = ({
     });
 
   // so if the guess text gets too long, this will shrink it to fit into its parent div
-  const { fontSize: guessFontSize, ref } = useFitText({
-    maxFontSize: 180,
-    resolution: 30,
+  const { fontSize: guessFontSize, ref: guessTextRef } = useFitText({
+    maxFontSize: 140,
+    resolution: 15,
   });
 
   const [containerPosition, setContainerPosition] = useState<Position>({
@@ -133,10 +138,10 @@ const Guess = ({
       >
         {/* key is vital for rerendering so that the animation can play everytime the guess is changed */}
         <GuessText
+          unPadded={true}
           fontFamily="Decorative"
-          ref={ref}
+          ref={guessTextRef}
           fontSize={guessFontSize}
-          size="xl"
           key={currentGuess}
         >
           {formattedGuess}

@@ -1,16 +1,17 @@
 import { css } from "@emotion/react";
 import styled from "@emotion/styled";
-import { useState } from "react";
+import { useMemo, useState } from "react";
 import { Pangrams } from "../lib/gameTypes";
 import useHydration from "../lib/useHydration";
 import usePlaySessionStore from "../lib/usePlaySessionStore";
+import useWindowSize from "../lib/useWindowSize";
 import { colours, spacings } from "../styles/theme";
 import TextElement from "./basic/TextElement";
 
 const narrowScreenWidth = "min(700px, 90vw)";
-const narrowScreeHeight = "75vh";
+const narrowScreeHeight = "65vh";
 const wideScreenWidth = "100%";
-const wideScreenHeight = "max(440px,60vh)";
+const wideScreenHeight = "max(440px,55vh)";
 
 type CollapseType = {
   opened: boolean;
@@ -71,7 +72,7 @@ const WordsContainer = styled("div")<CollapseType & { isAbsolute: boolean }>(
         : "0"
       : wideScreenHeight,
     position: props.isAbsolute ? "absolute" : "inherit",
-    top: props.isAbsolute ? 95 : "",
+    top: props.isAbsolute ? 230 : "",
     maxHeight: props.isAbsolute ? narrowScreeHeight : wideScreenHeight,
   })
 );
@@ -104,30 +105,28 @@ const CollapseIcon = styled("svg")<CollapseType>(
   })
 );
 
-const FoundWordsList = ({
-  pangrams,
-  isAbsolutelyPosition,
-}: {
-  pangrams: Pangrams;
-  isAbsolutelyPosition: boolean;
-}) => {
+const FoundWordsList = ({ pangrams }: { pangrams: Pangrams }) => {
   const wordsFound = usePlaySessionStore((state) => state.wordsFound);
-  // use memo on the sorted version of words found?
-  const wordsAsList = wordsFound.map((word) => {
-    const titleCaseWord =
-      word.slice(0, 1) + word.toLowerCase().slice(1, word.length);
-    if (pangrams.includes(word)) {
-      return <Pangram key={`wordslist_${word}`}>{titleCaseWord}</Pangram>;
-    } else return <WordsLi key={`wordslist_${word}`}>{titleCaseWord}</WordsLi>;
-  });
+
+  const memoizedWordList = useMemo(() => {
+    return wordsFound.sort().map((word) => {
+      const titleCaseWord =
+        word.slice(0, 1) + word.toLowerCase().slice(1, word.length);
+      if (pangrams.includes(word)) {
+        return <Pangram key={`wordslist_${word}`}>{titleCaseWord}</Pangram>;
+      } else
+        return <WordsLi key={`wordslist_${word}`}>{titleCaseWord}</WordsLi>;
+    });
+  }, [wordsFound]);
 
   const wordContainerContents =
-    wordsAsList.length > 0 ? (
-      <WordsUl>{wordsAsList}</WordsUl>
+    memoizedWordList.length > 0 ? (
+      <WordsUl>{memoizedWordList}</WordsUl>
     ) : (
       <TextElement>{"You haven't found any words yet!"}</TextElement>
     );
 
+  // words found so far
   const collapsibleContents = `${wordsFound.length} word${
     wordsFound.length == 1 ? "" : "s"
   } found so far`;
@@ -135,8 +134,14 @@ const FoundWordsList = ({
   const [isOpen, setIsOpen] = useState(false);
   const hasHydrated = useHydration();
 
+  const size = useWindowSize();
+  const breakpoint = 768;
+
+  const isAbsolutelyPosition =
+    size.width !== undefined && size.width <= breakpoint;
+
   if (!hasHydrated) {
-    return <></>;
+    return <>Loading...</>;
   } else if (isAbsolutelyPosition)
     return (
       <>

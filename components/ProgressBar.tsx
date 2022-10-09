@@ -99,7 +99,22 @@ const ProgressBar = ({ rankingScheme }: { rankingScheme: RankingScheme }) => {
   const hasHydrated = useHydration();
 
   if (!hasHydrated) {
-    return <>Loading...</>;
+    // return <>Loading...</>;
+    return (
+      <ProgressContainer>
+        <ProgressFiller percentage={0} />
+        {emojis.map((emoji) => {
+          return (
+            <Checkpoint key={emoji}>
+              <EmojiContainer isActive={false} hasBeenSurpassed={false}>
+                {emoji}
+              </EmojiContainer>
+              <Demarkation />
+            </Checkpoint>
+          );
+        })}
+      </ProgressContainer>
+    );
   } else
     return (
       <ProgressContainer>

@@ -13,7 +13,7 @@ const PageContainer = styled.div({
   maxWidth: "100vw",
   fontSize: fontSizes.md,
   backgroundColor: colours["Antique White"],
-  justifyContent: "space-evenly",
+  justifyContent: "flex-start",
   // background: `linear-gradient(${colours.Gamboge},${colours["Antique White"]})`,
 });
 export default PageContainer;

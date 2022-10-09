@@ -67,7 +67,13 @@ const ScoreBoard = ({ rankingScheme }: { rankingScheme: RankingScheme }) => {
   const hasHydrated = useHydration();
 
   if (!hasHydrated) {
-    return <></>;
+    return (
+      <ScoreCardContainer>
+        {CardElement("Score", "")}
+        {CardElement("Rank", "")}
+        {CardElement("Pts to next Rank", "")}
+      </ScoreCardContainer>
+    );
   } else
     return (
       <ScoreCardContainer>

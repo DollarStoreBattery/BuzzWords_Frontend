@@ -6,10 +6,13 @@ export const GameElementsDiv = styled("div")({
   alignItems: "center",
 });
 
-export const WideGameLayout = styled("div")({
+export const GameLayout = styled("div")({
   width: "100%",
   display: "flex",
   flexDirection: "row",
   justifyContent: "space-around",
   alignItems: "center",
+  "@media (max-width: 768px)": {
+    flexDirection: "column-reverse",
+  },
 });

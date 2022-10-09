@@ -14,8 +14,7 @@ import NavBar from "../components/basic/NavBar";
 import { useState } from "react";
 import InstructionModal from "../components/InstructionModal";
 import { gameName } from "../lib/constants";
-import { GameElementsDiv, WideGameLayout } from "../components/basic/Layouts";
-import useWindowSize from "../lib/useWindowSize";
+import { GameElementsDiv, GameLayout } from "../components/basic/Layouts";
 interface DailyPuzzleProps {
   game: Puzzle;
 }
@@ -36,9 +35,6 @@ const MainPage: NextPage<DailyPuzzleProps> = ({ game }) => {
 
   const [isInstructionsVisible, setIsInstructionsVisible] =
     useState<boolean>(false);
-
-  const size = useWindowSize();
-  const breakpoint = 768;
 
   const gameContents = (
     <>
@@ -77,23 +73,14 @@ const MainPage: NextPage<DailyPuzzleProps> = ({ game }) => {
           <link rel="icon" href="/favicon.ico" />
         </Head>
 
-        {size.width && size.width < breakpoint && (
-          <FoundWordsList pangrams={pangrams} isAbsolutelyPosition={true} />
-        )}
-
         <ScoreBoard rankingScheme={rankingScheme} />
 
         <ProgressBar rankingScheme={rankingScheme} />
 
-        {/* on small screens, the layout is vertically */}
-        {size.width && size.width < breakpoint && gameContents}
-        {/* on big screens, the layout is wider */}
-        {size.width && size.width >= breakpoint && (
-          <WideGameLayout>
-            <GameElementsDiv>{gameContents}</GameElementsDiv>
-            <FoundWordsList pangrams={pangrams} isAbsolutelyPosition={false} />
-          </WideGameLayout>
-        )}
+        <GameLayout>
+          <GameElementsDiv>{gameContents}</GameElementsDiv>
+          <FoundWordsList pangrams={pangrams} />
+        </GameLayout>
       </PageContainer>
     </>
   );
