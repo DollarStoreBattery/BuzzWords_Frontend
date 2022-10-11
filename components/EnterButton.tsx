@@ -41,7 +41,7 @@ const EnterButton = ({
     return () => {
       window.removeEventListener("keydown", keyboardInputHandler);
     };
-  }, [badGuessActive, successActive]);
+  }, [badGuessActive, successActive, puzzleLetters]);
 
   return (
     <GameButton

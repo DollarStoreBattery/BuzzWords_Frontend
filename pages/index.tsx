@@ -11,10 +11,12 @@ import ProgressBar from "../components/ProgressBar";
 import ScoreBoard from "../components/ScoreBoard";
 import ControlsPanel from "../components/ControlsPanel";
 import NavBar from "../components/basic/NavBar";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import InstructionModal from "../components/InstructionModal";
 import { gameName } from "../lib/constants";
 import { GameElementsDiv, GameLayout } from "../components/basic/Layouts";
+import numSecondsTilNewGame from "../lib/getTimeTilNewGame";
+import usePlaySessionStore from "../lib/usePlaySessionStore";
 interface DailyPuzzleProps {
   game: Puzzle;
 }
@@ -27,6 +29,18 @@ const MainPage: NextPage<DailyPuzzleProps> = ({ game }) => {
     centralLetter,
     rankingScheme,
   } = game;
+
+  const resetFunction = usePlaySessionStore((state) => state.resetGame);
+  const gameSessionID = usePlaySessionStore((state) => state.gameID);
+  const setGameSessionID = usePlaySessionStore((state) => state.setGameID);
+
+  useEffect(() => {
+    // detect if getStaticProps has made a new game and reset the play session state accordingly
+    if (game.gameId != gameSessionID) {
+      resetFunction();
+      setGameSessionID(game.gameId);
+    }
+  }, [game.gameId]);
 
   const centralLetterUpper = centralLetter.toUpperCase();
   const puzzleLettersUpper = puzzleLetters.map((letter) =>
@@ -90,8 +104,8 @@ export default MainPage;
 
 export const getStaticProps: GetStaticProps = async () => {
   // temporarily commented out to avoid fetching from redis every time, just using a fixed game rn
-  // const dailyGame = await getDailyGame();
-  const dailyGame = dummyPuzzle;
+  const dailyGame = await getDailyGame();
+  // const dailyGame = dummyPuzzle;
 
   if (!dailyGame) {
     return {
@@ -103,6 +117,6 @@ export const getStaticProps: GetStaticProps = async () => {
     props: {
       game: dailyGame,
     },
-    revalidate: 3600,
+    revalidate: numSecondsTilNewGame(),
   };
 };

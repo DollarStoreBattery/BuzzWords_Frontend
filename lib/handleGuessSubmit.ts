@@ -11,7 +11,7 @@ export const handleGuessSubmit = (
   const guess = usePlaySessionStore.getState().currentGuess;
   const wordsFound = usePlaySessionStore.getState().wordsFound;
 
-  let badGuess = undefined;
+  let badGuess: BadGuessReasons | undefined = undefined;
   if (guess.length < MIN_GUESS_LENGTH) {
     badGuess = BadGuessReasons.TOO_SHORT;
   } else if (guess.length > MAX_GUESS_LENGTH) {

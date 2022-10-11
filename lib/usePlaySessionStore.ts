@@ -23,6 +23,10 @@ interface PlaySessionState {
   activeError: boolean;
   activeSuccess: boolean;
   lastGuessedWord: string;
+  gameID: string;
+}
+
+interface PlaySessionActions {
   setBoundaryLetters: (letters: Array<string>) => void;
   setBadGuessReason: (reason: BadGuessReasons) => void;
   addToGuess: (newLetter: string) => void;
@@ -34,18 +38,31 @@ interface PlaySessionState {
   clearSuccess: () => void;
   nukeWordsDevOnly: () => void;
   setScoreDevOnly: (score: number) => void;
+  resetGame: () => void;
+  setGameID: (id: string) => void;
 }
 
-const usePlaySessionStore = create<PlaySessionState>()(
+const initialPlayState: PlaySessionState = {
+  activeError: false,
+  activeSuccess: false,
+  wordsFound: [],
+  score: 0,
+  currentGuess: "",
+  boundaryLetters: [],
+  lastGuessedWord: "",
+  gameID: "",
+};
+
+const usePlaySessionStore = create<PlaySessionState & PlaySessionActions>()(
   persist(
     (set, get) => ({
-      activeError: false,
-      activeSuccess: false,
-      wordsFound: [],
-      score: 0,
-      currentGuess: "",
-      boundaryLetters: [],
-      lastGuessedWord: "",
+      ...initialPlayState,
+      setGameID: (id) => {
+        set(() => ({ gameID: id }));
+      },
+      resetGame: () => {
+        set(initialPlayState);
+      },
       setScoreDevOnly: (score) => {
         set(() => ({ score: score }));
       },
@@ -107,6 +124,7 @@ const usePlaySessionStore = create<PlaySessionState>()(
       partialize: (state) => ({
         wordsFound: state.wordsFound,
         score: state.score,
+        gameID: state.gameID,
       }),
     }
   )
