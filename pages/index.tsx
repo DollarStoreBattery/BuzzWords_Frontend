@@ -1,9 +1,9 @@
 import type { NextPage, GetStaticProps } from "next";
 import Head from "next/head";
-import { getDailyGame } from "../lib/fetchDailyGame";
-import { Puzzle } from "../lib/gameTypes";
+import { getDailyGame, getYesterDaysGame } from "../lib/fetchDailyGame";
+import { Puzzle, ScoreRankings } from "../lib/gameTypes";
 import PageContainer from "../components/basic/PageContainer";
-import { dummyPuzzle } from "../lib/dummy";
+import { fallbackPuzzle } from "../lib/fallback";
 import GameGrid from "../components/GameGrid";
 import Guess from "../components/Guess";
 import FoundWordsList from "../components/FoundWordsList";
@@ -18,10 +18,11 @@ import { GameElementsDiv, GameLayout } from "../components/basic/Layouts";
 import numSecondsTilNewGame from "../lib/getTimeTilNewGame";
 import usePlaySessionStore from "../lib/usePlaySessionStore";
 interface DailyPuzzleProps {
-  game: Puzzle;
+  todaysGame: Puzzle;
+  yesterdaysGame: Puzzle | null;
 }
 
-const MainPage: NextPage<DailyPuzzleProps> = ({ game }) => {
+const MainPage: NextPage<DailyPuzzleProps> = ({ todaysGame: game }) => {
   const {
     pangrams,
     puzzleLetters,
@@ -33,25 +34,35 @@ const MainPage: NextPage<DailyPuzzleProps> = ({ game }) => {
   const resetFunction = usePlaySessionStore((state) => state.resetGame);
   const gameSessionID = usePlaySessionStore((state) => state.gameID);
   const setGameSessionID = usePlaySessionStore((state) => state.setGameID);
+  const wordsFound = usePlaySessionStore((state) => state.wordsFound);
+
+  const [isInstructionsVisible, setIsInstructionsVisible] =
+    useState<boolean>(false);
+
+  const [isYesterdayVisibile, setIsYesterdayVisibile] =
+    useState<boolean>(false);
+
+  const [yesterdayStats, setYesterdayStats] = useState<{
+    yesterdaysFoundWords: Array<string>;
+  }>();
 
   useEffect(() => {
     // detect if getStaticProps has made a new game and reset the play session state accordingly
     if (game.gameId != gameSessionID) {
+      setYesterdayStats({ yesterdaysFoundWords: wordsFound });
       resetFunction();
       setGameSessionID(game.gameId);
     }
-  }, [game.gameId]);
+  }, [game.gameId, wordsFound]);
 
   const centralLetterUpper = centralLetter.toUpperCase();
   const puzzleLettersUpper = puzzleLetters.map((letter) =>
     letter.toUpperCase()
   );
 
-  const [isInstructionsVisible, setIsInstructionsVisible] =
-    useState<boolean>(false);
-
   const gameContents = (
     <>
+      <div>{yesterdayStats?.yesterdaysFoundWords}</div>
       <Guess
         centralLetter={centralLetterUpper}
         pangrams={pangrams}
@@ -102,21 +113,26 @@ const MainPage: NextPage<DailyPuzzleProps> = ({ game }) => {
 
 export default MainPage;
 
-export const getStaticProps: GetStaticProps = async () => {
+export const getStaticProps: GetStaticProps<DailyPuzzleProps> = async () => {
   // temporarily commented out to avoid fetching from redis every time, just using a fixed game rn
-  const dailyGame = await getDailyGame();
-  // const dailyGame = dummyPuzzle;
+  // let yesterdaysGame: Puzzle | undefined | null = await getYesterDaysGame();
+  // let dailyGame: Puzzle | undefined = await getDailyGame();
 
+  let dailyGame = fallbackPuzzle;
+  let yesterdaysGame: Puzzle | null = fallbackPuzzle;
   if (!dailyGame) {
-    return {
-      notFound: true,
-    };
+    dailyGame = fallbackPuzzle;
+  }
+  if (!yesterdaysGame) {
+    yesterdaysGame = null;
   }
 
   return {
     props: {
-      game: dailyGame,
+      todaysGame: dailyGame,
+      yesterdaysGame: yesterdaysGame,
     },
-    revalidate: numSecondsTilNewGame(),
+    // revalidate: numSecondsTilNewGame(),
+    revalidate: 3600,
   };
 };

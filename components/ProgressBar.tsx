@@ -1,5 +1,5 @@
 import styled from "@emotion/styled";
-import { rankAndEmojis } from "../lib/dummy";
+import { rankAndEmojis } from "../lib/constants";
 import { RankingScheme } from "../lib/gameTypes";
 import getRankingBounds from "../lib/getRankingBounds";
 import useHydration from "../lib/useHydration";

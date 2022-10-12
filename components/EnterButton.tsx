@@ -41,7 +41,13 @@ const EnterButton = ({
     return () => {
       window.removeEventListener("keydown", keyboardInputHandler);
     };
-  }, [badGuessActive, successActive, puzzleLetters]);
+  }, [
+    badGuessActive,
+    successActive,
+    puzzleLetters,
+    solutionsWithScores,
+    centralLetter,
+  ]);
 
   return (
     <GameButton

@@ -117,7 +117,7 @@ const FoundWordsList = ({ pangrams }: { pangrams: Pangrams }) => {
       } else
         return <WordsLi key={`wordslist_${word}`}>{titleCaseWord}</WordsLi>;
     });
-  }, [wordsFound]);
+  }, [wordsFound, pangrams]);
 
   const wordContainerContents =
     memoizedWordList.length > 0 ? (
