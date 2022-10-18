@@ -1,6 +1,7 @@
 import { css } from "@emotion/react";
 import styled from "@emotion/styled";
 import { useMemo, useState } from "react";
+import convertTitleCase from "../lib/convertTitleCase";
 import { Pangrams } from "../lib/gameTypes";
 import useHydration from "../lib/useHydration";
 import usePlaySessionStore from "../lib/usePlaySessionStore";
@@ -77,18 +78,20 @@ const WordsContainer = styled("div")<CollapseType & { isAbsolute: boolean }>(
   })
 );
 
-const WordsUl = styled("ul")({
+export const WordsUl = styled("ul")({
+  fontFamily: "Oxygen",
+
   marginTop: 0,
   display: "grid",
   gridTemplateColumns: "repeat(auto-fill, minmax(max(130px, 100%/3), 1fr))",
   listStylePosition: "outside",
 });
 
-const WordsLi = styled("li")({
+export const WordsLi = styled("li")({
   listStyleType: "disc",
 });
 
-const Pangram = styled(WordsLi)({
+export const Pangram = styled(WordsLi)({
   color: colours["Gamboge"],
 });
 
@@ -110,8 +113,7 @@ const FoundWordsList = ({ pangrams }: { pangrams: Pangrams }) => {
 
   const memoizedWordList = useMemo(() => {
     return wordsFound.sort().map((word) => {
-      const titleCaseWord =
-        word.slice(0, 1) + word.toLowerCase().slice(1, word.length);
+      const titleCaseWord = convertTitleCase(word);
       if (pangrams.includes(word)) {
         return <Pangram key={`wordslist_${word}`}>{titleCaseWord}</Pangram>;
       } else

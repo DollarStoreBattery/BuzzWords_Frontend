@@ -17,24 +17,27 @@ import { gameName } from "../lib/constants";
 import { GameElementsDiv, GameLayout } from "../components/basic/Layouts";
 import numSecondsTilNewGame from "../lib/getTimeTilNewGame";
 import usePlaySessionStore from "../lib/usePlaySessionStore";
+import YesterdayModal from "../components/YesterdayModal";
 interface DailyPuzzleProps {
   todaysGame: Puzzle;
   yesterdaysGame: Puzzle | null;
 }
 
-const MainPage: NextPage<DailyPuzzleProps> = ({ todaysGame: game }) => {
+const MainPage: NextPage<DailyPuzzleProps> = ({
+  todaysGame,
+  yesterdaysGame,
+}) => {
   const {
     pangrams,
     puzzleLetters,
     solutionsWithScores,
     centralLetter,
     rankingScheme,
-  } = game;
+  } = todaysGame;
 
-  const resetFunction = usePlaySessionStore((state) => state.resetGame);
+  const resetGame = usePlaySessionStore((state) => state.resetGame);
   const gameSessionID = usePlaySessionStore((state) => state.gameID);
   const setGameSessionID = usePlaySessionStore((state) => state.setGameID);
-  const wordsFound = usePlaySessionStore((state) => state.wordsFound);
 
   const [isInstructionsVisible, setIsInstructionsVisible] =
     useState<boolean>(false);
@@ -42,18 +45,13 @@ const MainPage: NextPage<DailyPuzzleProps> = ({ todaysGame: game }) => {
   const [isYesterdayVisibile, setIsYesterdayVisibile] =
     useState<boolean>(false);
 
-  const [yesterdayStats, setYesterdayStats] = useState<{
-    yesterdaysFoundWords: Array<string>;
-  }>();
-
   useEffect(() => {
     // detect if getStaticProps has made a new game and reset the play session state accordingly
-    if (game.gameId != gameSessionID) {
-      setYesterdayStats({ yesterdaysFoundWords: wordsFound });
-      resetFunction();
-      setGameSessionID(game.gameId);
+    if (todaysGame.gameId != gameSessionID) {
+      resetGame();
+      setGameSessionID(todaysGame.gameId);
     }
-  }, [game.gameId, wordsFound]);
+  }, [todaysGame.gameId]);
 
   const centralLetterUpper = centralLetter.toUpperCase();
   const puzzleLettersUpper = puzzleLetters.map((letter) =>
@@ -62,7 +60,6 @@ const MainPage: NextPage<DailyPuzzleProps> = ({ todaysGame: game }) => {
 
   const gameContents = (
     <>
-      <div>{yesterdayStats?.yesterdaysFoundWords}</div>
       <Guess
         centralLetter={centralLetterUpper}
         pangrams={pangrams}
@@ -85,12 +82,22 @@ const MainPage: NextPage<DailyPuzzleProps> = ({ todaysGame: game }) => {
   );
   return (
     <>
-      <NavBar toggleInstructions={setIsInstructionsVisible} />
+      <NavBar
+        toggleInstructions={setIsInstructionsVisible}
+        toggleYesterday={setIsYesterdayVisibile}
+      />
       <PageContainer>
         <InstructionModal
           isOpened={isInstructionsVisible}
           setIsOpened={setIsInstructionsVisible}
         />
+        {yesterdaysGame && (
+          <YesterdayModal
+            isOpened={isYesterdayVisibile}
+            setIsOpened={setIsYesterdayVisibile}
+            yesterdayGame={yesterdaysGame}
+          ></YesterdayModal>
+        )}
 
         <Head>
           <title>{gameName}</title>

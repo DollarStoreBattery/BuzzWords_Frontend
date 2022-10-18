@@ -31,13 +31,15 @@ export const NavIcon = styled("svg")({
 
 const NavBar = ({
   toggleInstructions,
+  toggleYesterday,
 }: {
   toggleInstructions: Dispatch<SetStateAction<boolean>>;
+  toggleYesterday: Dispatch<SetStateAction<boolean>>;
 }) => {
   return (
     <Navigation>
       <NavigationInner>
-        <IconButton>
+        <IconButton onClick={(e) => toggleYesterday(true)}>
           <NavIcon
             viewBox="0 0 24 24"
             fill="currentColor"

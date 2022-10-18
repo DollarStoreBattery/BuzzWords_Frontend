@@ -40,6 +40,7 @@ interface PlaySessionActions {
   setScoreDevOnly: (score: number) => void;
   resetGame: () => void;
   setGameID: (id: string) => void;
+  setYesterday: () => void;
 }
 
 const initialPlayState: PlaySessionState = {
@@ -53,14 +54,22 @@ const initialPlayState: PlaySessionState = {
   gameID: "",
 };
 
-const usePlaySessionStore = create<PlaySessionState & PlaySessionActions>()(
+const usePlaySessionStore = create<
+  PlaySessionState &
+    PlaySessionActions & { yesterdaysWordsFound: Array<string> }
+>()(
   persist(
     (set, get) => ({
       ...initialPlayState,
+      yesterdaysWordsFound: [],
+      setYesterday: () => {
+        set((state) => ({ yesterdaysWordsFound: state.wordsFound }));
+      },
       setGameID: (id) => {
         set(() => ({ gameID: id }));
       },
       resetGame: () => {
+        get().setYesterday();
         set(initialPlayState);
       },
       setScoreDevOnly: (score) => {
