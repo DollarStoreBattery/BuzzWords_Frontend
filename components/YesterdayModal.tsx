@@ -11,11 +11,10 @@ import { WordsLi, WordsUl } from "./FoundWordsList";
 const Word = styled(WordsLi)<{ isPangram: boolean; wasFound: boolean }>(
   (props) => ({
     color: props.isPangram ? colours.Gamboge : "",
-    opacity: props.wasFound ? 1 : 0.4,
-    // ":marker": {
-    //   content: `✝`,
-    // },
-    ":marker": { content: '"✝ "', color: "red" },
+    opacity: props.wasFound ? 1 : 0.45,
+    "::marker": {
+      content: props.wasFound ? '"✔ "' : "initial",
+    },
   })
 );
 
@@ -28,47 +27,48 @@ const YesterdayModal = ({
   setIsOpened: Dispatch<SetStateAction<boolean>>;
   yesterdayGame: Puzzle;
 }) => {
-  const { solutionsWithScores, pangrams } = yesterdayGame;
+  const { solutionsWithScores, pangrams, date, puzzleLetters, centralLetter } =
+    yesterdayGame;
 
-  //   const yesterdaysSolutions = Object.keys(solutionsWithScores);
+  const yesterdaysSolutions = Object.keys(solutionsWithScores);
 
-  //   const yesterdaysWordsFound = usePlaySessionStore(
-  //     (state) => state.yesterdaysWordsFound
-  //   );
+  const yesterdaysWordsFound = usePlaySessionStore(
+    (state) => state.yesterdaysWordsFound
+  );
 
-  const yesterdaysSolutions = [
-    "Aerially",
-    "Aerie",
-    "Aide",
-    "Aided",
-    "Ailed",
-    "Aired",
-    "Airier",
-    "Airily",
-    "Airy",
-    "Allied",
-    "Aria",
-    "Arid",
-    "Aridly",
-    "Daily",
-    "Dairy",
-    "Dallied",
-    "Dallier",
-    "Deadlier",
-    "Dearie",
-    "READILY",
-    "DREARILY",
-  ];
+  //   const yesterdaysSolutions = [
+  //     "Aerially",
+  //     "Aerie",
+  //     "Aide",
+  //     "Aided",
+  //     "Ailed",
+  //     "Aired",
+  //     "Airier",
+  //     "Airily",
+  //     "Airy",
+  //     "Allied",
+  //     "Aria",
+  //     "Arid",
+  //     "Aridly",
+  //     "Daily",
+  //     "Dairy",
+  //     "Dallied",
+  //     "Dallier",
+  //     "Deadlier",
+  //     "Dearie",
+  //     "READILY",
+  //     "DREARILY",
+  //   ];
 
-  const yesterdaysWordsFound = [
-    "Allied",
-    "Aria",
-    "Arid",
-    "Aridly",
-    "Daily",
-    "Dairy",
-    "READILY",
-  ];
+  //   const yesterdaysWordsFound = [
+  //     "Allied",
+  //     "Aria",
+  //     "Arid",
+  //     "Aridly",
+  //     "Daily",
+  //     "Dairy",
+  //     "READILY",
+  //   ];
 
   const yesterdayWordsList = yesterdaysSolutions.map((word) => {
     const titleCaseWord = convertTitleCase(word);
@@ -83,8 +83,31 @@ const YesterdayModal = ({
       </Word>
     );
   });
+  const yesterDate = new Date(date);
+  const formattedPuzzleLetters = puzzleLetters.map((letter) => {
+    const letterUpper = letter.toUpperCase();
+
+    if (letter == centralLetter) {
+      return (
+        <span
+          key={`yesterday_${letter}`}
+          css={{
+            color: colours.Gamboge,
+          }}
+        >
+          {letterUpper}
+        </span>
+      );
+    } else return letterUpper;
+  });
   return (
     <Modal isOpened={isOpened} setIsOpened={setIsOpened}>
+      <TextElement>
+        Solutions for {yesterDate.toDateString().replace(/^\S+\s/, "")}
+      </TextElement>
+      <TextElement fontFamily="Decorative" size="lg" unPadded={true}>
+        {formattedPuzzleLetters}
+      </TextElement>
       <TextElement>{`You found ${yesterdaysWordsFound.length} word${
         yesterdaysWordsFound.length == 1 ? "" : "s"
       } out of ${yesterdaysSolutions.length} yesterday`}</TextElement>

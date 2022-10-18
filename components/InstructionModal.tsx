@@ -42,7 +42,7 @@ const InstructionModal = ({
 
       <StyledList>
         <StyledListItem>Words must contain the central letter</StyledListItem>
-        <StyledListItem>Words must be at least 4 letters</StyledListItem>
+        <StyledListItem>Words must be at least 4 letters long</StyledListItem>
         <StyledListItem>All letters can be used more than once</StyledListItem>
       </StyledList>
 
@@ -54,8 +54,8 @@ const InstructionModal = ({
           Longer words are worth 1 point per letter
         </StyledListItem>
         <StyledListItem>
-          Every puzzle has at least one pangram. These are words that use all 7
-          letters, and are worth 7 bonus points!
+          Puzzles will always have at least one pangram. These are words that
+          use all 7 letters, and are worth 7 bonus points!
         </StyledListItem>
       </StyledList>
 
@@ -83,9 +83,18 @@ const InstructionModal = ({
           What word list does this game use?
           <StyledList>
             <StyledListItem>
-              <a href="http://wordlist.aspell.net/12dicts/">
+              <a href="http://wordlist.aspell.net/12dicts/" target={"_blank"}>
                 12Dicts from SCOWL
               </a>
+            </StyledListItem>
+          </StyledList>
+        </StyledListItem>
+        <StyledListItem>
+          Are there vulgar or offensive words in the word list?
+          <StyledList>
+            <StyledListItem>
+              Unfortunately, yes. Filtering them out is something I plan to do
+              soon.
             </StyledListItem>
           </StyledList>
         </StyledListItem>
