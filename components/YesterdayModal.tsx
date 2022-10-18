@@ -10,6 +10,7 @@ import { WordsLi, WordsUl } from "./FoundWordsList";
 
 const Word = styled(WordsLi)<{ isPangram: boolean; wasFound: boolean }>(
   (props) => ({
+    zIndex: -1,
     color: props.isPangram ? colours.Gamboge : "",
     opacity: props.wasFound ? 1 : 0.45,
     "::marker": {
