@@ -72,6 +72,15 @@ const InstructionModal = ({
           </StyledList>
         </StyledListItem>
         <StyledListItem>
+          Are there keyboard shortcuts?
+          <StyledList>
+            <StyledListItem>
+              Yes, you can type in words rather than clicking the tiles. You can
+              also use the backspace and enter keys.
+            </StyledListItem>
+          </StyledList>
+        </StyledListItem>
+        <StyledListItem>
           Does this game use the same word list as the New York Times?
           <StyledList>
             <StyledListItem>
@@ -83,7 +92,11 @@ const InstructionModal = ({
           What word list does this game use?
           <StyledList>
             <StyledListItem>
-              <a href="http://wordlist.aspell.net/12dicts/" target={"_blank"}>
+              <a
+                href="http://wordlist.aspell.net/12dicts/"
+                target={"_blank"}
+                rel="noreferrer"
+              >
                 12Dicts from SCOWL
               </a>
             </StyledListItem>

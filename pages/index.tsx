@@ -1,7 +1,7 @@
 import type { NextPage, GetStaticProps } from "next";
 import Head from "next/head";
 import { getDailyGame, getYesterDaysGame } from "../lib/fetchDailyGame";
-import { Puzzle, ScoreRankings } from "../lib/gameTypes";
+import { Puzzle } from "../lib/gameTypes";
 import PageContainer from "../components/basic/PageContainer";
 import { fallbackPuzzle } from "../lib/fallback";
 import GameGrid from "../components/GameGrid";
@@ -15,7 +15,6 @@ import { useEffect, useState } from "react";
 import InstructionModal from "../components/InstructionModal";
 import { gameName } from "../lib/constants";
 import { GameElementsDiv, GameLayout } from "../components/basic/Layouts";
-import numSecondsTilNewGame from "../lib/getTimeTilNewGame";
 import usePlaySessionStore from "../lib/usePlaySessionStore";
 import YesterdayModal from "../components/YesterdayModal";
 interface DailyPuzzleProps {
@@ -122,11 +121,12 @@ export default MainPage;
 
 export const getStaticProps: GetStaticProps<DailyPuzzleProps> = async () => {
   // temporarily commented out to avoid fetching from redis every time, just using a fixed game rn
-  // let yesterdaysGame: Puzzle | undefined | null = await getYesterDaysGame();
-  // let dailyGame: Puzzle | undefined = await getDailyGame();
+  let yesterdaysGame: Puzzle | undefined | null = await getYesterDaysGame();
+  let dailyGame: Puzzle | undefined = await getDailyGame();
 
-  let dailyGame = fallbackPuzzle;
-  let yesterdaysGame: Puzzle | null = fallbackPuzzle;
+  // let dailyGame = fallbackPuzzle;
+  // let yesterdaysGame: Puzzle | null = fallbackPuzzle;
+
   if (!dailyGame) {
     dailyGame = fallbackPuzzle;
   }
@@ -139,7 +139,6 @@ export const getStaticProps: GetStaticProps<DailyPuzzleProps> = async () => {
       todaysGame: dailyGame,
       yesterdaysGame: yesterdaysGame,
     },
-    // revalidate: numSecondsTilNewGame(),
-    revalidate: 3600,
+    revalidate: 60,
   };
 };

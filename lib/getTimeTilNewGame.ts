@@ -7,7 +7,7 @@ const numSecondsTilNewGame = (): number => {
 
   const msTillMidnight = midnightESTtimestamp - now.getTime();
 
-  //   console.log(msTillMidnight / 1000 / 60 / 60, "hours to midnight EST");
+  // console.log(msTillMidnight / 1000 / 60 / 60, "hours to midnight EST");
 
   return Math.ceil(msTillMidnight / 1000);
 };
