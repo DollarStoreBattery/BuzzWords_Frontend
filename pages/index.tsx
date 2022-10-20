@@ -1,6 +1,6 @@
 import type { NextPage, GetStaticProps } from "next";
 import Head from "next/head";
-import { getDailyGame, getYesterDaysGame } from "../lib/fetchDailyGame";
+import { getDailyGame, getYesterDaysGame } from "../lib/fetchGame";
 import { Puzzle } from "../lib/gameTypes";
 import PageContainer from "../components/basic/PageContainer";
 import { fallbackPuzzle } from "../lib/fallback";
@@ -139,6 +139,6 @@ export const getStaticProps: GetStaticProps<DailyPuzzleProps> = async () => {
       todaysGame: dailyGame,
       yesterdaysGame: yesterdaysGame,
     },
-    revalidate: 60,
+    // revalidate: 60,
   };
 };

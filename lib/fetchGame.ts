@@ -4,7 +4,6 @@ import { Puzzle } from "./gameTypes";
 import path from "path";
 
 dotenv.config({ path: path.resolve("../.env") });
-const GAME_KEY = "dailyGame";
 
 enum RedisKeys {
   GAME_KEY = "dailyGame",
