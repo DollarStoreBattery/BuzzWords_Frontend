@@ -2,6 +2,7 @@ import styled from "@emotion/styled";
 import { Dispatch, SetStateAction } from "react";
 import convertTitleCase from "../lib/convertTitleCase";
 import { Puzzle } from "../lib/gameTypes";
+import useHydration from "../lib/useHydration";
 import usePlaySessionStore from "../lib/usePlaySessionStore";
 import { colours } from "../styles/theme";
 import Modal from "./basic/Modal";
@@ -28,6 +29,8 @@ const YesterdayModal = ({
   setIsOpened: Dispatch<SetStateAction<boolean>>;
   yesterdayGame: Puzzle;
 }) => {
+  const hasHydrated = useHydration();
+
   const { solutionsWithScores, pangrams, date, puzzleLetters, centralLetter } =
     yesterdayGame;
 
@@ -36,40 +39,6 @@ const YesterdayModal = ({
   const yesterdaysWordsFound = usePlaySessionStore(
     (state) => state.yesterdaysWordsFound
   );
-
-  //   const yesterdaysSolutions = [
-  //     "Aerially",
-  //     "Aerie",
-  //     "Aide",
-  //     "Aided",
-  //     "Ailed",
-  //     "Aired",
-  //     "Airier",
-  //     "Airily",
-  //     "Airy",
-  //     "Allied",
-  //     "Aria",
-  //     "Arid",
-  //     "Aridly",
-  //     "Daily",
-  //     "Dairy",
-  //     "Dallied",
-  //     "Dallier",
-  //     "Deadlier",
-  //     "Dearie",
-  //     "READILY",
-  //     "DREARILY",
-  //   ];
-
-  //   const yesterdaysWordsFound = [
-  //     "Allied",
-  //     "Aria",
-  //     "Arid",
-  //     "Aridly",
-  //     "Daily",
-  //     "Dairy",
-  //     "READILY",
-  //   ];
 
   const yesterdayWordsList = yesterdaysSolutions.map((word) => {
     const titleCaseWord = convertTitleCase(word);
@@ -84,7 +53,9 @@ const YesterdayModal = ({
       </Word>
     );
   });
+
   const yesterDate = new Date(date);
+
   const formattedPuzzleLetters = puzzleLetters.map((letter) => {
     const letterUpper = letter.toUpperCase();
 
@@ -101,8 +72,9 @@ const YesterdayModal = ({
       );
     } else return letterUpper;
   });
-  return (
-    <Modal isOpened={isOpened} setIsOpened={setIsOpened}>
+
+  const modalContents = (
+    <>
       <TextElement>
         Solutions for {yesterDate.toDateString().replace(/^\S+\s/, "")}
       </TextElement>
@@ -119,6 +91,11 @@ const YesterdayModal = ({
       >
         {yesterdayWordsList}
       </WordsUl>
+    </>
+  );
+  return (
+    <Modal isOpened={isOpened} setIsOpened={setIsOpened}>
+      {hasHydrated ? modalContents : <>Loading...</>}
     </Modal>
   );
 };

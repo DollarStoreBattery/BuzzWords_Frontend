@@ -26,6 +26,10 @@ interface PlaySessionState {
   gameID: string;
 }
 
+interface PersistentPlaySessionState {
+  yesterdaysWordsFound: Array<string>;
+}
+
 interface PlaySessionActions {
   setBoundaryLetters: (letters: Array<string>) => void;
   setBadGuessReason: (reason: BadGuessReasons) => void;
@@ -55,8 +59,7 @@ const initialPlayState: PlaySessionState = {
 };
 
 const usePlaySessionStore = create<
-  PlaySessionState &
-    PlaySessionActions & { yesterdaysWordsFound: Array<string> }
+  PlaySessionState & PlaySessionActions & PersistentPlaySessionState
 >()(
   persist(
     (set, get) => ({
@@ -134,22 +137,10 @@ const usePlaySessionStore = create<
         wordsFound: state.wordsFound,
         score: state.score,
         gameID: state.gameID,
+        yesterdaysWordsFound: state.yesterdaysWordsFound,
       }),
     }
   )
 );
 
 export default usePlaySessionStore;
-
-//   rankingScheme: {
-//     Beginner: 0,
-//     "Good Start": 0,
-//     "Moving Up": 0,
-//     Good: 0,
-//     Solid: 0,
-//     Nice: 0,
-//     Great: 0,
-//     Amazing: 0,
-//     Genius: 0,
-//     "Queen Bee": 0,
-//   }
