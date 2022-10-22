@@ -51,6 +51,7 @@ const EnterButton = ({
 
   return (
     <GameButton
+      name="Enter Guess"
       aria-label="Enter Guess"
       onClick={(e) => handleGuessSubmit(centralLetter, solutionsWithScores)}
     >

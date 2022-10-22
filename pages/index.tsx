@@ -81,6 +81,12 @@ const MainPage: NextPage<DailyPuzzleProps> = ({
   );
   return (
     <>
+      <Head>
+        <title>{gameName}</title>
+        <meta name="description" content="Spelling Bee Game" />
+        <link rel="icon" href="/favicon.ico" />
+      </Head>
+
       <NavBar
         toggleInstructions={setIsInstructionsVisible}
         toggleYesterday={setIsYesterdayVisibile}
@@ -97,12 +103,6 @@ const MainPage: NextPage<DailyPuzzleProps> = ({
             yesterdayGame={yesterdaysGame}
           ></YesterdayModal>
         )}
-
-        <Head>
-          <title>{gameName}</title>
-          <meta name="description" content="Spelling Bee Game" />
-          <link rel="icon" href="/favicon.ico" />
-        </Head>
 
         <ScoreBoard rankingScheme={rankingScheme} />
 

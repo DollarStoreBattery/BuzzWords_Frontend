@@ -39,7 +39,11 @@ const NavBar = ({
   return (
     <Navigation>
       <NavigationInner>
-        <IconButton onClick={(e) => toggleYesterday(true)}>
+        <IconButton
+          onClick={(e) => toggleYesterday(true)}
+          name="Yesterday's Solutions"
+          aria-label="Yesterday's Solutions"
+        >
           <NavIcon
             viewBox="0 0 24 24"
             fill="currentColor"
@@ -50,7 +54,11 @@ const NavBar = ({
           </NavIcon>
         </IconButton>
         <span> {gameName}</span>
-        <IconButton onClick={(e) => toggleInstructions(true)}>
+        <IconButton
+          onClick={(e) => toggleInstructions(true)}
+          name="Instructions"
+          aria-label="Instructions"
+        >
           <NavIcon
             viewBox="0 0 1024 1024"
             fill="currentColor"
