@@ -139,6 +139,6 @@ export const getStaticProps: GetStaticProps<DailyPuzzleProps> = async () => {
       todaysGame: dailyGame,
       yesterdaysGame: yesterdaysGame,
     },
-    // revalidate: 60,
+    revalidate: 60,
   };
 };
