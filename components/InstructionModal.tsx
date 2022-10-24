@@ -103,15 +103,6 @@ const InstructionModal = ({
           </StyledList>
         </StyledListItem>
         <StyledListItem>
-          Are there vulgar or offensive words in the word list?
-          <StyledList>
-            <StyledListItem>
-              Unfortunately, yes. Filtering them out is something I plan to do
-              soon.
-            </StyledListItem>
-          </StyledList>
-        </StyledListItem>
-        <StyledListItem>
           Does this game have a paywall?
           <StyledList>
             <StyledListItem>
