@@ -83,7 +83,7 @@ const MainPage: NextPage<DailyPuzzleProps> = ({
     <>
       <Head>
         <title>{gameName}</title>
-        <meta name="description" content="Spelling Bee Game" />
+        <meta name="description" content={gameName} />
         <link rel="icon" href="/favicon.ico" />
       </Head>
 

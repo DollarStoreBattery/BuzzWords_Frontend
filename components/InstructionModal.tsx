@@ -26,7 +26,7 @@ const InstructionModal = ({
   return (
     <Modal isOpened={isOpened} setIsOpened={setIsOpened}>
       <TextElement fontFamily="Decorative" unPadded={true}>
-        {`Welcome to the ${gameName}🐝`}
+        {`Welcome to the ${gameName}!`}
       </TextElement>
       <TextElement size={"sm"}>
         A new game drops every midnight (Eastern Standard Time).

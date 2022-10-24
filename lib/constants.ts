@@ -1,6 +1,6 @@
 import { ScoreRankings } from "./gameTypes";
 
-export const gameName = "Spelling Bee Game";
+export const gameName = "BuzzWords Game";
 
 export type Position = { top: number; midpoint: number };
 
