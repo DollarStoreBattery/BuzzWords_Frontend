@@ -1,4 +1,4 @@
-import { colours, fontSizes, spacings } from "../../styles/theme";
+import { fontSizes, spacings } from "../../styles/theme";
 
 import styled from "@emotion/styled";
 
@@ -9,11 +9,8 @@ const PageContainer = styled.div({
   alignItems: "center",
   padding: spacings.md,
   height: "100%",
-  minHeight: "100vh",
   maxWidth: "100vw",
   fontSize: fontSizes.md,
-  backgroundColor: colours["Antique White"],
   justifyContent: "flex-start",
-  // background: `linear-gradient(${colours.Gamboge},${colours["Antique White"]})`,
 });
 export default PageContainer;
