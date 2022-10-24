@@ -26,7 +26,7 @@ export const NavigationInner = styled("div")({
 export const NavIcon = styled("svg")({
   width: 30,
   height: 30,
-  ":hover": { filter: "opacity(0.8)" },
+  "@media (hover:hover)": { ":hover": { filter: "opacity(0.8)" } },
 });
 
 const NavBar = ({

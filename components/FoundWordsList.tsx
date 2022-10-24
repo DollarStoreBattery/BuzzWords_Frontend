@@ -42,9 +42,10 @@ const ControllerAndListContainer = styled("div")({
 const CollapsibleController = styled("button")<
   CollapseType & { isAbsolute: boolean }
 >(collapsibleHeaderStyles, (props) => ({
+  outline: "none",
   width: props.isAbsolute ? narrowScreenWidth : wideScreenWidth,
   cursor: "pointer",
-  ":hover": { filter: "brightness(90%)" },
+  "@media (hover:hover)": { ":hover": { filter: "brightness(90%)" } },
   backgroundColor: props.opened ? colours.Gamboge : colours["Gold Crayola"],
 }));
 

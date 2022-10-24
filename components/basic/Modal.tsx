@@ -35,7 +35,7 @@ const ModalCloseButton = styled("button")({
   position: "sticky",
   top: 0,
   border: "1px solid #80808057",
-  ":hover": { filter: "brightness(90%)" },
+  "@media (hover:hover)": { ":hover": { filter: "brightness(90%)" } },
 });
 
 const CloseIcon = styled("svg")({

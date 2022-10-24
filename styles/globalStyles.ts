@@ -6,6 +6,7 @@ export const globalStyles = css`
   }
   ,
   body {
+    -webkit-tap-highlight-color: transparent;
     margin: 0;
     padding: 0;
     height: 100%;

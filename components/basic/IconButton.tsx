@@ -8,7 +8,7 @@ const IconButton = styled("button")({
   outline: "none",
   border: "none",
   cursor: "pointer",
-  ":hover": { filter: "brightness(90%)" },
+  "@media (hover:hover)": { ":hover": { filter: "brightness(90%)" } },
 });
 
 export default IconButton;

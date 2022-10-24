@@ -32,8 +32,8 @@ const HoneyCombElement = styled("div")<HoneyCombType>(
     height: "min(20vw,95px)",
     userSelect: "none",
     clipPath: "polygon(25% 0%, 75% 0%, 100% 50%,75% 100%,25% 100%,0 50%)",
-    transition: ".1s linear",
-    ":hover": { filter: "brightness(89%)" },
+    transition: "0.07s ease-in-out",
+    "@media (hover:hover)": { ":hover": { filter: "brightness(89%)" } },
   },
   (props) => ({
     backgroundColor: props.cellColour
@@ -48,7 +48,7 @@ const HoneyCombElement = styled("div")<HoneyCombType>(
 
 const HoneyCombCenter = styled(HoneyCombElement)({
   backgroundColor: colours["Kobe"],
-  ":hover": { filter: "brightness(120%)" },
+  "@media (hover:hover)": { ":hover": { filter: "brightness(120%)" } },
 });
 
 // trial and error translations for perfect honeycomb shape
