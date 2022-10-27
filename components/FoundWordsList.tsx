@@ -43,6 +43,7 @@ const CollapsibleController = styled("button")<
   CollapseType & { isAbsolute: boolean }
 >(collapsibleHeaderStyles, (props) => ({
   outline: "none",
+  color: colours["Dark Sienna"],
   width: props.isAbsolute ? narrowScreenWidth : wideScreenWidth,
   cursor: "pointer",
   "@media (hover:hover)": { ":hover": { filter: "brightness(90%)" } },

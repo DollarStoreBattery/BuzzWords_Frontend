@@ -24,6 +24,7 @@ export const NavigationInner = styled("div")({
 });
 
 export const NavIcon = styled("svg")({
+  color: colours["Dark Sienna"],
   width: 30,
   height: 30,
   "@media (hover:hover)": { ":hover": { filter: "opacity(0.8)" } },
