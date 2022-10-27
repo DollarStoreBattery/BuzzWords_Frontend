@@ -9,10 +9,11 @@ import TextElement from "./basic/TextElement";
 const ScoreCardContainer = styled("div")({
   marginBlock: "10px 20px",
   display: "grid",
-  gridTemplateColumns: "repeat(auto-fit, minmax(60px,1fr))",
+  gridTemplateColumns: "24% auto 24%",
   width: "100%",
   maxWidth: "700px",
-  justifyContent: "space-evenly",
+  // gridTemplateColumns: "repeat(auto-fit, minmax(60px,1fr))",
+  // justifyContent: "space-evenly",
 });
 
 const ScoreCard = styled("div")({
@@ -32,21 +33,28 @@ const ScoreCard = styled("div")({
 });
 
 const ScoreLabel = styled(TextElement)({
+  // this stops the font from blowing up on small fones with larger enabled fonts
+  textSizeAdjust: "none",
   fontFamily: "Oxygen",
   "@media (max-width: 380px)": {
-    // fontSize: "1.05rem",
     fontSize: "10.5px",
   },
 });
 
 const ScoreValue = styled(TextElement)({
+  textSizeAdjust: "none",
   "@media (max-width: 380px)": {
-    // fontSize: "1.5rem",
     fontSize: "15px",
   },
 });
 
-const CardElement = (label: string, value: string | number) => {
+const CardElement = ({
+  label,
+  value,
+}: {
+  label: string;
+  value: string | number;
+}) => {
   return (
     <ScoreCard>
       <ScoreLabel size="xs" unPadded={true} textColour={"Kobe"}>
@@ -71,18 +79,21 @@ const ScoreBoard = ({ rankingScheme }: { rankingScheme: RankingScheme }) => {
   if (!hasHydrated) {
     return (
       <ScoreCardContainer>
-        {CardElement("Score", "")}
-        {CardElement("Rank", "")}
-        {CardElement("Pts to next Rank", "")}
+        <CardElement label="Score" value=""></CardElement>
+        <CardElement label="Rank" value=""></CardElement>
+        <CardElement label="Pts to next Rank" value=""></CardElement>
       </ScoreCardContainer>
     );
   } else
     return (
       <ScoreCardContainer>
-        {CardElement("Score", score)}
-        {CardElement("Rank", currentRank)}
+        <CardElement label="Score" value={score}></CardElement>
+        <CardElement label="Rank" value={currentRank}></CardElement>
         {pointsToNextRank ? (
-          CardElement("Pts to next Rank", pointsToNextRank)
+          <CardElement
+            label="Pts to next Rank"
+            value={pointsToNextRank}
+          ></CardElement>
         ) : (
           <></>
         )}
