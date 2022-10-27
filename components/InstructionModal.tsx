@@ -31,23 +31,17 @@ const InstructionModal = ({
       <TextElement size={"sm"}>
         A new game drops every midnight (Eastern Standard Time).
       </TextElement>
-
       {getHeadingElement("Goal")}
-
       <TextElement size={"sm"} css={{ alignSelf: "flex-start" }}>
         Find as many words as possible with the provided letters.
       </TextElement>
-
       {getHeadingElement("Rules")}
-
       <StyledList>
         <StyledListItem>Words must contain the central letter</StyledListItem>
         <StyledListItem>Words must be at least 4 letters long</StyledListItem>
         <StyledListItem>All letters can be used more than once</StyledListItem>
       </StyledList>
-
       {getHeadingElement("Scoring")}
-
       <StyledList>
         <StyledListItem>Four-letter words are worth 1 point</StyledListItem>
         <StyledListItem>
@@ -58,9 +52,7 @@ const InstructionModal = ({
           use all 7 letters, and are worth 7 bonus points!
         </StyledListItem>
       </StyledList>
-
       {getHeadingElement("F.A.Q.")}
-
       <StyledList>
         <StyledListItem>
           How do rankings work?
@@ -99,6 +91,7 @@ const InstructionModal = ({
               >
                 12Dicts from SCOWL
               </a>
+              , with some offensive words filtered out.
             </StyledListItem>
           </StyledList>
         </StyledListItem>
@@ -111,15 +104,25 @@ const InstructionModal = ({
             </StyledListItem>
           </StyledList>
         </StyledListItem>
+        <StyledListItem>
+          Can I contact you about adding/removing a word from your wordlist?
+          <StyledList>
+            <StyledListItem>
+              I'll gladly accept any word suggestions or just general feedback
+              via&nbsp;
+              <a href="mailto:hello@buzzwordsgame.com">email</a>.
+            </StyledListItem>
+          </StyledList>
+        </StyledListItem>
       </StyledList>
       {/* todo: figure out when the site is ready for this */}
       {/* <a href="https://ko-fi.com/U6U4FI5BD" target="_blank">
-<img
-  height="36"
-  src="https://cdn.ko-fi.com/cdn/kofi2.png?v=3"
-  alt="Buy Me a Coffee at ko-fi.com"
-/>
-</a> */}
+        <img
+          height="36"
+          src="https://cdn.ko-fi.com/cdn/kofi2.png?v=3"
+          alt="Buy Me a Coffee at ko-fi.com"
+        />
+      </a> */}
     </Modal>
   );
 };
