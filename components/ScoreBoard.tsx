@@ -35,15 +35,15 @@ const ScoreLabel = styled(TextElement)({
   // this stops the font from blowing up on small fones with larger enabled fonts
   textSizeAdjust: "none",
   fontFamily: "Oxygen",
-  "@media (max-width: 380px)": {
-    fontSize: "10.5px",
+  "@media (max-width: 400px)": {
+    fontSize: ".35em",
   },
 });
 
 const ScoreValue = styled(TextElement)({
   textSizeAdjust: "none",
-  "@media (max-width: 380px)": {
-    fontSize: "15px",
+  "@media (max-width: 400px)": {
+    fontSize: ".5em",
   },
 });
 
