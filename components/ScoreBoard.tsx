@@ -9,11 +9,10 @@ import TextElement from "./basic/TextElement";
 const ScoreCardContainer = styled("div")({
   marginBlock: "10px 20px",
   display: "grid",
-  gridTemplateColumns: "24% auto 24%",
   width: "100%",
   maxWidth: "700px",
-  // gridTemplateColumns: "repeat(auto-fit, minmax(60px,1fr))",
-  // justifyContent: "space-evenly",
+  gridTemplateColumns: "repeat(auto-fit, minmax(60px,1fr))",
+  justifyContent: "space-evenly",
 });
 
 const ScoreCard = styled("div")({
