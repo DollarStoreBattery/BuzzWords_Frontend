@@ -43,7 +43,7 @@ const ScoreLabel = styled(TextElement)({
 const ScoreValue = styled(TextElement)({
   textSizeAdjust: "none",
   "@media (max-width: 400px)": {
-    fontSize: ".5em",
+    fontSize: ".52em",
   },
 });
 
