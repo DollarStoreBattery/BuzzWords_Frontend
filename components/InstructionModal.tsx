@@ -108,8 +108,8 @@ const InstructionModal = ({
           Can I contact you about adding/removing a word from your wordlist?
           <StyledList>
             <StyledListItem>
-              I'll gladly accept any word suggestions or just general feedback
-              via&nbsp;
+              {`I'll gladly accept any word suggestions or just general feedback
+              via `}
               <a href="mailto:hello@buzzwordsgame.com">email</a>.
             </StyledListItem>
           </StyledList>
