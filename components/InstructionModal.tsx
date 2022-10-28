@@ -1,7 +1,7 @@
 import { Dispatch, SetStateAction } from "react";
 import { gameName } from "../lib/constants";
 import { StyledList, StyledListItem } from "./basic/List";
-import Modal from "./basic/Modal";
+import CustomModal from "./basic/CustomModal";
 import TextElement from "./basic/TextElement";
 
 const getHeadingElement = (heading: string) => {
@@ -24,7 +24,7 @@ const InstructionModal = ({
   setIsOpened: Dispatch<SetStateAction<boolean>>;
 }) => {
   return (
-    <Modal isOpened={isOpened} setIsOpened={setIsOpened}>
+    <CustomModal isOpened={isOpened} setIsOpened={setIsOpened}>
       <TextElement fontFamily="Decorative" unPadded={true}>
         {`Welcome to the ${gameName}!`}
       </TextElement>
@@ -123,7 +123,7 @@ const InstructionModal = ({
           alt="Buy Me a Coffee at ko-fi.com"
         />
       </a> */}
-    </Modal>
+    </CustomModal>
   );
 };
 

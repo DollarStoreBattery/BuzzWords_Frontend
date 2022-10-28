@@ -1,8 +1,9 @@
 import styled from "@emotion/styled";
-import { Dispatch, SetStateAction, useEffect, useRef } from "react";
+import { Dispatch, SetStateAction } from "react";
 import { colours, fontSizes, spacings, fontFamilies } from "../../styles/theme";
+import { Modal } from "react-dialog-polyfill";
 
-export const ModalContainer = styled("dialog")({
+export const ModalContainer = styled(Modal)({
   border: "1px solid #80808057",
   backgroundColor: colours["Soft White"],
   height: "95%",
@@ -50,24 +51,17 @@ type ModalProps = {
   children: React.ReactNode;
 };
 
-const Modal: React.FC<ModalProps> = ({ isOpened, setIsOpened, children }) => {
-  const modalRef = useRef<HTMLDialogElement>(null);
-  useEffect(() => {
-    if (isOpened) {
-      modalRef.current?.removeAttribute("open");
-
-      modalRef.current?.showModal();
-    } else {
-      modalRef.current?.close();
-    }
-  }, [isOpened, modalRef]);
-
+const CustomModal: React.FC<ModalProps> = ({
+  isOpened,
+  setIsOpened,
+  children,
+}) => {
   return (
     <ModalContainer
-      ref={modalRef}
       onCancel={(e) => {
         setIsOpened(false);
       }}
+      open={isOpened}
     >
       <ModalCloseButton
         onClick={(e) => {
@@ -89,4 +83,4 @@ const Modal: React.FC<ModalProps> = ({ isOpened, setIsOpened, children }) => {
   );
 };
 
-export default Modal;
+export default CustomModal;

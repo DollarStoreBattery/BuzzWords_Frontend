@@ -5,7 +5,7 @@ import { Puzzle } from "../lib/gameTypes";
 import useHydration from "../lib/useHydration";
 import usePlaySessionStore from "../lib/usePlaySessionStore";
 import { colours } from "../styles/theme";
-import Modal from "./basic/Modal";
+import CustomModal from "./basic/CustomModal";
 import TextElement from "./basic/TextElement";
 import { WordsLi, WordsUl } from "./FoundWordsList";
 
@@ -94,9 +94,9 @@ const YesterdayModal = ({
     </>
   );
   return (
-    <Modal isOpened={isOpened} setIsOpened={setIsOpened}>
+    <CustomModal isOpened={isOpened} setIsOpened={setIsOpened}>
       {hasHydrated ? modalContents : <>Loading...</>}
-    </Modal>
+    </CustomModal>
   );
 };
 
