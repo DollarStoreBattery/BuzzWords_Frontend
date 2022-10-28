@@ -7,7 +7,8 @@ import { colours } from "../styles/theme";
 import TextElement from "./basic/TextElement";
 
 const ScoreCardContainer = styled("div")({
-  marginBlock: "10px 20px",
+  marginTop: 10,
+  marginBottom: 20,
   display: "grid",
   width: "100%",
   maxWidth: "700px",

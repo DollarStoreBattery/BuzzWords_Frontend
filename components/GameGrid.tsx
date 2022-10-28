@@ -12,7 +12,8 @@ import TextElement from "./basic/TextElement";
 
 const HoneyCombContainer = styled.div({
   display: "grid",
-  marginBlock: "min(24vw,110px) min(26vw,120px)",
+  marginTop: "min(24vw,110px)",
+  marginBottom: "min(26vw,120px)",
 });
 
 type HoneyCombType = {

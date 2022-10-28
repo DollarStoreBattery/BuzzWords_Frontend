@@ -9,7 +9,8 @@ import { rocking } from "../styles/animations";
 const progressHeight = 4;
 
 const ProgressContainer = styled("div")({
-  marginBlock: "35px 20px",
+  marginTop: 35,
+  marginBottom: 20,
   backgroundColor: "darkgrey",
   width: "90%",
   height: progressHeight,

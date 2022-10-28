@@ -24,7 +24,6 @@ type GuessTextWrapperProps = {
 };
 const GuessTextWrapper = styled("div")<GuessTextWrapperProps>((props) => ({
   width: "100%",
-  marginBlock: "0",
   animation: props.isShaking
     ? `${shake} ${UI_WAITING_TIME}ms ease`
     : props.isPulsing
@@ -46,7 +45,7 @@ const GuessText = styled(TextElement)<{ fontSize: string }>(
     margin: guessPadding,
     maxWidth: "70%",
     width: "auto",
-    animation: `${horizontalRock} 100ms ease`,
+    animation: `${horizontalRock} 75ms ease`,
   },
   (props) => ({
     fontSize: props.fontSize,

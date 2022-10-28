@@ -1,13 +1,13 @@
 import styled from "@emotion/styled";
 import { SolutionAndScore } from "../lib/gameTypes";
-import BackSpaceButton from "./BackSpaceButton";
 import ClearButton from "./ClearButton";
 import EnterButton from "./EnterButton";
 import NukeButtonDevOnly from "./NukeButtonDevOnly";
 import ShuffleButton from "./ShuffleButton";
 
 const ControlsPanelElement = styled("div")({
-  marginBlock: 20,
+  marginTop: 20,
+  marginBottom: 20,
   display: "flex",
   flexDirection: "row",
 });
