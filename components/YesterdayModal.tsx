@@ -87,6 +87,7 @@ const YesterdayModal = ({
       <WordsUl
         css={{
           width: "100%",
+          fontSize: "1em",
         }}
       >
         {yesterdayWordsList}

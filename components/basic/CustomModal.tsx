@@ -24,6 +24,7 @@ export const ModalContent = styled("div")({
 });
 
 const ModalCloseButton = styled("button")({
+  color: colours["Dark Sienna"],
   justifyContent: "space-between",
   alignItems: "center",
   display: "flex",

@@ -85,7 +85,7 @@ export const WordsUl = styled("ul")({
 
   marginTop: 0,
   display: "grid",
-  gridTemplateColumns: "repeat(auto-fill, minmax(max(130px, 100%/3), 1fr))",
+  gridTemplateColumns: "repeat(auto-fill, minmax(max(110px, 100%/3), 1fr))",
   listStylePosition: "outside",
 });
 

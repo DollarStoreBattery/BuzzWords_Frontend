@@ -17,7 +17,7 @@ const ShuffleButton = () => {
     <GameButton
       name="Shuffle Letters"
       aria-label="Shuffle"
-      css={{ height: 40, width: 40, borderRadius: "50%" }}
+      css={{ height: 40, width: 40, borderRadius: "50%", padding: "0.3em" }}
       onClick={shuffleBoundaryLetters}
     >
       <ShuffleIcon viewBox="0 0 24 24" fill="currentColor">
